@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" fill="none">
+  <!-- horizontal line left -->
+  <line x1="0" y1="18" x2="52" y2="18" stroke="#ffffff" stroke-width="0.8" opacity="0.7"/>
+  <!-- wordmark: ethereal -->
+  <text x="58" y="22" font-family="'PP Fragment Serif Regular', Georgia, serif" font-size="15" font-weight="400" fill="#ffffff" letter-spacing="2">ethereal</text>
+  <!-- dot gold -->
+  <text x="119" y="22" font-family="'PP Fragment Serif Regular', Georgia, serif" font-size="15" font-weight="400" fill="#d5a94e">.</text>
+  <!-- subtext: estates -->
+  <text x="72" y="33" font-family="'Urbanist', Arial, sans-serif" font-size="5.5" font-weight="300" fill="#ffffff" opacity="0.45" letter-spacing="4">ESTATES</text>
+</svg>

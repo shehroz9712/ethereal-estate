@@ -1,0 +1,20 @@
+/* 
+  Ethereal Estate - Custom Styles
+  Main styles are in index.html via Tailwind CDN + <style> block
+  Add any additional overrides here
+*/
+
+/* Ensure video never shows scrollbars */
+* { box-sizing: border-box; }
+
+/* Custom selection color */
+::selection {
+  background: rgba(201, 168, 76, 0.3);
+  color: #fff;
+}
+
+/* Smooth font rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

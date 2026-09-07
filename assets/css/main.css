@@ -1,0 +1,446 @@
+/* ============================================================
+   main.css  —  Ethereal Estates
+   Single global stylesheet for all pages.
+   Loaded via includes/head.php on every page.
+   ============================================================ */
+
+
+/* ══════════════════════════════════════════════════════════
+   1. RESET & BASE
+══════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Urbanist", sans-serif;
+  background: #fff;
+  color: #111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(213, 169, 78, .25);
+}
+
+::-webkit-scrollbar        { width: 4px; height: 4px; }
+::-webkit-scrollbar-thumb  { background: #d5a94e55; border-radius: 2px; }
+
+
+/* ══════════════════════════════════════════════════════════
+   2. CONTAINER  (Bootstrap-style, global)
+   Use <div class="container"> on any page.
+══════════════════════════════════════════════════════════ */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+.container-fluid {
+  width: 100%;
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+/* Narrower variant for article/text pages */
+.container-md {
+  width: 100%;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   3. TYPOGRAPHY UTILITIES
+══════════════════════════════════════════════════════════ */
+.font-fragment {
+  font-family: "PP Fragment Serif Regular", Georgia, serif;
+}
+
+.gold-line {
+  display: block;
+  width: 48px;
+  height: 1px;
+  background: #d5a94e;
+  margin-bottom: 20px;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   4. NAV LINK  (used in navbar.php)
+══════════════════════════════════════════════════════════ */
+.nav-link {
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color .2s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.nav-link:hover,
+.nav-link.active { color: #d5a94e; }
+
+
+/* ══════════════════════════════════════════════════════════
+   5. BACK LINK  (shared across pages with "← Back")
+══════════════════════════════════════════════════════════ */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: #888;
+  text-decoration: none;
+  transition: color .2s;
+  margin-bottom: 2px;
+}
+.back-link:hover { color: #d5a94e; }
+
+
+/* ══════════════════════════════════════════════════════════
+   6. BUTTONS
+══════════════════════════════════════════════════════════ */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #d5a94e;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  padding: 12px 28px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .2s;
+}
+.btn-gold:hover { background: #e3b961; }
+
+.btn-gold-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #d5a94e;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  padding: 11px 28px;
+  border: 1px solid #d5a94e;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .2s;
+}
+.btn-gold-outline:hover { background: #d5a94e; color: #fff; }
+
+
+/* ══════════════════════════════════════════════════════════
+   7. FOOTER  (dark — includes/footer.php)
+══════════════════════════════════════════════════════════ */
+.site-footer {
+  background: #060e09;
+  color: #fff;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   8. PRE-CONSTRUCTION PAGE  (.precon-page)
+   Scoped under body.precon-page so it doesn't leak to
+   other pages.
+══════════════════════════════════════════════════════════ */
+
+/* Full-screen layout lock */
+body.precon-page {
+  height: 100%;
+  overflow: hidden;
+}
+html:has(body.precon-page) { height: 100%; }
+
+.precon-page {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* Page header */
+.precon-page #page-header {
+  flex-shrink: 0;
+  padding-top: 10px;
+  padding-bottom: 0;
+  border-bottom: 1px solid #e8e8e8;
+  background: #fff;
+}
+
+.precon-page .title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.precon-page .pre-label {
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #d5a94e;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.precon-page .page-title {
+  font-family: "PP Fragment Serif Regular", Georgia, serif;
+  font-size: 2rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #111;
+  line-height: 1;
+}
+
+/* Filter bar */
+.precon-page #filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-top: 1px solid #e8e8e8;
+  flex-shrink: 0;
+}
+
+.precon-page .filter-input-wrap {
+  flex: 1;
+  min-width: 180px;
+  border-right: 1px solid #e8e8e8;
+}
+
+.precon-page .filter-input-wrap input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-family: "Urbanist", sans-serif;
+  color: #444;
+  border: none;
+  outline: none;
+  background: #fff;
+  letter-spacing: .01em;
+}
+.precon-page .filter-input-wrap input::placeholder { color: #bbb; }
+
+.precon-page .filter-select-wrap {
+  border-right: 1px solid #e8e8e8;
+  position: relative;
+  flex-shrink: 0;
+}
+.precon-page .filter-select-wrap:last-child { border-right: none; }
+
+.precon-page .filter-select-wrap select {
+  appearance: none;
+  padding: 10px 30px 10px 14px;
+  font-size: 11px;
+  font-family: "Urbanist", sans-serif;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #333;
+  background: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='5'%3E%3Cpath d='M0 0l4.5 5L9 0z' fill='%23999'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+/* Split layout */
+.precon-page #split-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.precon-page #split-body > .container {
+  max-width: 100%;
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Left panel */
+.precon-page #left-panel {
+  width: 435px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #e8e8e8;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Gold left accent bar */
+.precon-page #left-panel::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: #d5a94e;
+  z-index: 2;
+}
+
+.precon-page #listings-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.precon-page #listings-scroll::-webkit-scrollbar { width: 0; }
+
+/* Listing rows */
+.precon-page .listing-row {
+  display: grid;
+  grid-template-columns: 1fr 130px;
+  border-bottom: 1px solid #efefef;
+  cursor: pointer;
+  transition: background .15s;
+  min-height: 90px;
+}
+.precon-page .listing-row:hover,
+.precon-page .listing-row.active { background: #fdfaf4; }
+
+.precon-page .listing-left {
+  padding: 14px 14px 12px 20px;
+}
+
+.precon-page .listing-city {
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #aaa;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+.precon-page .listing-name {
+  font-family: "PP Fragment Serif Regular", Georgia, serif;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  line-height: 1.1;
+  color: #111;
+  margin-bottom: 5px;
+}
+
+.precon-page .listing-desc {
+  font-size: 11px;
+  color: #888;
+  font-weight: 300;
+  line-height: 1.45;
+  margin-bottom: 6px;
+}
+
+/* Image slider */
+.precon-page .img-slider {
+  position: relative;
+  overflow: hidden;
+  background: #ddd;
+  flex-shrink: 0;
+  width: 130px;
+}
+.precon-page .img-slider-track {
+  display: flex;
+  height: 100%;
+  transition: transform .4s cubic-bezier(.4,0,.2,1);
+}
+.precon-page .slide-img {
+  flex-shrink: 0;
+  width: 130px;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.precon-page .slider-bottom {
+  position: absolute;
+  bottom: 7px; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.precon-page .slide-dot-btn {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.75);
+  background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; padding: 0; flex-shrink: 0;
+}
+.precon-page .slide-dot-btn span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,.85);
+  display: block;
+}
+.precon-page .img-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(255,255,255,.55);
+  cursor: pointer; flex-shrink: 0;
+  transition: background .2s;
+}
+.precon-page .img-dot.active { background: #fff; }
+
+/* Map panel */
+.precon-page #map-panel { flex: 1; min-width: 0; position: relative; }
+.precon-page #map { width: 100%; height: 100%; }
+
+/* Leaflet custom pins */
+.leaf-pin { display: flex; flex-direction: column; align-items: center; }
+.leaf-pin-head {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: #1a2e1e; color: #fff;
+  font-size: 9px; font-weight: 700; letter-spacing: .04em;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #d5a94e;
+  box-shadow: 0 2px 8px rgba(0,0,0,.28);
+}
+.leaf-pin-tail { width: 2px; height: 7px; background: #1a2e1e; }
+.leaf-pin-active .leaf-pin-head { background: #d5a94e; border-color: #1a2e1e; }
+
+/* Leaflet popup overrides */
+.leaflet-popup-content-wrapper {
+  border-radius: 8px !important;
+  box-shadow: 0 6px 24px rgba(0,0,0,.14) !important;
+  padding: 0 !important;
+  border: none !important;
+}
+.leaflet-popup-content { margin: 0 !important; }
+.leaflet-popup-tip-container { display: none; }
+.map-popup { padding: 11px 14px; min-width: 150px; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .precon-page #left-panel { width: 100%; }
+  .precon-page #map-panel  { display: none; }
+}

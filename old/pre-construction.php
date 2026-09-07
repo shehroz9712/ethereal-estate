@@ -1,65 +1,69 @@
 <?php
 $pageTitle = 'Pre-Construction — Ethereal Estates';
-$pageDesc = 'Explore exclusive pre-construction homes across Ontario.';
+$pageDesc  = 'Explore exclusive pre-construction homes across Ontario.';
 $activePage = 'pre-construction';
+$bodyClass  = 'precon-body';
 $extraHead = '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
-  /* Make body a flex column so navbar + content fill exactly 100vh */
-  html { height:100%; }
-  body {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  /* Navbar must not shrink */
-  #site-navbar { flex-shrink: 0; }
+  /* Lock entire page — no scroll on body */
+  html, body { height:100%; overflow:hidden; }
+  body.precon-body { display:flex; flex-direction:column; }
 
-  /* Hide scrollbar visually but keep scroll working */
+  /* Navbar stays at top, does not grow */
+  #site-navbar { flex-shrink:0; }
+
+  /* main-wrap takes all space below navbar */
+  #main-wrap { flex:1; min-height:0; display:flex; flex-direction:column; overflow:hidden; }
+
+  /* Split row takes remaining height after header+filter */
+  #pc-split { flex:1; min-height:0; display:flex; overflow:hidden; }
+
+  /* Left column: fixed 40%, scroll only inside */
+  #left-col {
+    position:relative; width:40%; flex-shrink:0;
+    display:flex; flex-direction:column;
+    border-right:1px solid #e8e8e8; overflow:hidden;
+  }
+
+  /* The scroll div fills left-col exactly */
   #listings-scroll {
-    scrollbar-width: thin;
-    scrollbar-color: #d8d8d8 transparent;
+    flex:1; min-height:0;
+    overflow-y:auto; overflow-x:hidden;
   }
+  #listings-scroll::-webkit-scrollbar { width:3px; }
+  #listings-scroll::-webkit-scrollbar-thumb { background:#e0e0e0; border-radius:2px; }
 
-  #listings-scroll::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  #listings-scroll::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  #listings-scroll::-webkit-scrollbar-thumb {
-    background: #d8d8d8;
-    border-radius: 10px;
-  }
+  /* Right column: map fills remaining 60% */
+  #right-col { flex:1; position:relative; min-width:0; min-height:0; }
+  #map { position:absolute; inset:0; width:100%; height:100%; }
 
   /* Leaflet popup */
-  .leaflet-popup-content-wrapper {
-    border-radius: 8px !important;
-    box-shadow: 0 6px 24px rgba(0,0,0,.14) !important;
-    padding: 0 !important;
-    border: none !important;
+  .leaflet-popup-content-wrapper { border-radius:8px!important; box-shadow:0 6px 24px rgba(0,0,0,.14)!important; padding:0!important; border:none!important; }
+  .leaflet-popup-content { margin:0!important; }
+  .leaflet-popup-tip-container { display:none; }
+
+  /* Responsive */
+  @media (max-width:768px) {
+    #left-col  { width:100% !important; }
+    #right-col { display:none !important; }
   }
-  .leaflet-popup-content { margin: 0 !important; }
-  .leaflet-popup-tip-container { display: none; }
+  @media (min-width:769px) and (max-width:1100px) {
+    #left-col { width:50% !important; }
+  }
 </style>';
+
 require 'includes/head.php';
 $navDark = false;
 require 'includes/navbar.php';
 ?>
 
-<!--
-  #main-wrap = flex:1 → takes EXACTLY the remaining height after navbar.
-  No JS needed. No hardcoded heights.
--->
-<div id="main-wrap" style="flex:1; display:flex; flex-direction:column; overflow:hidden; min-height:0;">
+<div id="main-wrap">
 
   <!-- ── PAGE HEADER ── -->
-  <div class="container">
-    <div style="flex-shrink:0; background:#fff; border-bottom:1px solid #e8e8e8;">
-      <div style="position:relative; display:flex; align-items:center;
-                  justify-content:space-between; padding:10px 0;">
+  <div style="flex-shrink:0; background:#fff; border-bottom:1px solid #e8e8e8;">
+   <div class="container">
+    <div style="position:relative; display:flex; align-items:center;
+                justify-content:space-between; padding:10px 0;">
 
         <!-- Left: back + label -->
         <div style="display:flex; flex-direction:column; gap:3px;">
@@ -92,10 +96,11 @@ require 'includes/navbar.php';
         <!-- Right: spacer for visual balance -->
         <div style="width:100px;"></div>
       </div>
-    </div>
+   </div><!-- .container -->
+  </div><!-- header -->
 
-    <!-- ── FILTER BAR ── -->
-    <div style="flex-shrink:0; background:#fff; border-bottom:1px solid #e8e8e8;
+  <!-- ── FILTER BAR ── -->
+  <div style="flex-shrink:0; background:#fff; border-bottom:1px solid #e8e8e8;
               display:flex; align-items:stretch; overflow-x:auto;">
 
       <!-- Search input -->
@@ -131,60 +136,53 @@ require 'includes/navbar.php';
     </div>
 
     <!-- ══════════════════════════════════
-       SPLIT: 40% listings | 60% map
-       flex:1 + min-height:0 = fills EXACT
-       remaining space, nothing more
-  ══════════════════════════════════ -->
-    <div style="flex:1; display:flex; min-height:0; overflow:hidden;">
+  <!-- ══ SPLIT: 40% listings | 60% map ══ -->
+  <div id="pc-split">
 
-      <!-- LEFT 40% ── gold bar + scrollable list -->
-      <div style="position:relative; width:40%; flex-shrink:0;
-                display:flex; flex-direction:column;
-                border-right:1px solid #e8e8e8; overflow:hidden;">
-
-        <!-- Gold accent bar -->
-        <div style="position:absolute; left:0; top:0; bottom:0;
-                  width:3px; background:#d5a94e; z-index:5;"></div>
-
-        <!-- Scroll container -->
-        <div  id="listings-scroll"
-  style="
-    flex:1;
-    min-height:0;
-    overflow-y:auto;
-    overflow-x:hidden;
-    padding:0 10px 0 0;
-    margin-right:10px;
-  ">
+  <!-- LEFT 40% -->
+  <div id="left-col">
+    <!-- Gold accent bar -->
+    <div style="position:absolute; left:0; top:0; bottom:0; width:3px; background:#d5a94e; z-index:5;"></div>
+    <!-- Scrollable listings -->
+    <div id="listings-scroll">
 
           <?php
           $listings = [
             [
-              'id' => 0,
-              'city' => 'BOWMANVILLE',
-              'name' => 'Orchard South',
+              'id' => 0, 'city' => 'BOWMANVILLE', 'name' => 'Orchard South',
               'desc' => 'Bungalows and Single Detached Homes with 2 & 3-Car Garages',
-              'imgs' => ['assets/images/prop-orchard-south.jpg', 'assets/images/prop-chateau9.jpg', 'assets/images/prop-mirra.jpg'],
-              'lat' => 43.9043,
-              'lng' => -78.6873,
+              'imgs' => ['assets/images/prop-orchard-south.jpg','assets/images/prop-chateau9.jpg','assets/images/prop-mirra.jpg'],
+              'lat' => 43.9043, 'lng' => -78.6873,
             ],
             [
-              'id' => 1,
-              'city' => 'BOWMANVILLE',
-              'name' => 'Chateau 9',
+              'id' => 1, 'city' => 'BOWMANVILLE', 'name' => 'Chateau 9',
               'desc' => 'Bungalows and Single Detached Homes with 2 & 3-Car Garages',
-              'imgs' => ['assets/images/prop-chateau9.jpg', 'assets/images/prop-mirra.jpg', 'assets/images/prop-orchard-south.jpg'],
-              'lat' => 43.9120,
-              'lng' => -78.6720,
+              'imgs' => ['assets/images/prop-chateau9.jpg','assets/images/prop-mirra.jpg','assets/images/prop-orchard-south.jpg'],
+              'lat' => 43.9120, 'lng' => -78.6720,
             ],
             [
-              'id' => 2,
-              'city' => 'BOWMANVILLE',
-              'name' => 'Ellia at Unity',
+              'id' => 2, 'city' => 'BOWMANVILLE', 'name' => 'Ellia at Unity',
               'desc' => 'Bungalows and Single Detached Homes with 2 & 3-Car Garages',
-              'imgs' => ['assets/images/prop-mirra.jpg', 'assets/images/prop-orchard-south.jpg', 'assets/images/prop-chateau9.jpg'],
-              'lat' => 43.8980,
-              'lng' => -78.6600,
+              'imgs' => ['assets/images/prop-mirra.jpg','assets/images/prop-orchard-south.jpg','assets/images/prop-chateau9.jpg'],
+              'lat' => 43.8980, 'lng' => -78.6600,
+            ],
+            [
+              'id' => 3, 'city' => 'OSHAWA', 'name' => 'Mirra Townhomes',
+              'desc' => 'Modern townhomes with expansive rooftop terraces and designer kitchens',
+              'imgs' => ['assets/images/prop-mirra.jpg','assets/images/prop-orchard-south.jpg','assets/images/prop-chateau9.jpg'],
+              'lat' => 43.8971, 'lng' => -78.8658,
+            ],
+            [
+              'id' => 4, 'city' => 'WHITBY', 'name' => 'Highland Reserve',
+              'desc' => 'Scenic hillside community with sweeping Lake Ontario views',
+              'imgs' => ['assets/images/prop-chateau9.jpg','assets/images/prop-mirra.jpg','assets/images/prop-orchard-south.jpg'],
+              'lat' => 43.8975, 'lng' => -78.9417,
+            ],
+            [
+              'id' => 5, 'city' => 'AJAX', 'name' => 'Orchard West',
+              'desc' => 'Master-planned neighborhood with parks, top schools and modern family recreation',
+              'imgs' => ['assets/images/prop-orchard-south.jpg','assets/images/prop-chateau9.jpg','assets/images/prop-mirra.jpg'],
+              'lat' => 43.8510, 'lng' => -79.0300,
             ],
                 [
               'id' => 2,
@@ -277,7 +275,7 @@ require 'includes/navbar.php';
       </div><!-- left 40% -->
 
       <!-- RIGHT 60% ── map fills entire remaining area -->
-      <div style="flex:1; position:relative; min-width:0; min-height:0;">
+      <div id="right-col" style="flex:1; position:relative; min-width:0; min-height:0;">
         <div id="map" style="position:absolute; top:0; right:0; bottom:0; left:0;"></div>
       </div>
 
@@ -291,12 +289,15 @@ require 'includes/navbar.php';
 <script>
   /* ── Map init ── */
   const PROPS = [
-    { id: 0, name: 'Orchard South', city: 'Bowmanville', lat: 43.9043, lng: -78.6873 },
-    { id: 1, name: 'Chateau 9', city: 'Bowmanville', lat: 43.9120, lng: -78.6720 },
-    { id: 2, name: 'Ellia at Unity', city: 'Bowmanville', lat: 43.8980, lng: -78.6600 },
+    { id:0, name:'Orchard South',   city:'Bowmanville', lat:43.9043, lng:-78.6873 },
+    { id:1, name:'Chateau 9',       city:'Bowmanville', lat:43.9120, lng:-78.6720 },
+    { id:2, name:'Ellia at Unity',  city:'Bowmanville', lat:43.8980, lng:-78.6600 },
+    { id:3, name:'Mirra Townhomes', city:'Oshawa',      lat:43.8971, lng:-78.8658 },
+    { id:4, name:'Highland Reserve',city:'Whitby',      lat:43.8975, lng:-78.9417 },
+    { id:5, name:'Orchard West',    city:'Ajax',        lat:43.8510, lng:-79.0300 },
   ];
 
-  const map = L.map('map', { center: [43.9050, -78.6730], zoom: 13 });
+const map = L.map('map', { center: [43.8900, -78.8000], zoom: 10 });
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     maxZoom: 19,
@@ -372,7 +373,7 @@ require 'includes/navbar.php';
   }
 
   setInterval(() => {
-    for (let i = 0; i < PROPS.length; i++) {
+    for (let i = 0; i < 6; i++) {
       const t = document.getElementById('sl-' + i);
       if (t) setSl(i, (SI[i] + 1) % t.children.length);
     }

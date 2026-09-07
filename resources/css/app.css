@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
+@import 'tailwindcss';
+
+/* PP Fragment Custom Fonts from public/assets/fonts */
+@font-face {
+  font-family: 'PP Fragment Serif Regular';
+  src: url('/assets/fonts/PPFragment-SerifRegular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Fragment Serif Light';
+  src: url('/assets/fonts/PPFragment-SerifLight.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Fragment Serif ExtraBold';
+  src: url('/assets/fonts/PPFragment-SerifExtraBold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Fragment Glare';
+  src: url('/assets/fonts/PPFragment-GlareRegular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+  --font-sans: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'PP Fragment Serif Regular', Georgia, serif;
+  --color-gold: #d5a94e;
+  --color-gold-hover: #e3b961;
+  --color-forest: #06130d;
+  --color-forest-deep: #1a2e1e;
+  --color-warm-bg: #fdfaf4;
+}
+
+:root {
+  --gold: #d5a94e;
+  --gold-hover: #e3b961;
+  --forest-dark: #06130d;
+  --forest-mid: #1a2e1e;
+  --border: #e8e8e8;
+  --border-dark: rgba(255, 255, 255, 0.12);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Urbanist', sans-serif;
+  background-color: #ffffff;
+  color: #111111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(213, 169, 78, 0.3);
+  color: #111;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #d5a94e88;
+  border-radius: 3px;
+}
+
+/* Typography Utilities */
+.font-fragment {
+  font-family: 'PP Fragment Serif Regular', Georgia, serif;
+}
+.font-fragment-light {
+  font-family: 'PP Fragment Serif Light', Georgia, serif;
+}
+.font-fragment-bold {
+  font-family: 'PP Fragment Serif ExtraBold', Georgia, serif;
+}
+
+/* Luxury Gold & Line Utilities */
+.text-gold {
+  color: #d5a94e;
+}
+.bg-gold {
+  background-color: #d5a94e;
+}
+.border-gold {
+  border-color: #d5a94e;
+}
+.gold-line {
+  display: block;
+  width: 48px;
+  height: 1px;
+  background: #d5a94e;
+  margin-bottom: 20px;
+}
+
+/* Container */
+.container-custom {
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+@media (min-width: 1024px) {
+  .container-custom {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+}
+
+/* Buttons */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #d5a94e;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  padding: 13px 28px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(213, 169, 78, 0.25);
+}
+.btn-gold:hover {
+  background: #e3b961;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(213, 169, 78, 0.35);
+}
+
+.btn-gold-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #d5a94e;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  padding: 12px 28px;
+  border: 1px solid #d5a94e;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+.btn-gold-outline:hover {
+  background: #d5a94e;
+  color: #ffffff;
+}
+
+.btn-forest {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2e1e;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  padding: 13px 28px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+.btn-forest:hover {
+  background: #06130d;
+  color: #ffffff;
+}
+
+/* Leaflet Custom Marker & Popups */
+.leaf-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+.leaf-pin-head {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #06130d;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #d5a94e;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s, background 0.2s;
+}
+.leaf-pin-tail {
+  width: 2px;
+  height: 7px;
+  background: #06130d;
+}
+.leaf-pin.active .leaf-pin-head,
+.leaf-pin:hover .leaf-pin-head {
+  background: #d5a94e;
+  color: #06130d;
+  border-color: #06130d;
+  transform: scale(1.15);
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18) !important;
+  padding: 0 !important;
+  border: 1px solid #e8e8e8 !important;
+  overflow: hidden;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1.4 !important;
+}
+.leaflet-popup-tip-container {
+  display: none;
+}

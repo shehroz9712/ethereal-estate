@@ -8,114 +8,82 @@
         'pre-construction' => ['route' => 'pre-construction', 'label' => 'Pre-Construction'],
         'properties'       => ['route' => 'properties.index',   'label' => 'Featured Properties'],
         'about'            => ['route' => 'about',              'label' => 'About Us'],
-        'news'             => ['route' => 'news.index',          'label' => 'Ethereal Edit'],
         'contact'          => ['route' => 'contact',            'label' => 'Contact Us'],
         'rebate'           => ['route' => 'rebate-calculator',  'label' => 'Calculate Your Rebate'],
     ];
 @endphp
 
 @if ($dark)
-<!-- ═══════════ TRANSPARENT DARK NAVBAR (Hero video mode) ═══════════ -->
-<header id="site-navbar" class="absolute inset-x-0 top-0 z-50 flex items-center justify-between pe-6 sm:pe-10 lg:pe-16 py-6 transition-all duration-300">
+<!-- ═══════════ TRANSPARENT DARK NAVBAR (Hero video mode - matching Figma / old index.php) ═══════════ -->
+<header id="site-navbar" class="absolute inset-x-0 top-0 z-50 flex items-center justify-between pe-6 sm:pe-10 lg:pe-16 py-5 transition-all duration-300">
     <!-- Logo -->
     <a href="{{ route('home') }}" class="shrink-0 group block">
         <img src="{{ asset('assets/images/logo.png') }}"
              alt="Ethereal Estates"
-             class="h-8 sm:h-9 w-auto object-contain transition-opacity duration-300 group-hover:opacity-85" />
+             class=" w-auto object-contain transition-opacity duration-300 group-hover:opacity-85" />
     </a>
 
-    <!-- Desktop Nav Links -->
-    <nav class="hidden xl:flex items-center gap-8 2xl:gap-10">
+    <!-- Desktop Nav Links (exact 5 links from Figma) -->
+    <nav class="hidden lg:flex items-center gap-7 xl:gap-9">
         @foreach ($links as $key => $link)
             <a href="{{ route($link['route']) }}"
-               class="flex items-center gap-1.5 text-[12px] uppercase tracking-[0.18em] font-medium transition-colors duration-200 {{ $activePage === $key ? 'text-[#d5a94e]' : 'text-white/90 hover:text-[#d5a94e]' }}">
+               class="flex items-center gap-1.5 text-[12.5px] uppercase tracking-[0.17em] font-medium transition-colors duration-200 {{ $activePage === $key ? 'text-[#d5a94e]' : 'text-white hover:text-[#d5a94e]' }}">
                 {{ $link['label'] }}
                 <span class="text-[#d5a94e] text-xs">↗</span>
             </a>
         @endforeach
     </nav>
 
-    <!-- Right Controls: Auth + Two-Line Menu Icon -->
-    <div class="flex items-center gap-4 sm:gap-6">
-        @auth
-            @if(auth()->user()->isAdmin())
-                <a href="{{ route('admin.dashboard') }}" class="hidden sm:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] font-semibold text-white/90 hover:text-[#d5a94e] border border-white/20 hover:border-[#d5a94e] rounded-full px-4 py-1.5 transition-colors">
-                    Admin Portal <span class="text-[#d5a94e]">↗</span>
-                </a>
-            @else
-                <a href="{{ route('user.dashboard') }}" class="hidden sm:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] font-semibold text-white/90 hover:text-[#d5a94e] border border-white/20 hover:border-[#d5a94e] rounded-full px-4 py-1.5 transition-colors">
-                    Client Portal <span class="text-[#d5a94e]">↗</span>
-                </a>
-            @endif
-        @else
-            <a href="{{ route('login') }}" class="hidden sm:inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-medium text-white/80 hover:text-[#d5a94e] transition-colors">
-                Sign In
-            </a>
-        @endauth
-
-        <!-- Two-Line Animated Menu Icon (transforms into X) -->
+    <!-- Mobile Menu Button -->
+    <div class="lg:hidden flex items-center">
         <button type="button"
                 @click="menuOpen = !menuOpen"
-                class="relative z-50 w-10 h-10 flex flex-col items-center justify-center gap-2 cursor-pointer p-2 rounded-full hover:bg-white/10 transition-colors focus:outline-none"
+                class="p-2 text-white hover:text-[#d5a94e] focus:outline-none"
                 aria-label="Toggle Navigation Menu">
-            <span class="w-6 h-[1.5px] bg-white transition-all duration-300 transform origin-center"
-                  :class="{ 'rotate-45 translate-y-[5px] !bg-white': menuOpen }"></span>
-            <span class="w-6 h-[1.5px] bg-white transition-all duration-300 transform origin-center"
-                  :class="{ '-rotate-45 -translate-y-[5px] !bg-white': menuOpen }"></span>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path x-show="!menuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                <path x-show="menuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
         </button>
     </div>
 </header>
 
 @else
-<!-- ═══════════ LIGHT / STICKY NAVBAR ═══════════ -->
-<header id="site-navbar" class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
-    <div class="flex items-center justify-between px-6 sm:px-10 lg:px-16 py-4">
-        <!-- Logo -->
-        <a href="{{ route('home') }}" class="shrink-0 group block">
-            <img src="{{ asset('assets/images/logo-dark.png') }}"
-                 onerror="this.src='{{ asset('assets/images/logo.png') }}'"
-                 alt="Ethereal Estates"
-                 class="h-8 sm:h-9 w-auto object-contain transition-opacity duration-300 group-hover:opacity-85" />
-        </a>
+<!-- ═══════════ LIGHT / STICKY NAVBAR (matching Figma Pre-Construction Listings.png) ═══════════ -->
+<header id="site-navbar" class="sticky top-0 z-40 bg-white border-b border-gray-100 transition-all duration-300">
+    <div class="flex items-center justify-between pe-6 sm:pe-10 lg:pe-16 py-4.5">
+        
+        <!-- Left: Continuous Gold Line from viewport edge to Logo (per Figma) -->
+        <div class="flex items-center">
+            <a href="{{ route('home') }}" class="shrink-0 group block">
+                <img src="{{ asset('assets/images/logo-dark.png') }}"
+                     onerror="this.src='{{ asset('assets/images/logo.png') }}'"
+                     alt="Ethereal Estates"
+                     class="w-auto object-contain transition-opacity duration-300 group-hover:opacity-85" />
+            </a>
+        </div>
 
-        <!-- Desktop Nav Links -->
-        <nav class="hidden xl:flex items-center gap-8 2xl:gap-10">
+        <!-- Desktop Nav Links (exact 5 links from Figma) -->
+        <nav class="hidden lg:flex items-center gap-7 xl:gap-9">
             @foreach ($links as $key => $link)
                 <a href="{{ route($link['route']) }}"
-                   class="flex items-center gap-1.5 text-[12px] uppercase tracking-[0.18em] font-medium transition-colors duration-200 {{ $activePage === $key ? 'text-[#d5a94e]' : 'text-gray-800 hover:text-[#d5a94e]' }}">
+                   class="flex items-center gap-1.5 text-[12.5px] uppercase tracking-[0.17em] font-medium transition-colors duration-200 {{ $activePage === $key ? 'text-[#d5a94e]' : 'text-gray-900 hover:text-[#d5a94e]' }}">
                     {{ $link['label'] }}
                     <span class="text-[#d5a94e] text-xs">↗</span>
                 </a>
             @endforeach
         </nav>
 
-        <!-- Right Controls: Auth + Two-Line Menu Icon -->
-        <div class="flex items-center gap-4 sm:gap-6">
-            @auth
-                @if(auth()->user()->isAdmin())
-                    <a href="{{ route('admin.dashboard') }}" class="hidden sm:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] font-semibold text-gray-800 hover:text-[#d5a94e] border border-gray-300 hover:border-[#d5a94e] rounded-full px-4 py-1.5 transition-colors">
-                        Admin Portal <span class="text-[#d5a94e]">↗</span>
-                    </a>
-                @else
-                    <a href="{{ route('user.dashboard') }}" class="hidden sm:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] font-semibold text-gray-800 hover:text-[#d5a94e] border border-gray-300 hover:border-[#d5a94e] rounded-full px-4 py-1.5 transition-colors">
-                        Client Portal <span class="text-[#d5a94e]">↗</span>
-                    </a>
-                @endif
-            @else
-                <a href="{{ route('login') }}" class="hidden sm:inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-medium text-gray-600 hover:text-[#d5a94e] transition-colors">
-                    Sign In
-                </a>
-            @endauth
-
-            <!-- Two-Line Animated Menu Icon (transforms into X) -->
+        <!-- Mobile Menu Button -->
+        <div class="lg:hidden flex items-center">
             <button type="button"
                     @click="menuOpen = !menuOpen"
-                    class="relative z-50 w-10 h-10 flex flex-col items-center justify-center gap-2 cursor-pointer p-2 rounded-full hover:bg-gray-100 transition-colors focus:outline-none"
+                    class="p-2 text-gray-900 hover:text-[#d5a94e] focus:outline-none"
                     aria-label="Toggle Navigation Menu">
-                <span class="w-6 h-[1.5px] bg-gray-900 transition-all duration-300 transform origin-center"
-                      :class="{ 'rotate-45 translate-y-[5px] !bg-white': menuOpen }"></span>
-                <span class="w-6 h-[1.5px] bg-gray-900 transition-all duration-300 transform origin-center"
-                      :class="{ '-rotate-45 -translate-y-[5px] !bg-white': menuOpen }"></span>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path x-show="!menuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    <path x-show="menuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
             </button>
         </div>
     </div>

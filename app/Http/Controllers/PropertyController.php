@@ -17,11 +17,24 @@ class PropertyController extends Controller
 
     public function index(Request $request): View
     {
-        $filters = $request->only(['search', 'city', 'type', 'bedrooms', 'bathrooms', 'max_price']);
-        $properties = $this->propertyService->getPaginatedProperties($filters, 9);
-        $featuredList = $this->propertyService->getFeaturedProperties(8);
+        $properties = Property::with(['images', 'location'])
+            ->active()
+            ->get()
+            ->sortBy(function ($p) {
+                $order = [
+                    'orchard-south' => 1,
+                    'mirra-townhomes' => 2,
+                    'chateau-9' => 3,
+                    'orchard-west' => 4,
+                    'highland-reserve' => 5,
+                    'ellia-at-unity' => 6,
+                    'bayview-trail' => 7,
+                    'eversley-estates' => 8,
+                ];
+                return $order[$p->slug] ?? ($p->sort_order + 10);
+            })->values();
 
-        return view('pages.properties.index', compact('properties', 'featuredList', 'filters'));
+        return view('pages.properties.index', compact('properties'));
     }
 
     public function show(string $slug): View

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#101d17"/><stop offset=".55" stop-color="#6d766f"/><stop offset="1" stop-color="#d7d1c5"/>
+    </linearGradient>
+    <pattern id="p" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0v64" fill="none" stroke="#fff" stroke-opacity=".07"/></pattern>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g)"/><rect width="1200" height="800" fill="url(#p)"/>
+  <circle cx="915" cy="245" r="180" fill="#fff" opacity=".08"/>
+  <path d="M0 690 260 430l170 160 170-190 320 290z" fill="#07150f" opacity=".52"/>
+  <text x="60" y="740" font-family="Arial,sans-serif" font-size="32" letter-spacing="8" fill="#fff" opacity=".55">IMAGE PLACEHOLDER</text>
+</svg>

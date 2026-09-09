@@ -3,71 +3,62 @@
     <div class="max-w-7xl mx-auto">
 
         <!-- Top grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 pb-12 border-b border-white/10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 pb-14 border-b border-white/10">
 
-            <!-- Col 1-2: Contact -->
-            <div class="lg:col-span-2">
-                <p class="text-[11px] uppercase tracking-[0.25em] text-[#d5a94e] font-semibold mb-3">Let's Talk</p>
+            <!-- Col 1: Contact (spans 6 cols) -->
+            <div class="lg:col-span-6 space-y-5">
+                <p class="text-[12px] tracking-[0.25em] text-[#c5983e] font-serif italic">Let's Talk</p>
                 <a href="mailto:office@etherealestates.ca"
-                   class="font-fragment text-2xl sm:text-3xl text-white hover:text-[#d5a94e] transition-colors block mb-6">
+                   class="font-fragment text-2xl sm:text-3xl lg:text-[34px] text-white hover:text-[#c5983e] transition-colors block leading-none">
                     office@etherealestates.ca
                 </a>
-                <div class="text-xs text-white/60 font-light leading-relaxed mb-6 space-y-1">
-                    <p>600 Matheson Blvd W Unit 5, Mississauga, ON L5R 4C1, Canada</p>
-                    <p>Telephone:
-                        <a href="tel:+14373767611" class="text-white/85 hover:text-[#d5a94e] transition-colors font-normal">+1 437-376-7611</a>
-                    </p>
+                <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 text-xs text-white/60 font-light pt-2">
+                    <p>600 Matheson Blvd W Unit 5<br/>Mississauga, ON L5R 4C1, Canada</p>
+                    <div>
+                        <span class="text-white/40">Telephone:</span>
+                        <a href="tel:+14373767611" class="text-white/85 hover:text-[#c5983e] transition-colors ml-1 font-normal">+1 437 376 7611</a>
+                    </div>
                 </div>
+
                 <!-- Social pills -->
-                <div class="flex flex-wrap gap-2">
-                    @foreach (['Instagram','Twitter','Youtube','Behance','LinkedIn'] as $social)
+                <div class="flex flex-wrap gap-2.5 pt-3">
+                    @foreach (['Instagram', 'Twitter', 'Youtube', 'Behance', 'Linkedin'] as $social)
                         <a href="#"
-                           class="px-4 py-1.5 rounded-full border border-white/20 text-[10px] uppercase tracking-[0.14em] text-white/70 hover:border-[#d5a94e] hover:text-[#d5a94e] transition-colors">
+                           class="px-4 py-1.5 rounded-full border border-white/25 text-[11px] font-normal tracking-wide text-white/80 hover:border-[#c5983e] hover:text-[#c5983e] transition-colors">
                             {{ $social }}
                         </a>
                     @endforeach
                 </div>
             </div>
 
-            <!-- Col 3: Discover More -->
-            <div>
+            <!-- Col 2: Discover More (spans 3 cols) -->
+            <div class="lg:col-span-3">
                 <h3 class="font-fragment text-base uppercase tracking-[0.12em] text-white mb-5">Discover More</h3>
                 <ul class="space-y-3 text-xs text-white/60 font-light">
-                    <li><a href="{{ route('about') }}" class="hover:text-[#d5a94e] transition-colors">About Us</a></li>
-                    <li><a href="{{ route('pre-construction') }}" class="hover:text-[#d5a94e] transition-colors">Pre-Construction</a></li>
-                    <li><a href="{{ route('properties.index') }}" class="hover:text-[#d5a94e] transition-colors">Featured Properties</a></li>
-                    <li><a href="{{ route('genius') }}" class="hover:text-[#d5a94e] transition-colors">Genius Experience</a></li>
-                    <li><a href="{{ route('news.index') }}" class="hover:text-[#d5a94e] transition-colors">Ethereal Edit</a></li>
+                    <li><a href="{{ route('our-story') }}" class="hover:text-[#c5983e] transition-colors">Our Story</a></li>
+                    <li><a href="{{ route('pre-construction') }}" class="hover:text-[#c5983e] transition-colors">Communities</a></li>
+                    <li><a href="{{ route('genius') }}" class="hover:text-[#c5983e] transition-colors">Genius</a></li>
+                    <li><a href="{{ route('news.index') }}" class="hover:text-[#c5983e] transition-colors">News</a></li>
+                    <li><a href="{{ route('contact') }}" class="hover:text-[#c5983e] transition-colors">Contact</a></li>
                 </ul>
             </div>
 
-            <!-- Col 4: Quick Links -->
-            <div>
+            <!-- Col 3: Quick Links (spans 3 cols) -->
+            <div class="lg:col-span-3">
                 <h3 class="font-fragment text-base uppercase tracking-[0.12em] text-white mb-5">Quick Links</h3>
                 <ul class="space-y-3 text-xs text-white/60 font-light">
-                    <li><a href="{{ route('our-story') }}" class="hover:text-[#d5a94e] transition-colors">Our Story</a></li>
-                    <li><a href="{{ route('rebate-calculator') }}" class="hover:text-[#d5a94e] transition-colors">Rebate Calculator</a></li>
-                    <li><a href="{{ route('join-ethereal') }}" class="hover:text-[#d5a94e] transition-colors">Join Ethereal</a></li>
-                    <li><a href="{{ route('contact') }}" class="hover:text-[#d5a94e] transition-colors">Contact Advisory</a></li>
-                    @guest
-                        <li><a href="{{ route('login') }}" class="hover:text-[#d5a94e] transition-colors">Client Portal Sign In</a></li>
-                    @else
-                        <li><a href="{{ route('user.dashboard') }}" class="hover:text-[#d5a94e] transition-colors">Client Dashboard</a></li>
-                    @endguest
+                    <li><a href="#" class="hover:text-[#c5983e] transition-colors">GT USA</a></li>
+                    <li><a href="#" class="hover:text-[#c5983e] transition-colors">Sitemap</a></li>
+                    <li><a href="#" class="hover:text-[#c5983e] transition-colors">Terms and Conditions</a></li>
+                    <li><a href="#" class="hover:text-[#c5983e] transition-colors">Privacy Policy</a></li>
                 </ul>
             </div>
 
         </div>
 
         <!-- Bottom bar -->
-        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/40 tracking-[0.12em] uppercase">
-            <p>&copy; 2026 Ethereal Estates. All rights reserved.</p>
-            <div class="flex items-center gap-8">
-                <a href="{{ route('home') }}" class="hover:text-[#d5a94e] transition-colors">Home</a>
-                <a href="{{ route('properties.index') }}" class="hover:text-[#d5a94e] transition-colors">Properties</a>
-                <a href="{{ route('about') }}" class="hover:text-[#d5a94e] transition-colors">About</a>
-                <a href="{{ route('contact') }}" class="hover:text-[#d5a94e] transition-colors">Contact</a>
-            </div>
+        <div class="pt-8 text-xs text-white/40 font-light tracking-wide">
+            <p>&copy; 2026 Ethereal. All rights reserved</p>
         </div>
 
     </div>

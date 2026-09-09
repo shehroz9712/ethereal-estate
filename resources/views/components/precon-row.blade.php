@@ -5,82 +5,50 @@
     if (empty($images)) {
         $images = [$property->primary_image_url];
     }
+    $subtitle = $property->short_description ?? 'Bungalows and Single Detached Homes with 2 & 3-Car Garages';
 @endphp
 
-<div class="precon-item border-b border-gray-200/80 cursor-pointer transition-colors duration-150 {{ $active ? 'bg-[#fdfaf4]' : 'bg-white hover:bg-[#fdfaf4]' }}"
+<div class="precon-item border border-[#e8e8e6] bg-[#fbfbfa] hover:bg-[#f6f5f0] transition-all duration-200 cursor-pointer mb-3 rounded-[3px] overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.02)] {{ $active ? '!bg-[#fdfaf4] ring-1 ring-[#d5a94e]/70' : '' }}"
      id="prop-row-{{ $property->id }}"
      data-id="{{ $property->id }}"
-     data-lat="{{ $property->latitude }}"
-     data-lng="{{ $property->longitude }}"
      data-title="{{ $property->title }}"
-     onclick="selectPreconListing({{ $property->id }}, {{ $property->latitude }}, {{ $property->longitude }})">
+     onclick="selectPreconListing({{ $property->id }})">
 
-    <div class="grid grid-cols-[1fr_135px] sm:grid-cols-[1fr_150px] min-h-[125px]">
-        <!-- Text & Specs Info -->
-        <div class="p-4 sm:p-5 flex flex-col justify-center">
-            <p class="text-[10px] font-semibold tracking-[0.2em] uppercase text-gray-400 mb-1">
+    <div class="grid grid-cols-[1fr_150px] sm:grid-cols-[1fr_170px] min-h-[125px]">
+        <!-- Left Text & Info (exact Figma match) -->
+        <div class="px-5 py-3.5 flex flex-col justify-center">
+            <p class="text-[10px] sm:text-[10.5px] font-semibold tracking-[0.2em] uppercase text-[#333] mb-1 font-sans">
                 {{ $property->city }}
             </p>
 
-            <h3 class="font-fragment text-xl sm:text-[1.3rem] uppercase tracking-[0.05em] text-gray-900 leading-tight mb-2">
-                <a href="{{ route('properties.show', $property->slug) }}" class="hover:text-[#d5a94e] transition-colors" onclick="event.stopPropagation()">
+            <h3 class="font-fragment text-xl sm:text-[23px] uppercase tracking-[0.04em] text-[#111111] leading-tight mb-2 hover:text-[#d5a94e] transition-colors">
+                <a href="{{ route('properties.show', $property->slug) }}" onclick="event.stopPropagation()">
                     {{ $property->title }}
                 </a>
             </h3>
 
-            <!-- Specifications: 4 BED · 6 BATH · 1,400 SQ FT -->
-            <p class="text-[11px] font-medium tracking-wider text-gray-700 uppercase mb-1">
-                {{ $property->bedrooms }} BED &middot; {{ (int)$property->bathrooms }} BATH &middot; {{ number_format($property->sqft) }} SQ FT
+            <!-- Feature Subtitle line (exact from Figma) -->
+            <p class="text-[11px] sm:text-[11.5px] text-[#444] font-normal leading-snug font-sans max-w-[260px]">
+                {{ $subtitle }}
             </p>
-
-            <!-- Property-specific feature line in italics -->
-            @if($property->feature_line)
-                <p class="text-xs text-gray-500 italic font-light line-clamp-1 mb-2">
-                    {{ $property->feature_line }}
-                </p>
-            @endif
-
-            <div class="flex items-center gap-4 mt-1">
-                <a href="{{ route('properties.show', $property->slug) }}"
-                   onclick="event.stopPropagation()"
-                   class="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.16em] font-semibold text-[#d5a94e] hover:underline">
-                    View Details ↗
-                </a>
-                <button type="button"
-                        onclick="event.stopPropagation(); window.dispatchEvent(new CustomEvent('open-vip-modal', { detail: { id: {{ $property->id }}, title: '{{ addslashes($property->title) }}' } }))"
-                        class="text-[10px] uppercase tracking-[0.16em] text-gray-400 hover:text-gray-900 transition-colors">
-                    Request VIP Access
-                </button>
-            </div>
         </div>
 
-        <!-- Image Slider Thumbnail -->
-        <div class="relative w-[135px] sm:w-[150px] bg-gray-100 overflow-hidden shrink-0 group select-none"
-             x-data="{ currentSlide: 0, total: {{ count($images) }} }"
-             onclick="event.stopPropagation()">
+        <!-- Right Image Thumbnail with Carousel Dots (exact from Figma) -->
+        <div class="relative w-[150px] sm:w-[170px] bg-gray-200 overflow-hidden shrink-0 group select-none">
+            <img src="{{ $property->primary_image_url }}"
+                 alt="{{ $property->title }}"
+                 class="w-full h-full object-cover shrink-0 min-h-[125px]"
+                 loading="lazy" />
 
-            <!-- Slides Track -->
-            <div class="flex h-full transition-transform duration-400 ease-out"
-                 :style="`transform: translateX(-${currentSlide * 100}%);`">
-                @foreach($images as $img)
-                    <img src="{{ $img }}"
-                         alt="{{ $property->title }}"
-                         class="w-full h-full object-cover shrink-0 min-h-[125px]"
-                         loading="lazy" />
-                @endforeach
+            <!-- Dots Overlay matching screenshot: ⭘ • • • -->
+            <div class="absolute bottom-2.5 inset-x-0 flex items-center justify-center gap-1.5 z-10 pointer-events-none">
+                <span class="w-3.5 h-3.5 rounded-full border border-white flex items-center justify-center">
+                    <span class="w-1 h-1 rounded-full bg-[#d5a94e]"></span>
+                </span>
+                <span class="w-1 h-1 rounded-full bg-white/80"></span>
+                <span class="w-1 h-1 rounded-full bg-white/80"></span>
+                <span class="w-1 h-1 rounded-full bg-white/80"></span>
             </div>
-
-            <!-- Dots Overlay -->
-            @if(count($images) > 1)
-                <div class="absolute bottom-2.5 inset-x-0 flex items-center justify-center gap-1.5 z-10">
-                    <template x-for="(item, idx) in total" :key="idx">
-                        <button type="button"
-                                @click.stop="currentSlide = idx"
-                                class="w-1.5 h-1.5 rounded-full transition-all duration-200"
-                                :class="currentSlide === idx ? 'bg-white scale-125 ring-1 ring-white/60' : 'bg-white/50 hover:bg-white/80'"></button>
-                    </template>
-                </div>
-            @endif
         </div>
     </div>
 </div>

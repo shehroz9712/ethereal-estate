@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/pre-construction', [PreConstructionController::class, 'index'])->name('pre-construction');
 Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
+Route::redirect('/featured-properties', '/properties');
 Route::get('/properties/{slug}', [PropertyController::class, 'show'])->name('properties.show');
 Route::post('/properties/{property}/favorite', [PropertyController::class, 'toggleFavorite'])->name('properties.favorite');
 

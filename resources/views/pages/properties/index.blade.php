@@ -1,4 +1,4 @@
-<x-layouts.app activePage="properties" title="Featured Properties — Ethereal Estates Living Across Ontario">
+<x-layouts.app activePage="properties" title="Distinctive Homes. Considered Choices. — Ethereal Estates">
 
     @push('styles')
     <style>
@@ -18,7 +18,7 @@
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             will-change: transform;
         }
-        /* Desktop: 3 cards fit with 4th card peeking on right (~3.25 cards in view) */
+        /* Desktop: 3 cards fit with 4th card peeking on right (~3.22 cards in view) */
         .prop-slider-card {
             flex: 0 0 calc((100% - 48px) / 3.22);
             min-width: 0;
@@ -34,7 +34,7 @@
         }
         .prop-slider-card:hover {
             box-shadow: 0 12px 32px rgba(0,0,0,0.08);
-            border-color: #d5a94e80;
+            border-color: #c5983e80;
             transform: translateY(-2px);
         }
         @media (max-width: 1180px) {
@@ -60,244 +60,234 @@
             font-family: 'Urbanist', sans-serif;
         }
         .pg-pill.active {
-            color: #111111;
+            color: #c5983e;
             font-weight: 700;
         }
         .pg-pill:hover {
-            color: #d5a94e;
+            color: #c5983e;
         }
     </style>
     @endpush
 
-    <!-- ═══════════ SUBHEADER ROW (exact match with media_1788798411860.png) ═══════════ -->
+    <!-- ═══════════ SUBHEADER ROW ═══════════ -->
     <div class="bg-white border-b border-gray-100 py-3.5 px-6 sm:px-10 lg:px-14">
         <div class="flex items-center justify-between">
             
-            <!-- Left: Back link + (Properties) label -->
-            <div class="flex flex-col items-start gap-0.5 z-10">
+            <!-- Left: Back link (bracketed category label removed per specification) -->
+            <div class="flex items-center gap-2 z-10">
                 <a href="{{ route('home') }}"
-                   class="inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.14em] text-gray-500 hover:text-[#d5a94e] transition-colors font-sans">
+                   class="inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.16em] text-gray-500 hover:text-[#c5983e] transition-colors font-sans">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
                     Back
                 </a>
-                <span class="font-fragment italic text-xl sm:text-2xl text-[#b8860b] tracking-wide leading-tight select-none">
-                    (Properties)
-                </span>
             </div>
 
-            <!-- Centre: Heading "ETHEREAL ESTATES LIVING ACROSS ONTARIO" -->
-            <h1 class="font-fragment text-xl sm:text-2xl md:text-3xl lg:text-[34px] uppercase tracking-[0.05em] text-[#111111] absolute left-1/2 -translate-x-1/2 text-center whitespace-nowrap leading-tight select-none font-normal">
-                Ethereal Estates Living Across Ontario
+            <!-- Centre: Heading "DISTINCTIVE HOMES. CONSIDERED CHOICES." (per specification) -->
+            <h1 class="font-fragment text-xl sm:text-2xl md:text-3xl lg:text-[32px] uppercase tracking-[0.06em] text-[#111111] absolute left-1/2 -translate-x-1/2 text-center whitespace-nowrap leading-tight select-none font-normal">
+                Distinctive Homes. Considered Choices.
             </h1>
 
-            <!-- Right: Pagination Pills (1) (2) (3) -->
-            <div id="pg-pills" class="flex items-center gap-1 shrink-0 z-10">
+            <!-- Right: Spacer -->
+            <div class="w-16 hidden sm:block"></div>
+        </div>
+    </div>
+
+    <!-- ═══════════ HORIZONTAL CARDS SLIDER SECTION ═══════════ -->
+    <section class="py-10 lg:py-14 bg-white overflow-hidden">
+        <div class="w-full pl-6 sm:pl-10 lg:pl-14 pr-0">
+            
+            <!-- Slider Viewport -->
+            <div id="cards-viewport">
+                <div id="cards-track">
+                    
+                    @foreach($properties as $index => $prop)
+                        @php
+                            $images = $prop->images->pluck('full_url')->toArray();
+                            if (empty($images)) {
+                                $images = [$prop->primary_image_url];
+                            }
+                            $sqft = $prop->sqft ? number_format($prop->sqft) : '1,400';
+                            $balcony = $prop->balcony ?? '8';
+                            $priceText = $prop->price_label ?? 'STARTING FROM $' . number_format($prop->price ?? 999900) . '*';
+                            $featureLine = $prop->feature_line ?? 'Detached home with a double garage.';
+                        @endphp
+
+                        <div class="prop-slider-card group" data-card-index="{{ $index }}">
+                            
+                            <!-- Card Image with Top Badge & Favorite Button -->
+                            <div class="relative w-full aspect-[16/11] bg-gray-100 overflow-hidden select-none">
+                                <img src="{{ $prop->primary_image_url }}"
+                                     alt="{{ $prop->title }}"
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                     loading="lazy" />
+
+                                <!-- Top Left: Category Tag -->
+                                <div class="absolute top-3 left-3 z-10 pointer-events-none">
+                                    <span class="px-2.5 py-1 rounded bg-black/60 backdrop-blur-md text-[9px] uppercase tracking-[0.16em] text-white font-medium">
+                                        {{ $prop->category->name ?? 'Single Detached' }}
+                                    </span>
+                                </div>
+
+                                <!-- Top Right: Save Button -->
+                                <div class="absolute top-3 right-3 z-10">
+                                    <form action="{{ route('properties.favorite', $prop->id) }}" method="POST" class="inline" onclick="event.stopPropagation()">
+                                        @csrf
+                                        <button type="submit"
+                                                class="w-7 h-7 rounded-full bg-black/50 hover:bg-black/80 backdrop-blur-md flex items-center justify-center text-white/90 hover:text-white transition-colors cursor-pointer text-xs"
+                                                title="Save Property">
+                                            ♥
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <!-- Bottom Image Dots -->
+                                <div class="absolute bottom-2.5 inset-x-0 flex items-center justify-center gap-1.5 z-10 pointer-events-none">
+                                    <span class="w-3 h-3 rounded-full border border-white flex items-center justify-center">
+                                        <span class="w-1 h-1 rounded-full bg-[#c5983e]"></span>
+                                    </span>
+                                    <span class="w-1 h-1 rounded-full bg-white/80"></span>
+                                    <span class="w-1 h-1 rounded-full bg-white/80"></span>
+                                </div>
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-5 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <!-- City Subtitle -->
+                                    <p class="text-[10px] uppercase tracking-[0.2em] font-semibold text-gray-400 mb-1">
+                                        {{ $prop->city }}
+                                    </p>
+
+                                    <!-- Property Title -->
+                                    <h3 class="font-fragment text-xl sm:text-2xl uppercase tracking-[0.04em] text-[#111111] leading-tight mb-2 hover:text-[#c5983e] transition-colors">
+                                        <a href="{{ route('properties.show', $prop->slug) }}">
+                                            {{ $prop->title }}
+                                        </a>
+                                    </h3>
+
+                                    <!-- Price Banner -->
+                                    <p class="text-xs font-semibold text-[#c5983e] uppercase tracking-wider mb-2">
+                                        {{ $priceText }}
+                                    </p>
+
+                                    <!-- Feature Line in italics -->
+                                    <p class="text-[11px] text-gray-500 italic mb-4 font-serif">
+                                        {{ $featureLine }}
+                                    </p>
+
+                                    <!-- 2-Row Amenity Specification Grid -->
+                                    <div class="grid grid-cols-3 gap-2 py-3 border-y border-gray-100 mb-4 text-center">
+                                        <div>
+                                            <p class="text-[9px] uppercase tracking-wider text-gray-400">Beds</p>
+                                            <p class="text-xs font-bold text-gray-900 mt-0.5">{{ $prop->bedrooms ?? 4 }}</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-[9px] uppercase tracking-wider text-gray-400">Baths</p>
+                                            <p class="text-xs font-bold text-gray-900 mt-0.5">{{ (int)($prop->bathrooms ?? 6) }}</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-[9px] uppercase tracking-wider text-gray-400">Sq.Ft</p>
+                                            <p class="text-xs font-bold text-gray-900 mt-0.5">{{ $sqft }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card Action Footer -->
+                                <div class="pt-2 flex items-center justify-between">
+                                    <a href="{{ route('properties.show', $prop->slug) }}"
+                                       class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-[#1a2e1e] hover:text-[#c5983e] transition-colors">
+                                        Explore Community <span class="text-sm">↗</span>
+                                    </a>
+                                    <button type="button"
+                                            @click="openRegisterModal({{ $prop->id }}, '{{ addslashes($prop->title) }}')"
+                                            class="text-[10.5px] uppercase tracking-[0.14em] font-semibold text-[#c5983e] hover:underline cursor-pointer">
+                                        VIP Access
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    @endforeach
+
+                </div>
+            </div>
+
+            <!-- Page Numbering at Bottom Centre (per specification) -->
+            <div id="pg-pills" class="flex items-center justify-center gap-2 mt-8 select-none">
                 <span class="pg-pill active" data-page="0" onclick="goToPage(0)">(1)</span>
                 <span class="pg-pill" data-page="1" onclick="goToPage(1)">(2)</span>
                 <span class="pg-pill" data-page="2" onclick="goToPage(2)">(3)</span>
             </div>
 
         </div>
-    </div>
-
-    <!-- ═══════════ HORIZONTAL CARDS SLIDER (exact match with media_1788798411860.png) ═══════════ -->
-    <div class="w-full py-8 sm:py-10 px-6 sm:px-10 lg:px-14 overflow-hidden bg-white select-none">
-        <div id="cards-viewport">
-            <div id="cards-track">
-
-                @foreach($properties as $index => $prop)
-                    @php
-                        $subtitle = $prop->short_description ?? 'Bungalows and Single Detached Homes with 2 & 3-Car Garages';
-                    @endphp
-
-                    <a href="{{ route('properties.show', $prop->slug) }}"
-                       class="prop-slider-card group"
-                       data-index="{{ $index }}">
-
-                        <!-- Top Property Image Thumbnail -->
-                        <div class="w-full h-[250px] sm:h-[270px] bg-gray-100 overflow-hidden shrink-0">
-                            <img src="{{ $prop->primary_image_url }}"
-                                 alt="{{ $prop->title }}"
-                                 class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
-                                 loading="lazy" />
-                        </div>
-
-                        <!-- Card Body Content -->
-                        <div class="p-6 pt-5 flex flex-col flex-1">
-                            <!-- City -->
-                            <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#333] mb-1 font-sans">
-                                {{ $prop->city }}
-                            </p>
-
-                            <!-- Property Title -->
-                            <h2 class="font-fragment text-[24px] sm:text-[26px] uppercase tracking-[0.04em] text-[#111111] leading-tight mb-2 group-hover:text-[#d5a94e] transition-colors">
-                                {{ $prop->title }}
-                            </h2>
-
-                            <!-- Subtitle Description -->
-                            <p class="text-[12px] text-[#444] font-normal leading-snug font-sans mb-5">
-                                {{ $subtitle }}
-                            </p>
-
-                            <!-- Amenity Specs Grid (Exact 2 Rows from Figma Screenshot) -->
-                            <div class="mt-auto space-y-2.5 pt-2">
-                                <!-- Row 1: Bedrooms, Bathrooms, Garage -->
-                                <div class="grid grid-cols-3 gap-2 text-[11.5px] text-[#222] font-sans font-medium">
-                                    <!-- Bedrooms -->
-                                    <div class="flex items-center gap-1.5 whitespace-nowrap">
-                                        <svg class="w-4 h-4 text-[#c5983e] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M2 19h2v-2h16v2h2v-7a3 3 0 00-3-3H9a3 3 0 00-3 3v1H4V6H2v13zm4-7a1 1 0 011-1h10a1 1 0 011 1v3H6v-3zm2-3a2 2 0 110-4 2 2 0 010 4z"/>
-                                        </svg>
-                                        <span>{{ $prop->bedrooms ?? 4 }} Bedrooms</span>
-                                    </div>
-
-                                    <!-- Bathroom -->
-                                    <div class="flex items-center gap-1.5 whitespace-nowrap">
-                                        <svg class="w-4 h-4 text-[#c5983e] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M20 13V8a1 1 0 00-1-1h-2V5a2 2 0 00-2-2h-1a1 1 0 000 2h1v2H4a2 2 0 00-2 2v6a4 4 0 004 4v1a1 1 0 102 0v-1h8v1a1 1 0 102 0v-1a4 4 0 004-4v-2h-2zm0 0H4v-4h16v4z"/>
-                                        </svg>
-                                        <span>{{ (int)($prop->bathrooms ?? 6) }} Bathroom</span>
-                                    </div>
-
-                                    <!-- Garage -->
-                                    <div class="flex items-center gap-1.5 whitespace-nowrap">
-                                        <svg class="w-4 h-4 text-[#c5983e] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 3L2 10v11h20V10L12 3zm6 16H6v-7h12v7zm-2-2h-8v-3h8v3z"/>
-                                        </svg>
-                                        <span>{{ $prop->garage_spaces ?? 1 }} Garage</span>
-                                    </div>
-                                </div>
-
-                                <!-- Row 2: sq.ft, Balcony -->
-                                <div class="grid grid-cols-3 gap-2 text-[11.5px] text-[#222] font-sans font-medium">
-                                    <!-- sq.ft -->
-                                    <div class="flex items-center gap-1.5 whitespace-nowrap">
-                                        <svg class="w-4 h-4 text-[#c5983e] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M4 3h4v11h11v4H4V3zm2 2v11h2v-2h2v2h2v-2h2v2h2v-2h1v-1H8V5H6z"/>
-                                        </svg>
-                                        <span>{{ number_format($prop->sqft ?? 1400) }} sq.ft</span>
-                                    </div>
-
-                                    <!-- Balcony -->
-                                    <div class="flex items-center gap-1.5 whitespace-nowrap">
-                                        <svg class="w-4 h-4 text-[#c5983e] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M3 6h18v2H3V6zm1 4h2v8H4v-8zm4 0h2v8H8v-8zm4 0h2v8h-2v-8zm4 0h2v8h-2v-8zm4 0h2v8h-2v-8zM2 19h20v2H2v-2z"/>
-                                        </svg>
-                                        <span>8 Balcony</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </a>
-                @endforeach
-
-            </div>
-        </div>
-    </div>
+    </section>
 
     @push('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        (function() {
             const viewport = document.getElementById('cards-viewport');
             const track = document.getElementById('cards-track');
             const pills = document.querySelectorAll('.pg-pill');
-            const cards = document.querySelectorAll('.prop-slider-card');
-            
-            if (!viewport || !track || cards.length === 0) return;
+            if (!viewport || !track) return;
 
             let currentPage = 0;
-            const totalCards = cards.length;
-            const gap = 24;
+            const totalPages = 3;
 
-            function getStep() {
-                const card = cards[0];
-                return card ? card.offsetWidth + gap : 380;
-            }
+            function updateSlider() {
+                const card = track.querySelector('.prop-slider-card');
+                if (!card) return;
+                const cardWidth = card.offsetWidth;
+                const gap = 24;
+                const step = (cardWidth + gap) * 2;
+                track.style.transform = `translateX(-${currentPage * step}px)`;
 
-            function updateSlider(animated = true) {
-                const step = getStep();
-                track.style.transition = animated ? 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
-                
-                // Jump 3 cards per page
-                let targetIndex = currentPage * 3;
-                if (targetIndex > totalCards - 3) {
-                    targetIndex = Math.max(0, totalCards - 3);
-                }
-
-                track.style.transform = `translateX(-${targetIndex * step}px)`;
-
-                // Update active pill
                 pills.forEach((p, idx) => {
-                    p.classList.toggle('active', idx === currentPage);
+                    if (idx === currentPage) {
+                        p.classList.add('active');
+                    } else {
+                        p.classList.remove('active');
+                    }
                 });
             }
 
             window.goToPage = function(page) {
-                currentPage = page;
-                updateSlider(true);
+                currentPage = Math.max(0, Math.min(page, totalPages - 1));
+                updateSlider();
             };
 
-            // Touch & Drag Support
-            let isDown = false;
-            let startX, scrollLeft;
+            // Touch Swipe Support
+            let startX = 0;
+            let currentX = 0;
+            let isDragging = false;
 
-            viewport.addEventListener('mousedown', (e) => {
-                isDown = true;
-                startX = e.pageX;
-                track.style.transition = 'none';
-            });
-
-            window.addEventListener('mouseup', () => {
-                if (!isDown) return;
-                isDown = false;
-                updateSlider(true);
-            });
-
-            viewport.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                const x = e.pageX;
-                const walk = (x - startX);
-                if (Math.abs(walk) > 80) {
-                    isDown = false;
-                    if (walk < 0 && currentPage < 2) {
-                        currentPage++;
-                    } else if (walk > 0 && currentPage > 0) {
-                        currentPage--;
-                    }
-                    updateSlider(true);
-                }
-            });
-
-            // Touch events for mobile/tablet
-            let touchStartX = 0;
             viewport.addEventListener('touchstart', (e) => {
-                touchStartX = e.touches[0].clientX;
+                startX = e.touches[0].clientX;
+                isDragging = true;
             }, { passive: true });
 
-            viewport.addEventListener('touchend', (e) => {
-                const touchEndX = e.changedTouches[0].clientX;
-                const diff = touchStartX - touchEndX;
-                if (Math.abs(diff) > 50) {
-                    if (diff > 0 && currentPage < 2) {
-                        currentPage++;
+            viewport.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                currentX = e.touches[0].clientX;
+            }, { passive: true });
+
+            viewport.addEventListener('touchend', () => {
+                if (!isDragging) return;
+                isDragging = false;
+                const diff = startX - currentX;
+                if (Math.abs(diff) > 40) {
+                    if (diff > 0 && currentPage < totalPages - 1) {
+                        goToPage(currentPage + 1);
                     } else if (diff < 0 && currentPage > 0) {
-                        currentPage--;
+                        goToPage(currentPage - 1);
                     }
-                    updateSlider(true);
                 }
-            }, { passive: true });
+            });
 
-            window.addEventListener('resize', () => {
-                updateSlider(false);
-            }, { passive: true });
-
-            // Initialize
-            updateSlider(false);
-        });
+            // Window resize handler
+            window.addEventListener('resize', updateSlider);
+        })();
     </script>
     @endpush
 

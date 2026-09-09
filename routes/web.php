@@ -35,8 +35,10 @@ Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/rebate-calculator', [PageController::class, 'rebateCalculator'])->name('rebate-calculator');
 Route::get('/join-ethereal', [PageController::class, 'joinEthereal'])->name('join-ethereal');
 
-Route::get('/news', [ArticleController::class, 'index'])->name('news.index');
-Route::get('/news/{slug}', [ArticleController::class, 'show'])->name('news.show');
+Route::get('/ethereal-edit', [ArticleController::class, 'index'])->name('ethereal-edit');
+Route::get('/ethereal-edit/{slug}', [ArticleController::class, 'show'])->name('ethereal-edit.show');
+Route::get('/news', fn () => redirect()->route('ethereal-edit'))->name('news.index');
+Route::get('/news/{slug}', fn ($slug) => redirect()->route('ethereal-edit.show', $slug))->name('news.show');
 
 /*
 |--------------------------------------------------------------------------

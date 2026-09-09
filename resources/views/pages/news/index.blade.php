@@ -1,22 +1,22 @@
-<x-app-layout title="Market Insights & The Ethereal Edit — Ethereal Estates" activePage="news">
+<x-layouts.app title="Ethereal Edit — Articles, Market Insights & Project Content" activePage="ethereal-edit">
     <!-- HERO HEADER -->
     <div class="px-4 lg:px-14 pt-4">
         <div class="relative w-full rounded-2xl overflow-hidden min-h-[340px] sm:min-h-[400px] flex items-center justify-center text-center p-8 bg-[#06130d]">
             <img src="{{ asset('assets/images/news-hero.jpg') }}"
-                 onerror="this.src='{{ asset('assets/images/prop-1.jpg') }}'"
-                 alt="Market Insights Hero"
+                 onerror="this.src='{{ asset('assets/images/about-hero.jpg') }}'"
+                 alt="Ethereal Edit Hero"
                  class="absolute inset-0 w-full h-full object-cover opacity-35" />
             <div class="absolute inset-0 bg-gradient-to-t from-[#06130d] via-black/40 to-black/30"></div>
 
             <div class="relative z-10 max-w-2xl mx-auto text-white">
-                <span class="inline-block text-[#d5a94e] text-xs font-bold tracking-[0.28em] uppercase mb-4">
-                    The Ethereal Edit
+                <span class="inline-block text-[#c5983e] text-xs font-semibold tracking-[0.28em] uppercase mb-4">
+                    Editorial Collection
                 </span>
-                <h1 class="font-fragment text-3xl sm:text-5xl uppercase tracking-[0.05em] leading-tight mb-4">
-                    Market Insights &amp; Intelligence
+                <h1 class="font-fragment text-3xl sm:text-5xl lg:text-6xl uppercase tracking-[0.05em] leading-tight mb-4">
+                    Ethereal Edit
                 </h1>
                 <p class="text-white/80 text-sm sm:text-base font-light leading-relaxed max-w-xl mx-auto">
-                    Stay ahead with in-depth analysis on Ontario's pre-construction sector, interest rate developments, luxury architectural releases, and investment opportunities.
+                    Curated articles, market intelligence, pre-construction developments, and luxury architectural insights across Ontario.
                 </p>
             </div>
         </div>
@@ -58,7 +58,7 @@
                             </div>
 
                             <h3 class="font-fragment text-2xl sm:text-3xl text-gray-900 uppercase leading-tight mb-4 group-hover:text-[#d5a94e] transition-colors">
-                                <a href="{{ route('news.show', $article->slug) }}">
+                                <a href="{{ route('ethereal-edit.show', $article->slug) }}">
                                     {{ $article->title }}
                                 </a>
                             </h3>
@@ -67,7 +67,7 @@
                                 {{ $article->excerpt ?? Str::limit(strip_tags($article->content), 180) }}
                             </p>
 
-                            <a href="{{ route('news.show', $article->slug) }}"
+                            <a href="{{ route('ethereal-edit.show', $article->slug) }}"
                                class="inline-flex items-center gap-3 text-xs uppercase tracking-[0.16em] font-semibold text-[#1a2e1e] group-hover:text-[#d5a94e] transition-colors">
                                 <span>Read Full Editorial</span>
                                 <span class="w-8 h-8 rounded-full bg-[#1a2e1e] group-hover:bg-[#d5a94e] text-white flex items-center justify-center transition-colors">
@@ -79,7 +79,7 @@
                         </div>
 
                         <div class="order-1 lg:order-2 overflow-hidden rounded-xl bg-gray-100 aspect-[16/10] shadow-sm">
-                            <a href="{{ route('news.show', $article->slug) }}" class="block w-full h-full">
+                            <a href="{{ route('ethereal-edit.show', $article->slug) }}" class="block w-full h-full">
                                 <img src="{{ $article->full_image_url }}"
                                      onerror="this.src='{{ asset('assets/images/prop-2.jpg') }}'"
                                      alt="{{ $article->title }}"

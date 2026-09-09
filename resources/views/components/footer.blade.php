@@ -35,21 +35,24 @@
             <div class="lg:col-span-3">
                 <h3 class="font-fragment text-base uppercase tracking-[0.12em] text-white mb-5">Discover More</h3>
                 <ul class="space-y-3 text-xs text-white/60 font-light">
-                    <li><a href="{{ route('our-story') }}" class="hover:text-[#c5983e] transition-colors">Our Story</a></li>
-                    <li><a href="{{ route('pre-construction') }}" class="hover:text-[#c5983e] transition-colors">Communities</a></li>
-                    <li><a href="{{ route('genius') }}" class="hover:text-[#c5983e] transition-colors">Genius</a></li>
-                    <li><a href="{{ route('news.index') }}" class="hover:text-[#c5983e] transition-colors">News</a></li>
-                    <li><a href="{{ route('contact') }}" class="hover:text-[#c5983e] transition-colors">Contact</a></li>
+                    <li><a href="{{ route('pre-construction') }}" class="hover:text-[#c5983e] transition-colors">Pre-Construction</a></li>
+                    <li><a href="{{ route('properties.index') }}" class="hover:text-[#c5983e] transition-colors">Featured Properties</a></li>
+                    <li><a href="{{ route('about') }}" class="hover:text-[#c5983e] transition-colors">About Us</a></li>
+                    <li><a href="{{ route('ethereal-edit') }}" class="hover:text-[#c5983e] transition-colors">Ethereal Edit</a></li>
+                    <li><a href="{{ route('join-ethereal') }}" class="hover:text-[#c5983e] transition-colors">Join Ethereal</a></li>
+                    <li><a href="{{ route('rebate-calculator') }}" class="hover:text-[#c5983e] transition-colors">Rebate Calculator</a></li>
+                    <li><a href="{{ route('contact') }}" class="hover:text-[#c5983e] transition-colors">Contact Us</a></li>
                 </ul>
             </div>
 
-            <!-- Col 3: Quick Links (spans 3 cols) -->
+            <!-- Col 3: Legal & Portal (spans 3 cols) -->
             <div class="lg:col-span-3">
-                <h3 class="font-fragment text-base uppercase tracking-[0.12em] text-white mb-5">Quick Links</h3>
+                <h3 class="font-fragment text-base uppercase tracking-[0.12em] text-white mb-5">Navigation</h3>
                 <ul class="space-y-3 text-xs text-white/60 font-light">
-                    <li><a href="#" class="hover:text-[#c5983e] transition-colors">GT USA</a></li>
-                    <li><a href="#" class="hover:text-[#c5983e] transition-colors">Sitemap</a></li>
-                    <li><a href="#" class="hover:text-[#c5983e] transition-colors">Terms and Conditions</a></li>
+                    <li><a href="{{ route('login') }}" class="hover:text-[#c5983e] transition-colors">Client Sign In</a></li>
+                    <li><a href="{{ route('register') }}" class="hover:text-[#c5983e] transition-colors">Register for VIP Allocations</a></li>
+                    <li><a href="{{ route('genius') }}" class="hover:text-[#c5983e] transition-colors">The Genius Experience</a></li>
+                    <li><a href="#" class="hover:text-[#c5983e] transition-colors">Terms of Service</a></li>
                     <li><a href="#" class="hover:text-[#c5983e] transition-colors">Privacy Policy</a></li>
                 </ul>
             </div>
@@ -57,8 +60,9 @@
         </div>
 
         <!-- Bottom bar -->
-        <div class="pt-8 text-xs text-white/40 font-light tracking-wide">
-            <p>&copy; 2026 Ethereal. All rights reserved</p>
+        <div class="pt-8 text-xs text-white/40 font-light tracking-wide flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>&copy; 2026 Ethereal Estates.</p>
+            <p class="text-[11px] text-white/30">Ontario Real Estate Brokerage • Century 21 Double Centurion Advisory</p>
         </div>
 
     </div>

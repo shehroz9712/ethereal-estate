@@ -60,6 +60,56 @@
             </div>
         </div>
 
+        <!-- ═══════════ SCROLL-CONTROLLED BUILD-UP VIDEO SEQUENCE (per specification) ═══════════ -->
+        <section class="px-4 sm:px-8 lg:px-14 pt-6 pb-2 bg-white"
+                 x-data="{
+                     progress: 0,
+                     init() {
+                         const el = this.$refs.seqWrap;
+                         const video = this.$refs.seqVideo;
+                         window.addEventListener('scroll', () => {
+                             if (!el) return;
+                             const rect = el.getBoundingClientRect();
+                             const winH = window.innerHeight;
+                             if (rect.top < winH && rect.bottom > 0) {
+                                 const total = winH + rect.height;
+                                 const current = winH - rect.top;
+                                 const ratio = Math.min(Math.max(current / total, 0), 1);
+                                 this.progress = ratio;
+                                 if (video && video.duration && !isNaN(video.duration)) {
+                                     video.currentTime = video.duration * ratio;
+                                 }
+                             }
+                         }, { passive: true });
+                     }
+                 }"
+                 x-ref="seqWrap">
+            <div class="max-w-7xl mx-auto rounded-2xl overflow-hidden bg-[#06130d] text-white p-8 sm:p-12 lg:p-14 shadow-2xl relative border border-white/10">
+                <div class="max-w-2xl mb-8">
+                    <span class="text-[11px] uppercase tracking-[0.24em] text-[#c5983e] font-semibold block mb-2">Construction Evolution</span>
+                    <h2 class="font-fragment text-2xl sm:text-3xl lg:text-4xl uppercase tracking-[0.04em] text-white mb-3">
+                        Architectural Build-Up Sequence
+                    </h2>
+                    <p class="text-xs sm:text-sm text-white/70 font-light leading-relaxed">
+                        Scroll through the section to scrub the architectural build-up and development progress of {{ $property->title }}.
+                    </p>
+                </div>
+
+                <div class="relative w-full rounded-xl overflow-hidden aspect-[16/9] bg-black shadow-inner">
+                    <video x-ref="seqVideo"
+                           class="w-full h-full object-cover"
+                           muted playsinline preload="auto">
+                        <source src="{{ asset('assets/video/hero.mp4') }}" type="video/mp4">
+                    </video>
+                    
+                    <!-- Progress Line Indicator -->
+                    <div class="absolute bottom-0 inset-x-0 h-1.5 bg-white/15">
+                        <div class="h-full bg-[#c5983e] transition-all duration-75" :style="'width: ' + (progress * 100) + '%'"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ═══════════ SUB-NAV TABS ═══════════ -->
         <div class="sticky top-[65px] z-30 bg-white/95 backdrop-blur-md border-b border-gray-200 px-6 lg:px-14 py-3">
             <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4">

@@ -9,11 +9,12 @@
             <div class="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/55 pointer-events-none"></div>
 
             <div class="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
+                <span class="block w-10 h-[1.5px] bg-[#c5983e] mb-4"></span>
                 <h1 class="font-fragment text-white text-3xl sm:text-4xl lg:text-[44px] uppercase tracking-[0.06em] leading-tight mb-3">
-                    LET'S START THE CONVERSATION
+                    EVERY GOOD DECISION STARTS HERE.
                 </h1>
                 <p class="text-white/85 text-xs sm:text-sm md:text-base font-light tracking-wide leading-relaxed max-w-xl">
-                    Whether you're buying, selling, investing, or exploring pre-construction opportunities,<br class="hidden sm:block" /> our team is here to guide you every step of the way.
+                    Every real estate decision begins with understanding what you are trying to achieve.
                 </p>
             </div>
         </div>
@@ -28,19 +29,20 @@
 
         <div class="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[45%_55%] gap-12 lg:gap-16 items-start">
             
-            <!-- Left: Headline -->
+            <!-- Left: Headline (Form Heading) -->
             <div>
-                <h2 class="font-fragment text-2xl sm:text-3xl lg:text-[40px] uppercase leading-[1.12] tracking-[0.02em] text-[#111] max-w-md">
-                    EVERY GREAT REAL ESTATE<br />
-                    JOURNEY STARTS WITH A<br />
-                    CONVERSATION.
+                <span class="text-[11px] uppercase tracking-[0.24em] text-[#c5983e] font-semibold block mb-3">Contact Our Advisory</span>
+                <h2 class="font-fragment text-2xl sm:text-3xl lg:text-[38px] uppercase leading-[1.14] tracking-[0.03em] text-[#111] max-w-md">
+                    TELL US WHAT<br />
+                    YOU’RE LOOKING FOR.
                 </h2>
+                <div class="gold-line mt-4"></div>
             </div>
 
-            <!-- Right: Intro Text & Underlined Form -->
+            <!-- Right: Intro Text & Form -->
             <div class="space-y-8">
-                <p class="text-xs sm:text-sm font-light text-gray-600 leading-relaxed">
-                    At Ethereal Estates, we believe real estate is personal. Whether you're searching for your dream home, exploring investment opportunities, or looking to maximize the value of your property, our team is ready to provide expert guidance tailored to your unique needs. Reach out today and discover how we can help you achieve your real estate goals across Ontario.
+                <p class="text-sm font-light text-gray-600 leading-relaxed">
+                    Every real estate decision begins with understanding what you are trying to achieve. Our team takes the time to listen, answer the questions that matter and help you determine the right next step. Whether you are buying, selling or considering an opportunity, the conversation starts here.
                 </p>
 
                 <form action="{{ route('inquiries.contact') }}" method="POST" class="space-y-6 pt-2">
@@ -189,12 +191,13 @@
                 </div>
             </div>
 
-            <!-- Right: Photo of curly blonde woman reading folder -->
+            <!-- Right: Real Team / Office Advisory Photography per specification -->
             <div class="w-full flex justify-center lg:justify-end">
-                <div class="rounded-2xl overflow-hidden shadow-xl aspect-[3/4] w-full max-w-[440px] bg-gray-100">
-                    <img src="{{ asset('assets/images/contact-agent.jpg') }}"
-                         alt="Advisor Reading Document"
-                         class="w-full h-full object-cover object-top" />
+                <div class="rounded-2xl overflow-hidden shadow-xl aspect-[3/4] w-full max-w-[440px] bg-[#09150e]">
+                    <img src="{{ asset('assets/images/about/Group 1686565521.png') }}"
+                         onerror="this.src='{{ asset('assets/images/founder-nakul.jpg') }}'"
+                         alt="Ethereal Estates Advisory Team"
+                         class="w-full h-full object-cover object-center" />
                 </div>
             </div>
         </div>

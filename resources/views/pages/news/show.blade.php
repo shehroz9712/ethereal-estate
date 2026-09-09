@@ -1,14 +1,14 @@
-<x-app-layout :title="$article->title . ' — The Ethereal Edit'" activePage="news">
+<x-layouts.app :title="$article->title . ' — Ethereal Edit'" activePage="ethereal-edit">
     <!-- ARTICLE HEADER -->
     <header class="bg-white border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-6 lg:px-14 py-8 sm:py-12">
             <div class="mb-6">
-                <a href="{{ route('news.index') }}"
+                <a href="{{ route('ethereal-edit') }}"
                    class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-gray-500 hover:text-[#d5a94e] transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
-                    <span>Back to Market Insights</span>
+                    <span>Back to Ethereal Edit</span>
                 </a>
             </div>
 
@@ -92,7 +92,7 @@
                 <!-- Prev / Next Navigation -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10 pt-8 border-t border-gray-100">
                     @if($prevArticle)
-                        <a href="{{ route('news.show', $prevArticle->slug) }}"
+                        <a href="{{ route('ethereal-edit.show', $prevArticle->slug) }}"
                            class="p-4 rounded-xl border border-gray-100 hover:border-[#d5a94e] transition-colors group block">
                             <span class="text-[10px] uppercase tracking-widest text-gray-400 block mb-1">← Previous Article</span>
                             <span class="text-xs font-semibold text-gray-800 group-hover:text-[#d5a94e] line-clamp-2">{{ $prevArticle->title }}</span>
@@ -102,7 +102,7 @@
                     @endif
 
                     @if($nextArticle)
-                        <a href="{{ route('news.show', $nextArticle->slug) }}"
+                        <a href="{{ route('ethereal-edit.show', $nextArticle->slug) }}"
                            class="p-4 rounded-xl border border-gray-100 hover:border-[#d5a94e] transition-colors group block text-right">
                             <span class="text-[10px] uppercase tracking-widest text-gray-400 block mb-1">Next Article →</span>
                             <span class="text-xs font-semibold text-gray-800 group-hover:text-[#d5a94e] line-clamp-2">{{ $nextArticle->title }}</span>

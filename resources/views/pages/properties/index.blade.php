@@ -1,4 +1,4 @@
-<x-layouts.app activePage="properties" title="Featured Properties — Ethereal Estates Living Across Ontario">
+<x-layouts.app activePage="properties" title="Featured Listings — Ethereal Estates">
 
     @push('styles')
     <style>
@@ -18,7 +18,7 @@
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             will-change: transform;
         }
-        /* Desktop: 3 cards fit with 4th card peeking on right (~3.25 cards in view) */
+        /* Desktop: 3 cards fit with 4th card peeking on right (~3.22 cards in view) */
         .prop-slider-card {
             flex: 0 0 calc((100% - 48px) / 3.22);
             min-width: 0;
@@ -34,7 +34,7 @@
         }
         .prop-slider-card:hover {
             box-shadow: 0 12px 32px rgba(0,0,0,0.08);
-            border-color: #d5a94e80;
+            border-color: #c5983e80;
             transform: translateY(-2px);
         }
         @media (max-width: 1180px) {
@@ -48,61 +48,77 @@
             }
         }
 
-        /* Pagination Pills */
-        .pg-pill {
+        /* Modern Pagination Number Pills */
+        .pg-num-pill {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             font-size: 13px;
-            letter-spacing: 0.08em;
-            color: #999999;
+            font-weight: 600;
+            color: #777777;
+            background: #f5f5f5;
             cursor: pointer;
-            padding: 2px 6px;
-            transition: color 0.2s ease, font-weight 0.2s ease;
+            transition: all 0.2s ease;
             user-select: none;
-            font-family: 'Urbanist', sans-serif;
         }
-        .pg-pill.active {
+        .pg-num-pill.active {
+            color: #ffffff;
+            background: #c5983e;
+            box-shadow: 0 2px 8px rgba(197, 152, 62, 0.3);
+        }
+        .pg-num-pill:hover:not(.active) {
             color: #111111;
-            font-weight: 700;
-        }
-        .pg-pill:hover {
-            color: #d5a94e;
+            background: #e8e8e8;
         }
     </style>
     @endpush
 
-    <!-- ═══════════ SUBHEADER ROW (exact match with media_1788798411860.png) ═══════════ -->
+    <!-- ═══════════ SUBHEADER ROW (Redesigned without brackets) ═══════════ -->
     <div class="bg-white border-b border-gray-100 py-3.5 px-6 sm:px-10 lg:px-14">
         <div class="flex items-center justify-between">
             
-            <!-- Left: Back link + (Properties) label -->
-            <div class="flex flex-col items-start gap-0.5 z-10">
+            <!-- Left: Back link + Redesigned Category Pill (No brackets) -->
+            <div class="flex items-center gap-3 z-10">
                 <a href="{{ route('home') }}"
-                   class="inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.14em] text-gray-500 hover:text-[#d5a94e] transition-colors font-sans">
+                   class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gray-500 hover:text-[#c5983e] transition-colors font-sans">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
                     Back
                 </a>
-                <span class="font-fragment italic text-xl sm:text-2xl text-[#b8860b] tracking-wide leading-tight select-none">
-                    (Properties)
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fdfaf4] border border-[#c5983e]/40 text-[#c5983e] text-[11px] font-semibold uppercase tracking-wider select-none">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#c5983e]"></span>
+                    Featured Listings
                 </span>
             </div>
 
-            <!-- Centre: Heading "ETHEREAL ESTATES LIVING ACROSS ONTARIO" -->
-            <h1 class="font-fragment text-xl sm:text-2xl md:text-3xl lg:text-[34px] uppercase tracking-[0.05em] text-[#111111] absolute left-1/2 -translate-x-1/2 text-center whitespace-nowrap leading-tight select-none font-normal">
-                Ethereal Estates Living Across Ontario
-            </h1>
+            <!-- Centre: Heading with Logo -->
+            <div class="absolute left-1/2 -translate-x-1/2 text-center whitespace-nowrap leading-tight select-none">
+                <div class="flex items-center justify-center gap-2">
+                    <img src="{{ asset('assets/images/logo-dark.png') }}"
+                         onerror="this.src='{{ asset('assets/images/logo.png') }}'"
+                         alt="Ethereal Estates"
+                         class="h-6 sm:h-7 w-auto object-contain hidden sm:inline-block" />
+                    <h1 class="font-fragment text-lg sm:text-2xl md:text-[28px] uppercase tracking-[0.05em] text-[#111111] font-normal">
+                        Distinctive Living Across Ontario
+                    </h1>
+                </div>
+            </div>
 
-            <!-- Right: Pagination Pills (1) (2) (3) -->
-            <div id="pg-pills" class="flex items-center gap-1 shrink-0 z-10">
-                <span class="pg-pill active" data-page="0" onclick="goToPage(0)">(1)</span>
-                <span class="pg-pill" data-page="1" onclick="goToPage(1)">(2)</span>
-                <span class="pg-pill" data-page="2" onclick="goToPage(2)">(3)</span>
+            <!-- Right: Redesigned Pagination Number Pills (No brackets) -->
+            <div id="pg-pills" class="flex items-center gap-2 shrink-0 z-10">
+                <button type="button" class="pg-num-pill active" data-page="0" onclick="goToPage(0)">1</button>
+                <button type="button" class="pg-num-pill" data-page="1" onclick="goToPage(1)">2</button>
+                <button type="button" class="pg-num-pill" data-page="2" onclick="goToPage(2)">3</button>
             </div>
 
         </div>
     </div>
 
-    <!-- ═══════════ HORIZONTAL CARDS SLIDER (exact match with media_1788798411860.png) ═══════════ -->
+    <!-- ═══════════ HORIZONTAL CARDS SLIDER ═══════════ -->
     <div class="w-full py-8 sm:py-10 px-6 sm:px-10 lg:px-14 overflow-hidden bg-white select-none">
         <div id="cards-viewport">
             <div id="cards-track">
@@ -112,16 +128,33 @@
                         $subtitle = $prop->short_description ?? 'Bungalows and Single Detached Homes with 2 & 3-Car Garages';
                     @endphp
 
-                    <a href="{{ route('properties.show', $prop->slug) }}"
-                       class="prop-slider-card group"
-                       data-index="{{ $index }}">
+                    <div class="prop-slider-card group" data-index="{{ $index }}">
 
-                        <!-- Top Property Image Thumbnail -->
-                        <div class="w-full h-[250px] sm:h-[270px] bg-gray-100 overflow-hidden shrink-0">
+                        <!-- Top Property Image Thumbnail with Heart Button -->
+                        <div class="relative w-full h-[250px] sm:h-[270px] bg-gray-100 overflow-hidden shrink-0">
                             <img src="{{ $prop->primary_image_url }}"
                                  alt="{{ $prop->title }}"
                                  class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
                                  loading="lazy" />
+
+                            <!-- Top Left: Category Badge -->
+                            <div class="absolute top-3 left-3 z-10 pointer-events-none">
+                                <span class="px-2.5 py-1 rounded bg-black/60 backdrop-blur-md text-[9px] uppercase tracking-[0.16em] text-white font-medium">
+                                    {{ $prop->category->name ?? 'Single Detached' }}
+                                </span>
+                            </div>
+
+                            <!-- Top Right: Wishlist Button -->
+                            <div class="absolute top-3 right-3 z-10">
+                                <button type="button"
+                                        @click="toggleSaveProperty({ id: {{ $prop->id }}, title: '{{ addslashes($prop->title) }}', city: '{{ addslashes($prop->city) }}', price: '{{ addslashes($prop->formatted_price) }}', image: '{{ $prop->primary_image_url }}', url: '{{ route('properties.show', $prop->slug) }}' })"
+                                        class="w-8 h-8 rounded-full bg-black/50 hover:bg-black/80 backdrop-blur-md flex items-center justify-center text-white transition-colors cursor-pointer text-sm shadow-md"
+                                        title="Save Property to Wishlist">
+                                    <span :class="isPropertySaved({{ $prop->id }}) ? 'text-red-400' : 'text-white'"
+                                          x-text="isPropertySaved({{ $prop->id }}) ? '♥' : '♡'">
+                                    </span>
+                                </button>
+                            </div>
                         </div>
 
                         <!-- Card Body Content -->
@@ -132,16 +165,18 @@
                             </p>
 
                             <!-- Property Title -->
-                            <h2 class="font-fragment text-[24px] sm:text-[26px] uppercase tracking-[0.04em] text-[#111111] leading-tight mb-2 group-hover:text-[#d5a94e] transition-colors">
-                                {{ $prop->title }}
+                            <h2 class="font-fragment text-[24px] sm:text-[26px] uppercase tracking-[0.04em] text-[#111111] leading-tight mb-2 group-hover:text-[#c5983e] transition-colors">
+                                <a href="{{ route('properties.show', $prop->slug) }}">
+                                    {{ $prop->title }}
+                                </a>
                             </h2>
 
                             <!-- Subtitle Description -->
-                            <p class="text-[12px] text-[#444] font-normal leading-snug font-sans mb-5">
+                            <p class="text-[12px] text-gray-600 font-normal leading-snug font-sans mb-5">
                                 {{ $subtitle }}
                             </p>
 
-                            <!-- Amenity Specs Grid (Exact 2 Rows from Figma Screenshot) -->
+                            <!-- Amenity Specs Grid -->
                             <div class="mt-auto space-y-2.5 pt-2">
                                 <!-- Row 1: Bedrooms, Bathrooms, Garage -->
                                 <div class="grid grid-cols-3 gap-2 text-[11.5px] text-[#222] font-sans font-medium">
@@ -183,20 +218,33 @@
                                     <!-- Balcony -->
                                     <div class="flex items-center gap-1.5 whitespace-nowrap">
                                         <svg class="w-4 h-4 text-[#c5983e] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M3 6h18v2H3V6zm1 4h2v8H4v-8zm4 0h2v8H8v-8zm4 0h2v8h-2v-8zm4 0h2v8h-2v-8zm4 0h2v8h-2v-8zM2 19h20v2H2v-2z"/>
+                                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
                                         </svg>
-                                        <span>8 Balcony</span>
+                                        <span>{{ $prop->balcony ?? '8' }} Balcony</span>
                                     </div>
                                 </div>
-                            </div>
 
+                                <!-- Card Action Footer -->
+                                <div class="pt-4 border-t border-gray-100 flex items-center justify-between">
+                                    <a href="{{ route('properties.show', $prop->slug) }}"
+                                       class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-[#0b2112] hover:text-[#c5983e] transition-colors">
+                                        Explore Community ↗
+                                    </a>
+                                    <button type="button"
+                                            @click="openRegisterModal({{ $prop->id }}, '{{ addslashes($prop->title) }}')"
+                                            class="text-[11px] uppercase tracking-[0.14em] font-semibold text-[#c5983e] hover:underline cursor-pointer">
+                                        VIP Access
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
-                    </a>
+                    </div>
                 @endforeach
 
             </div>
         </div>
+
     </div>
 
     @push('scripts')
@@ -204,7 +252,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const viewport = document.getElementById('cards-viewport');
             const track = document.getElementById('cards-track');
-            const pills = document.querySelectorAll('.pg-pill');
+            const pills = document.querySelectorAll('.pg-num-pill');
             const cards = document.querySelectorAll('.prop-slider-card');
             
             if (!viewport || !track || cards.length === 0) return;
@@ -293,7 +341,7 @@
 
             window.addEventListener('resize', () => {
                 updateSlider(false);
-            }, { passive: true });
+            });
 
             // Initialize
             updateSlider(false);

@@ -19,7 +19,7 @@
 
     <div class="sm:mx-auto sm:w-full sm:max-w-md text-center mb-8">
         <a href="{{ route('home') }}" class="inline-block transition-transform hover:scale-105">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="Ethereal Estates" class="h-10 w-auto mx-auto" />
+            <img src="{{ asset('assets/images/logo.png') }}" alt="Ethereal Estates" class="h-14 sm:h-16 w-auto mx-auto" />
         </a>
         <h2 class="mt-6 font-fragment text-2xl sm:text-3xl text-white uppercase tracking-[0.06em]">
             Join The Ethereal Circle

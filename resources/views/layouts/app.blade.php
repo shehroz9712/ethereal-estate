@@ -19,8 +19,21 @@
       x-data="{ 
           menuOpen: false,
           registerModalOpen: false,
+          savedDrawerOpen: false,
+          searchModalOpen: false,
           activePropertyId: null,
           activePropertyTitle: '',
+          savedItems: [],
+          init() {
+              try {
+                  const stored = localStorage.getItem('ethereal_saved_properties');
+                  if (stored) {
+                      this.savedItems = JSON.parse(stored);
+                  }
+              } catch (e) {
+                  this.savedItems = [];
+              }
+          },
           openRegisterModal(id = null, title = '') {
               this.activePropertyId = id;
               this.activePropertyTitle = title;
@@ -28,6 +41,43 @@
           },
           closeRegisterModal() {
               this.registerModalOpen = false;
+          },
+          openSearchModal() {
+              this.searchModalOpen = true;
+              this.$nextTick(() => {
+                  if (this.$refs.globalSearchInput) {
+                      this.$refs.globalSearchInput.focus();
+                  }
+              });
+          },
+          toggleSaveProperty(prop) {
+              const idx = this.savedItems.findIndex(i => i.id == prop.id);
+              if (idx > -1) {
+                  this.savedItems.splice(idx, 1);
+              } else {
+                  this.savedItems.push(prop);
+              }
+              try {
+                  localStorage.setItem('ethereal_saved_properties', JSON.stringify(this.savedItems));
+              } catch (e) {}
+
+              // Also sync with server if logged in
+              fetch('/properties/' + prop.id + '/favorite', {
+                  method: 'POST',
+                  headers: {
+                      'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                      'Accept': 'application/json'
+                  }
+              }).catch(() => {});
+          },
+          removeSavedItem(id) {
+              this.savedItems = this.savedItems.filter(i => i.id != id);
+              try {
+                  localStorage.setItem('ethereal_saved_properties', JSON.stringify(this.savedItems));
+              } catch (e) {}
+          },
+          isPropertySaved(id) {
+              return this.savedItems.some(i => i.id == id);
           }
       }">
 
@@ -49,6 +99,15 @@
 
     <!-- Global VIP Register Modal -->
     <x-register-modal />
+
+    <!-- Saved Properties / Wishlist Drawer -->
+    <x-wishlist-drawer />
+
+    <!-- Global Quick Search Modal (available on all pages) -->
+    <x-global-search-modal />
+
+    <!-- Floating Circular Human Bot & Chat Concierge -->
+    <x-human-bot-chat />
 
     @stack('scripts')
 </body>

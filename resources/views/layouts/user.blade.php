@@ -21,7 +21,7 @@
         <div class="max-w-7xl mx-auto px-6 sm:px-10 flex items-center justify-between h-16">
             <div class="flex items-center gap-6">
                 <a href="{{ route('home') }}" class="block">
-                    <img src="{{ asset('assets/images/logo-dark.png') }}" onerror="this.src='{{ asset('assets/images/logo.png') }}'" alt="Ethereal Estates" class="h-7 w-auto" />
+                    <img src="{{ asset('assets/images/logo-dark.png') }}" onerror="this.src='{{ asset('assets/images/logo.png') }}'" alt="Ethereal Estates" class="h-9 sm:h-10 w-auto" />
                 </a>
                 <span class="text-[11px] uppercase tracking-[0.2em] font-semibold text-[#d5a94e] hidden sm:inline">
                     Client Portal

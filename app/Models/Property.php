@@ -147,12 +147,14 @@ class Property extends Model
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         if (!empty($filters['search'])) {
-            $s = $filters['search'];
+            $s = trim($filters['search']);
             $query->where(function ($q) use ($s) {
                 $q->where('title', 'like', "%{$s}%")
                   ->orWhere('city', 'like', "%{$s}%")
                   ->orWhere('address', 'like', "%{$s}%")
-                  ->orWhere('short_description', 'like', "%{$s}%");
+                  ->orWhere('developer', 'like', "%{$s}%")
+                  ->orWhere('short_description', 'like', "%{$s}%")
+                  ->orWhere('full_description', 'like', "%{$s}%");
             });
         }
 
@@ -160,40 +162,77 @@ class Property extends Model
             $query->where('city', $filters['city']);
         }
 
-        if (!empty($filters['type']) && $filters['type'] !== 'All' && $filters['type'] !== 'Property Type') {
-            $query->where('property_type', $filters['type']);
+        $type = $filters['type'] ?? $filters['house_type'] ?? null;
+        if (!empty($type) && !in_array(strtolower($type), ['all', 'all house types', 'property type', 'house type'])) {
+            $query->where('property_type', 'like', "%{$type}%");
         }
 
-        if (!empty($filters['bedrooms']) && $filters['bedrooms'] !== 'Bedrooms') {
+        if (!empty($filters['bedrooms']) && !in_array(strtolower($filters['bedrooms']), ['bedrooms', 'all'])) {
             $minBeds = (int) filter_var($filters['bedrooms'], FILTER_SANITIZE_NUMBER_INT);
             if ($minBeds > 0) {
                 $query->where('bedrooms', '>=', $minBeds);
             }
         }
 
-        if (!empty($filters['bathrooms']) && $filters['bathrooms'] !== 'Bathrooms') {
+        if (!empty($filters['bathrooms']) && !in_array(strtolower($filters['bathrooms']), ['bathrooms', 'all'])) {
             $minBaths = (int) filter_var($filters['bathrooms'], FILTER_SANITIZE_NUMBER_INT);
             if ($minBaths > 0) {
                 $query->where('bathrooms', '>=', $minBaths);
             }
         }
 
-        if (!empty($filters['max_price']) && $filters['max_price'] !== 'Max Price') {
-            $priceStr = strtoupper($filters['max_price']);
-            $maxVal = null;
-            if (str_contains($priceStr, '500K')) $maxVal = 500000;
-            elseif (str_contains($priceStr, '750K')) $maxVal = 750000;
-            elseif (str_contains($priceStr, '1M')) $maxVal = 1000000;
-            elseif (str_contains($priceStr, '2M')) $maxVal = 2000000;
-
-            if ($maxVal) {
-                $query->where(function ($q) use ($maxVal) {
-                    $q->where('price', '<=', $maxVal)
-                      ->orWhereNull('price');
-                });
+        $priceRange = $filters['price_range'] ?? $filters['max_price'] ?? null;
+        if (!empty($priceRange) && !in_array(strtolower($priceRange), ['price range', 'max price', 'any', 'all'])) {
+            $pStr = strtoupper($priceRange);
+            if (str_contains($pStr, '-') || str_contains($pStr, 'TO') || str_contains($pStr, '–')) {
+                // e.g. "$750K - $1M" or "750000-1000000"
+                $parts = preg_split('/[\-–]|TO/i', $pStr);
+                if (count($parts) === 2) {
+                    $min = $this->parsePriceValue(trim($parts[0]));
+                    $max = $this->parsePriceValue(trim($parts[1]));
+                    if ($min !== null && $max !== null) {
+                        $query->whereBetween('price', [$min, $max]);
+                    } elseif ($min !== null) {
+                        $query->where('price', '>=', $min);
+                    } elseif ($max !== null) {
+                        $query->where('price', '<=', $max);
+                    }
+                }
+            } elseif (str_contains($pStr, 'UNDER') || str_contains($pStr, '<')) {
+                $max = $this->parsePriceValue($pStr);
+                if ($max !== null) {
+                    $query->where(function ($q) use ($max) {
+                        $q->where('price', '<=', $max)->orWhereNull('price');
+                    });
+                }
+            } elseif (str_contains($pStr, '+') || str_contains($pStr, 'OVER') || str_contains($pStr, '>')) {
+                $min = $this->parsePriceValue($pStr);
+                if ($min !== null) {
+                    $query->where('price', '>=', $min);
+                }
+            } else {
+                $val = $this->parsePriceValue($pStr);
+                if ($val !== null) {
+                    $query->where('price', '<=', $val);
+                }
             }
         }
 
         return $query;
+    }
+
+    protected function parsePriceValue(string $str): ?float
+    {
+        $str = strtoupper(str_replace(['$', ',', ' '], '', $str));
+        if (str_contains($str, 'M')) {
+            $num = (float) filter_var($str, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            return $num * 1000000;
+        }
+        if (str_contains($str, 'K')) {
+            $num = (float) filter_var($str, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            return $num * 1000;
+        }
+        $digits = (float) preg_replace('/[^0-9.]/', '', $str);
+        return $digits > 0 ? $digits : null;
     }
 }

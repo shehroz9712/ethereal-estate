@@ -19,9 +19,13 @@ class PreConstructionController extends Controller
             'search',
             'city',
             'type',
+            'house_type',
             'bedrooms',
             'bathrooms',
+            'price_range',
             'max_price',
+            'km',
+            'miles',
         ]);
 
         $properties = $this->propertyService->getPreConstructionProperties($filters);

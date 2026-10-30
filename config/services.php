@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'followupboss' => [
+        'api_key' => env('FOLLOWUPBOSS_API_KEY'),
+        'pixel_key' => env('FOLLOWUPBOSS_PIXEL_KEY'),
+    ],
+
 ];

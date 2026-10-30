@@ -5,9 +5,14 @@
         <!-- Top grid -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 pb-14 border-b border-white/10">
 
-            <!-- Col 1: Contact (spans 6 cols) -->
+            <!-- Col 1: Brand & Contact (spans 6 cols) -->
             <div class="lg:col-span-6 space-y-5">
-                <p class="text-[12px] tracking-[0.25em] text-[#c5983e] font-serif italic">Let's Talk</p>
+                <a href="{{ route('home') }}" class="inline-block mb-2">
+                    <img src="{{ asset('assets/images/logo.png') }}"
+                         alt="Ethereal Estates"
+                         class="h-12 sm:h-14 md:h-16 w-auto object-contain" />
+                </a>
+                <p class="text-[12px] tracking-[0.25em] text-[#c5983e] font-serif italic">Let's Talk Real Estate</p>
                 <a href="mailto:office@etherealestates.ca"
                    class="font-fragment text-2xl sm:text-3xl lg:text-[34px] text-white hover:text-[#c5983e] transition-colors block leading-none">
                     office@etherealestates.ca
@@ -22,7 +27,7 @@
 
                 <!-- Social pills -->
                 <div class="flex flex-wrap gap-2.5 pt-3">
-                    @foreach (['Instagram', 'Twitter', 'Youtube', 'Behance', 'Linkedin'] as $social)
+                    @foreach (['Instagram', 'LinkedIn', 'YouTube', 'Twitter'] as $social)
                         <a href="#"
                            class="px-4 py-1.5 rounded-full border border-white/25 text-[11px] font-normal tracking-wide text-white/80 hover:border-[#c5983e] hover:text-[#c5983e] transition-colors">
                             {{ $social }}
@@ -35,21 +40,24 @@
             <div class="lg:col-span-3">
                 <h3 class="font-fragment text-base uppercase tracking-[0.12em] text-white mb-5">Discover More</h3>
                 <ul class="space-y-3 text-xs text-white/60 font-light">
+                    <li><a href="{{ route('pre-construction') }}" class="hover:text-[#c5983e] transition-colors">Pre-Construction</a></li>
+                    <li><a href="{{ route('properties.index') }}" class="hover:text-[#c5983e] transition-colors">Featured Listings</a></li>
+                    <li><a href="{{ route('about') }}" class="hover:text-[#c5983e] transition-colors">Who We Are</a></li>
                     <li><a href="{{ route('our-story') }}" class="hover:text-[#c5983e] transition-colors">Our Story</a></li>
-                    <li><a href="{{ route('pre-construction') }}" class="hover:text-[#c5983e] transition-colors">Communities</a></li>
-                    <li><a href="{{ route('genius') }}" class="hover:text-[#c5983e] transition-colors">Genius</a></li>
-                    <li><a href="{{ route('news.index') }}" class="hover:text-[#c5983e] transition-colors">News</a></li>
-                    <li><a href="{{ route('contact') }}" class="hover:text-[#c5983e] transition-colors">Contact</a></li>
+                    <li><a href="{{ route('rebate-calculator') }}" class="hover:text-[#c5983e] transition-colors">Rebate Calculator</a></li>
+                    <li><a href="{{ route('genius') }}" class="hover:text-[#c5983e] transition-colors">The Genius Experience</a></li>
                 </ul>
             </div>
 
-            <!-- Col 3: Quick Links (spans 3 cols) -->
+            <!-- Col 3: Legal & Portal (spans 3 cols) -->
             <div class="lg:col-span-3">
-                <h3 class="font-fragment text-base uppercase tracking-[0.12em] text-white mb-5">Quick Links</h3>
+                <h3 class="font-fragment text-base uppercase tracking-[0.12em] text-white mb-5">Navigation & VIP</h3>
                 <ul class="space-y-3 text-xs text-white/60 font-light">
-                    <li><a href="#" class="hover:text-[#c5983e] transition-colors">GT USA</a></li>
-                    <li><a href="#" class="hover:text-[#c5983e] transition-colors">Sitemap</a></li>
-                    <li><a href="#" class="hover:text-[#c5983e] transition-colors">Terms and Conditions</a></li>
+                    <li><a href="{{ route('join-ethereal') }}" class="hover:text-[#c5983e] transition-colors">Join Ethereal</a></li>
+                    <li><a href="{{ route('contact') }}" class="hover:text-[#c5983e] transition-colors">Contact Us</a></li>
+                    <li><a href="{{ route('login') }}" class="hover:text-[#c5983e] transition-colors">Client Sign In</a></li>
+                    <li><a href="{{ route('register') }}" class="hover:text-[#c5983e] transition-colors">Register for VIP Allocations</a></li>
+                    <li><a href="#" class="hover:text-[#c5983e] transition-colors">Terms of Service</a></li>
                     <li><a href="#" class="hover:text-[#c5983e] transition-colors">Privacy Policy</a></li>
                 </ul>
             </div>
@@ -57,8 +65,12 @@
         </div>
 
         <!-- Bottom bar -->
-        <div class="pt-8 text-xs text-white/40 font-light tracking-wide">
-            <p>&copy; 2026 Ethereal. All rights reserved</p>
+        <div class="pt-8 text-xs text-white/40 font-light tracking-wide flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2.5">
+                <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" class="h-5 sm:h-6 w-auto opacity-75" />
+                <p>&copy; 2026. All rights reserved.</p>
+            </div>
+            <p class="text-[11px] text-white/30">Ontario Real Estate Brokerage • Follow Up Boss Integrated Advisory</p>
         </div>
 
     </div>

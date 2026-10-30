@@ -1,44 +1,50 @@
 <x-layouts.app activePage="join" title="Join Ethereal — Career in Real Estate">
 
-    <!-- ═══════════ HERO BANNER ═══════════ -->
+    <!-- ═══════════ HERO BANNER (Real Team Imagery) ═══════════ -->
     <div class="px-4 sm:px-8 lg:px-14 pt-4">
-        <div class="relative w-full h-[320px] sm:h-[380px] rounded-2xl overflow-hidden shadow-2xl bg-gray-900 flex items-center justify-center text-center p-6">
-            <img src="{{ asset('assets/images/about-hero.jpg') }}" alt="Join Ethereal Estates" class="absolute inset-0 w-full h-full object-cover opacity-60" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
+        <div class="relative w-full h-[360px] sm:h-[420px] rounded-2xl overflow-hidden shadow-2xl bg-[#09150e] flex items-center justify-center text-center p-6">
+            <img src="{{ asset('assets/images/about/Group 1686565521.png') }}"
+                 onerror="this.src='{{ asset('assets/images/about-video-thumb.jpg') }}'"
+                 alt="Join Ethereal Estates Team"
+                 class="absolute inset-0 w-full h-full object-cover opacity-75" />
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/75"></div>
 
-            <div class="relative z-10 max-w-2xl mx-auto">
-                <span class="text-[#d5a94e] text-xs uppercase tracking-[0.24em] font-semibold block mb-2">Brokerage Careers</span>
-                <h1 class="font-fragment text-white text-3xl sm:text-5xl uppercase tracking-[0.06em] leading-tight mb-3">
-                    Join Ethereal
+            <div class="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
+                <span class="block w-10 h-[1.5px] bg-[#c5983e] mb-4"></span>
+                <h1 class="font-fragment text-white text-3xl sm:text-5xl lg:text-[46px] uppercase tracking-[0.06em] leading-tight mb-3">
+                    JOIN ETHEREAL
                 </h1>
-                <p class="text-white/85 text-xs sm:text-sm font-light tracking-wide leading-relaxed">
+                <p class="text-white/85 text-xs sm:text-sm md:text-base font-light tracking-wide leading-relaxed max-w-xl">
                     A career in real estate should not be built alone.
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- ═══════════ MAIN NARRATIVE & APPLICATION FORM (docx specification) ═══════════ -->
+    <!-- ═══════════ MAIN NARRATIVE & APPLICATION FORM (per specification) ═══════════ -->
     <section class="px-6 lg:px-14 py-16 lg:py-24 bg-white">
         <div class="max-w-4xl mx-auto space-y-12">
             
-            <div class="text-center max-w-2xl mx-auto space-y-4">
-                <h2 class="font-fragment text-2xl sm:text-3xl uppercase tracking-[0.04em] text-gray-900">
-                    Grow With A Committed Team
+            <!-- Page Copy per specification -->
+            <div class="text-center max-w-2xl mx-auto space-y-5">
+                <h2 class="font-fragment text-2xl sm:text-3xl lg:text-4xl uppercase tracking-[0.04em] text-[#111111]">
+                    JOIN ETHEREAL
                 </h2>
                 <div class="gold-line mx-auto"></div>
-                <p class="text-sm font-light text-gray-600 leading-relaxed">
-                    A career in real estate should not be built alone. At Ethereal, agents work alongside people who share their knowledge, offer support when it matters, and bring more than one perspective to every opportunity.
-                </p>
-                <p class="text-sm font-light text-gray-600 leading-relaxed">
-                    From client conversations and property analysis to negotiations and closings, our agents receive practical guidance that strengthens how they work. We invest in Realtors who take their growth seriously and want to build a career supported by the experience of a committed team.
-                </p>
+                <div class="space-y-4 text-sm font-light text-gray-600 leading-relaxed text-left sm:text-center">
+                    <p>
+                        A career in real estate should not be built alone. At Ethereal, agents work alongside people who share their knowledge, offer support when it matters and bring more than one perspective to every opportunity.
+                    </p>
+                    <p>
+                        From client conversations and property analysis to negotiations and closings, our agents receive practical guidance that strengthens how they work. We invest in Realtors who take their growth seriously and want to build a career supported by the experience of a committed team.
+                    </p>
+                </div>
             </div>
 
-            <!-- Application Form -->
+            <!-- Application Form Directly Below Copy per specification -->
             <div class="bg-[#fdfaf4] border border-gray-200 rounded-2xl p-6 sm:p-12 shadow-sm">
-                <h3 class="font-fragment text-xl sm:text-2xl uppercase tracking-[0.04em] text-gray-900 mb-6 text-center">
-                    Realtor Career Application
+                <h3 class="font-fragment text-xl sm:text-2xl uppercase tracking-[0.04em] text-[#111111] mb-6 text-center">
+                    Join Ethereal Application Form
                 </h3>
 
                 <form action="{{ route('inquiries.join') }}" method="POST" class="space-y-5">

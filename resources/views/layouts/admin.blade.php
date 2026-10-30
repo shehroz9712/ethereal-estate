@@ -24,7 +24,7 @@
             <!-- Brand -->
             <div class="h-16 flex items-center justify-between px-6 border-b border-white/10">
                 <a href="{{ route('admin.dashboard') }}" class="block">
-                    <img src="{{ asset('assets/images/logo.png') }}" alt="Ethereal Estates" class="h-7 w-auto" />
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="Ethereal Estates" class="h-9 sm:h-10 w-auto" />
                 </a>
                 <button type="button" @click="sidebarOpen = false" class="md:hidden text-gray-400 hover:text-white">✕</button>
             </div>

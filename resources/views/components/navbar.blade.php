@@ -15,7 +15,7 @@
 
 @if ($dark)
 <!-- ═══════════ TRANSPARENT DARK NAVBAR (Hero video mode) ═══════════ -->
-<header id="site-navbar" class="absolute inset-x-0 top-0 z-50 flex items-center justify-between px-6 sm:px-10 lg:px-16 py-5 transition-all duration-300">
+<header id="site-navbar" class="absolute inset-x-0 top-0 z-50 flex items-center justify-between pl-2 sm:pl-3 lg:pl-4 pr-4 sm:pr-6 lg:pr-8 py-4 sm:py-5 transition-all duration-300">
     <!-- Logo -->
     <a href="{{ route('home') }}" class="shrink-0 group block">
         <img src="{{ asset('assets/images/logo.png') }}"
@@ -74,7 +74,7 @@
 @else
 <!-- ═══════════ LIGHT / STICKY NAVBAR ═══════════ -->
 <header id="site-navbar" class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
-    <div class="flex items-center justify-between px-6 sm:px-10 lg:px-16 py-4">
+    <div class="flex items-center justify-between pl-2 sm:pl-3 lg:pl-4 pr-4 sm:pr-6 lg:pr-8 py-3.5 sm:py-4">
         
         <!-- Left: Logo -->
         <div class="flex items-center">
@@ -144,7 +144,7 @@
      x-transition:leave="transition ease-in duration-300"
      x-transition:leave-start="opacity-100 translate-y-0"
      x-transition:leave-end="opacity-0 translate-y-[-10px]"
-     class="fixed inset-0 z-50 bg-[#06130d]/98 backdrop-blur-xl text-white flex flex-col justify-between p-8 sm:p-14 lg:p-20 overflow-y-auto"
+     class="fixed inset-0 z-50 bg-[#06130d]/98 backdrop-blur-xl text-white flex flex-col justify-between pl-4 sm:pl-6 lg:pl-8 pr-6 sm:pr-8 lg:pr-10 py-6 sm:py-8 overflow-y-auto"
      style="display: none;">
 
     <!-- Top Bar Inside Overlay -->

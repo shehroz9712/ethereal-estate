@@ -167,17 +167,67 @@ class Property extends Model
             $query->where('property_type', 'like', "%{$type}%");
         }
 
-        if (!empty($filters['bedrooms']) && !in_array(strtolower($filters['bedrooms']), ['bedrooms', 'all'])) {
-            $minBeds = (int) filter_var($filters['bedrooms'], FILTER_SANITIZE_NUMBER_INT);
-            if ($minBeds > 0) {
-                $query->where('bedrooms', '>=', $minBeds);
+        if (!empty($filters['bedrooms'])) {
+            $rawBeds = is_array($filters['bedrooms']) ? $filters['bedrooms'] : explode(',', (string) $filters['bedrooms']);
+            $rawBeds = array_filter(array_map('trim', $rawBeds));
+            if (!empty($rawBeds) && !in_array('all', array_map('strtolower', $rawBeds))) {
+                $exactBeds = [];
+                $hasPlus = false;
+                foreach ($rawBeds as $b) {
+                    if (str_contains($b, '+') || (int)$b >= 5) {
+                        $hasPlus = true;
+                    } elseif (is_numeric($b) && (int)$b > 0) {
+                        $exactBeds[] = (int)$b;
+                    }
+                }
+                if (!empty($exactBeds) || $hasPlus) {
+                    $query->where(function ($q) use ($exactBeds, $hasPlus) {
+                        if (!empty($exactBeds)) {
+                            $q->whereIn('bedrooms', $exactBeds);
+                        }
+                        if ($hasPlus) {
+                            if (!empty($exactBeds)) {
+                                $q->orWhere('bedrooms', '>=', 5);
+                            } else {
+                                $q->where('bedrooms', '>=', 5);
+                            }
+                        }
+                    });
+                }
             }
         }
 
-        if (!empty($filters['bathrooms']) && !in_array(strtolower($filters['bathrooms']), ['bathrooms', 'all'])) {
-            $minBaths = (int) filter_var($filters['bathrooms'], FILTER_SANITIZE_NUMBER_INT);
-            if ($minBaths > 0) {
-                $query->where('bathrooms', '>=', $minBaths);
+        if (!empty($filters['bathrooms'])) {
+            $rawBaths = is_array($filters['bathrooms']) ? $filters['bathrooms'] : explode(',', (string) $filters['bathrooms']);
+            $rawBaths = array_filter(array_map('trim', $rawBaths));
+            if (!empty($rawBaths) && !in_array('all', array_map('strtolower', $rawBaths))) {
+                $exactBaths = [];
+                $hasPlus = false;
+                foreach ($rawBaths as $b) {
+                    if (str_contains($b, '+') || (int)$b >= 5) {
+                        $hasPlus = true;
+                    } elseif (is_numeric($b) && (int)$b > 0) {
+                        $exactBaths[] = (int)$b;
+                    }
+                }
+                if (!empty($exactBaths) || $hasPlus) {
+                    $query->where(function ($q) use ($exactBaths, $hasPlus) {
+                        if (!empty($exactBaths)) {
+                            $q->where(function ($sub) use ($exactBaths) {
+                                foreach ($exactBaths as $eb) {
+                                    $sub->orWhereRaw('FLOOR(bathrooms) = ?', [(int)$eb]);
+                                }
+                            });
+                        }
+                        if ($hasPlus) {
+                            if (!empty($exactBaths)) {
+                                $q->orWhere('bathrooms', '>=', 5);
+                            } else {
+                                $q->where('bathrooms', '>=', 5);
+                            }
+                        }
+                    });
+                }
             }
         }
 

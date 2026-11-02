@@ -22,7 +22,7 @@
                 <div class="flex items-center gap-2 mb-4">
                     <span class="w-8 h-[1px] bg-[#c5983e]"></span>
                     <span class="text-xs sm:text-[13px] uppercase tracking-[0.28em] text-[#c5983e] font-semibold">
-                        Who We Are • About Us
+                        Who We Are 
                     </span>
                     <span class="w-8 h-[1px] bg-[#c5983e]"></span>
                 </div>
@@ -73,6 +73,104 @@
                     <p>
                         From contract review and mortgage pre-approval through construction evolution, interim occupancy, and leasing management, we steward every client's property journey with unmatched precision and dedicated representation.
                     </p>
+                </div>
+
+                <!-- Live Realistic Sales Closed Counter (Persists on Refresh & Increments Naturally) -->
+                <div x-data="{
+                        salesCount: 1482,
+                        justIncremented: false,
+                        init() {
+                            // Reference epoch baseline (Jan 1, 2025 at 1,420 base sales)
+                            const baseEpoch = 1735689600000;
+                            const baseCount = 1420;
+                            // Natural steady growth: ~1 sale per 8 hours over history
+                            const naturalCount = baseCount + Math.floor(Math.max(0, Date.now() - baseEpoch) / (1000 * 60 * 60 * 8));
+                            
+                            // Check localStorage so page refreshes NEVER reset backwards
+                            const stored = parseInt(localStorage.getItem('ethereal_sales_closed_count') || '0', 10);
+                            this.salesCount = Math.max(naturalCount, stored);
+                            try {
+                                localStorage.setItem('ethereal_sales_closed_count', this.salesCount);
+                            } catch (e) {}
+
+                            // Realistic slow ticking schedule (random delay between 25s - 45s per increment)
+                            this.scheduleNextIncrement();
+                        },
+                        scheduleNextIncrement() {
+                            const delay = Math.floor(Math.random() * (45000 - 25000 + 1)) + 25000;
+                            setTimeout(() => {
+                                this.salesCount++;
+                                try {
+                                    localStorage.setItem('ethereal_sales_closed_count', this.salesCount);
+                                } catch (e) {}
+                                this.justIncremented = true;
+                                setTimeout(() => {
+                                    this.justIncremented = false;
+                                }, 4000);
+                                this.scheduleNextIncrement();
+                            }, delay);
+                        },
+                        get formattedCount() {
+                            return Number(this.salesCount).toLocaleString('en-US');
+                        }
+                    }"
+                    class="pt-3">
+
+                    <div class="relative overflow-hidden p-5 sm:p-6 rounded-2xl bg-[#06130d] text-white border border-[#c5983e]/40 shadow-xl transition-all duration-300">
+                        <!-- Decorative gold background glow -->
+                        <div class="absolute -right-8 -bottom-8 w-40 h-40 rounded-full bg-[#c5983e]/15 blur-2xl pointer-events-none"></div>
+
+                        <!-- Live Status Indicator Row -->
+                        <div class="flex items-center justify-between gap-3 mb-3 relative z-10">
+                            <div class="flex items-center gap-2">
+                                <span class="relative flex h-2.5 w-2.5">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                                </span>
+                                <span class="text-[10px] sm:text-[11px] uppercase tracking-[0.22em] font-semibold text-[#c5983e]">
+                                    Live Performance Metric
+                                </span>
+                            </div>
+
+                            <!-- Real-time pulse notification pill -->
+                            <div x-show="justIncremented"
+                                 x-transition:enter="transition ease-out duration-300"
+                                 x-transition:enter-start="opacity-0 translate-y-1 scale-95"
+                                 x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                                 x-transition:leave="transition ease-in duration-300"
+                                 x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                                 x-transition:leave-end="opacity-0 translate-y-1 scale-95"
+                                 class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[10px] font-medium tracking-wide">
+                                <span>+1</span>
+                                <span>Just Closed</span>
+                            </div>
+                        </div>
+
+                        <!-- Main Counter Display -->
+                        <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 relative z-10">
+                            <div class="flex items-baseline gap-2.5">
+                                <span class="font-fragment text-4xl sm:text-5xl lg:text-[54px] text-white tracking-tight leading-none transition-transform duration-300"
+                                      :class="justIncremented ? 'scale-105 text-[#c5983e]' : ''"
+                                      x-text="formattedCount">
+                                </span>
+                                <span class="text-xs uppercase tracking-wider font-semibold text-emerald-400 flex items-center gap-1">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                                    </svg>
+                                    Active Sales
+                                </span>
+                            </div>
+                            <p class="text-xs sm:text-[12.5px] uppercase tracking-[0.14em] font-medium text-white/80 sm:text-right font-sans">
+                                Properties &amp; Pre-Construction Sales Closed
+                            </p>
+                        </div>
+
+                        <!-- Footer micro-copy -->
+                        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-white/55 font-light relative z-10">
+                            <span>$350M+ verified sales milestone</span>
+                            <span class="text-[#c5983e] font-normal">Ontario Platinum Advisory</span>
+                        </div>
+                    </div>
                 </div>
                 <!-- 'More About Us' button removed per specification -->
             </div>

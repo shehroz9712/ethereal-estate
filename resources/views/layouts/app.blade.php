@@ -23,15 +23,21 @@
           searchModalOpen: false,
           activePropertyId: null,
           activePropertyTitle: '',
-          savedItems: [],
+          isAuthenticated: {{ auth()->check() ? 'true' : 'false' }},
+          savedItems: @json(auth()->check() ? auth()->user()->savedProperties->map(fn($p) => [
+              'id' => $p->id,
+              'title' => $p->title,
+              'city' => $p->city,
+              'price' => $p->formatted_price,
+              'image' => $p->primary_image_url,
+              'url' => route('properties.show', $p->slug)
+          ]) : []),
           init() {
-              try {
-                  const stored = localStorage.getItem('ethereal_saved_properties');
-                  if (stored) {
-                      this.savedItems = JSON.parse(stored);
-                  }
-              } catch (e) {
+              if (!this.isAuthenticated) {
                   this.savedItems = [];
+                  try {
+                      localStorage.removeItem('ethereal_saved_properties');
+                  } catch (e) {}
               }
           },
           openRegisterModal(id = null, title = '') {
@@ -51,18 +57,44 @@
               });
           },
           toggleSaveProperty(prop) {
+              if (!this.isAuthenticated) {
+                  // Login required! Do not save without login
+                  const currentUrl = window.location.href;
+                  window.location.href = "{{ route('login') }}?redirect=" + encodeURIComponent(currentUrl) + "&info=" + encodeURIComponent('Please sign in to save properties to your wishlist.');
+                  return;
+              }
+
               const idx = this.savedItems.findIndex(i => i.id == prop.id);
               if (idx > -1) {
                   this.savedItems.splice(idx, 1);
               } else {
                   this.savedItems.push(prop);
               }
-              try {
-                  localStorage.setItem('ethereal_saved_properties', JSON.stringify(this.savedItems));
-              } catch (e) {}
 
-              // Also sync with server if logged in
+              // Sync with server
               fetch('/properties/' + prop.id + '/favorite', {
+                  method: 'POST',
+                  headers: {
+                      'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                      'Accept': 'application/json'
+                  }
+              })
+              .then(r => {
+                  if (r.status === 401) {
+                      this.isAuthenticated = false;
+                      this.savedItems = [];
+                      window.location.href = "{{ route('login') }}?redirect=" + encodeURIComponent(window.location.href) + "&info=" + encodeURIComponent('Please sign in to save properties to your wishlist.');
+                  }
+              })
+              .catch(() => {});
+          },
+          removeSavedItem(id) {
+              if (!this.isAuthenticated) {
+                  this.savedItems = [];
+                  return;
+              }
+              this.savedItems = this.savedItems.filter(i => i.id != id);
+              fetch('/properties/' + id + '/favorite', {
                   method: 'POST',
                   headers: {
                       'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -70,14 +102,8 @@
                   }
               }).catch(() => {});
           },
-          removeSavedItem(id) {
-              this.savedItems = this.savedItems.filter(i => i.id != id);
-              try {
-                  localStorage.setItem('ethereal_saved_properties', JSON.stringify(this.savedItems));
-              } catch (e) {}
-          },
           isPropertySaved(id) {
-              return this.savedItems.some(i => i.id == id);
+              return this.isAuthenticated && this.savedItems.some(i => i.id == id);
           }
       }">
 

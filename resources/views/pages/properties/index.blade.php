@@ -69,7 +69,7 @@
             background: #c5983e;
             box-shadow: 0 2px 8px rgba(197, 152, 62, 0.3);
         }
-        .pg-num-pill:hover:not(.active) {
+        .pg-num-pill:hover:not(.active):not(.cursor-not-allowed) {
             color: #111111;
             background: #e8e8e8;
         }
@@ -108,18 +108,59 @@
                 </div>
             </div>
 
-            <!-- Right: Redesigned Pagination Number Pills (No brackets) -->
-            <div id="pg-pills" class="flex items-center gap-2 shrink-0 z-10">
+            <!-- Right: Pagination Number Pills with Arrow buttons -->
+            <div id="pg-pills" class="flex items-center gap-1.5 shrink-0 z-10">
+                <button type="button"
+                        id="pill-prev-btn"
+                        class="pg-num-pill transition-all"
+                        onclick="slidePrev()"
+                        title="Previous Properties">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
                 <button type="button" class="pg-num-pill active" data-page="0" onclick="goToPage(0)">1</button>
                 <button type="button" class="pg-num-pill" data-page="1" onclick="goToPage(1)">2</button>
                 <button type="button" class="pg-num-pill" data-page="2" onclick="goToPage(2)">3</button>
+                <button type="button"
+                        id="pill-next-btn"
+                        class="pg-num-pill transition-all"
+                        onclick="slideNext()"
+                        title="Next Properties">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
             </div>
 
         </div>
     </div>
 
     <!-- ═══════════ HORIZONTAL CARDS SLIDER ═══════════ -->
-    <div class="w-full py-8 sm:py-10 px-6 sm:px-10 lg:px-14 overflow-hidden bg-white select-none">
+    <div class="relative w-full py-8 sm:py-10 px-6 sm:px-10 lg:px-14 overflow-hidden bg-white select-none group/slider">
+
+        <!-- Floating Left Arrow -->
+        <button type="button"
+                id="slider-prev-btn"
+                onclick="slidePrev()"
+                aria-label="Previous properties"
+                class="absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 hover:bg-white text-gray-900 border border-gray-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.12)] flex items-center justify-center transition-all duration-200 hover:scale-105 hover:border-[#c5983e] hover:text-[#c5983e] cursor-pointer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+            </svg>
+        </button>
+
+        <!-- Floating Right Arrow -->
+        <button type="button"
+                id="slider-next-btn"
+                onclick="slideNext()"
+                aria-label="Next properties"
+                class="absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 hover:bg-white text-gray-900 border border-gray-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.12)] flex items-center justify-center transition-all duration-200 hover:scale-105 hover:border-[#c5983e] hover:text-[#c5983e] cursor-pointer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+            </svg>
+        </button>
+
         <div id="cards-viewport">
             <div id="cards-track">
 
@@ -252,71 +293,135 @@
         document.addEventListener('DOMContentLoaded', function() {
             const viewport = document.getElementById('cards-viewport');
             const track = document.getElementById('cards-track');
-            const pills = document.querySelectorAll('.pg-num-pill');
+            const pills = document.querySelectorAll('.pg-num-pill[data-page]');
             const cards = document.querySelectorAll('.prop-slider-card');
             
             if (!viewport || !track || cards.length === 0) return;
 
-            let currentPage = 0;
+            let currentIndex = 0;
             const totalCards = cards.length;
             const gap = 24;
 
             function getStep() {
                 const card = cards[0];
-                return card ? card.offsetWidth + gap : 380;
+                return card ? (card.offsetWidth + gap) : 380;
+            }
+
+            function getMaxIndex() {
+                const step = getStep();
+                const visibleCount = Math.max(1, Math.floor(viewport.clientWidth / step));
+                return Math.max(0, totalCards - visibleCount);
             }
 
             function updateSlider(animated = true) {
                 const step = getStep();
-                track.style.transition = animated ? 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+                const maxIndex = getMaxIndex();
                 
-                // Jump 3 cards per page
-                let targetIndex = currentPage * 3;
-                if (targetIndex > totalCards - 3) {
-                    targetIndex = Math.max(0, totalCards - 3);
+                if (currentIndex < 0) currentIndex = 0;
+                if (currentIndex > maxIndex) currentIndex = maxIndex;
+
+                track.style.transition = animated ? 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+
+                let translateX = currentIndex * step;
+                const maxTranslate = Math.max(0, track.scrollWidth - viewport.clientWidth);
+                if (translateX > maxTranslate) translateX = maxTranslate;
+
+                track.style.transform = `translateX(-${translateX}px)`;
+
+                // Update active page pill (0, 1, 2)
+                let activePage = 0;
+                if (maxIndex > 0) {
+                    const ratio = currentIndex / maxIndex;
+                    if (ratio > 0.66) {
+                        activePage = 2;
+                    } else if (ratio > 0.25) {
+                        activePage = 1;
+                    } else {
+                        activePage = 0;
+                    }
                 }
-
-                track.style.transform = `translateX(-${targetIndex * step}px)`;
-
-                // Update active pill
                 pills.forEach((p, idx) => {
-                    p.classList.toggle('active', idx === currentPage);
+                    p.classList.toggle('active', idx === activePage);
+                });
+
+                // Update arrow button opacity / pointer-events
+                const prevBtns = [document.getElementById('slider-prev-btn'), document.getElementById('pill-prev-btn')];
+                const nextBtns = [document.getElementById('slider-next-btn'), document.getElementById('pill-next-btn')];
+
+                prevBtns.forEach(btn => {
+                    if (!btn) return;
+                    if (currentIndex <= 0) {
+                        btn.classList.add('opacity-30', 'cursor-not-allowed');
+                        btn.classList.remove('hover:scale-105', 'hover:border-[#c5983e]');
+                    } else {
+                        btn.classList.remove('opacity-30', 'cursor-not-allowed');
+                        btn.classList.add('hover:scale-105', 'hover:border-[#c5983e]');
+                    }
+                });
+
+                nextBtns.forEach(btn => {
+                    if (!btn) return;
+                    if (currentIndex >= maxIndex) {
+                        btn.classList.add('opacity-30', 'cursor-not-allowed');
+                        btn.classList.remove('hover:scale-105', 'hover:border-[#c5983e]');
+                    } else {
+                        btn.classList.remove('opacity-30', 'cursor-not-allowed');
+                        btn.classList.add('hover:scale-105', 'hover:border-[#c5983e]');
+                    }
                 });
             }
 
+            window.slidePrev = function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateSlider(true);
+                }
+            };
+
+            window.slideNext = function() {
+                const maxIndex = getMaxIndex();
+                if (currentIndex < maxIndex) {
+                    currentIndex++;
+                    updateSlider(true);
+                }
+            };
+
             window.goToPage = function(page) {
-                currentPage = page;
+                const maxIndex = getMaxIndex();
+                if (page === 0) {
+                    currentIndex = 0;
+                } else if (page === 1) {
+                    currentIndex = Math.min(maxIndex, Math.round(maxIndex / 2));
+                } else if (page === 2) {
+                    currentIndex = maxIndex;
+                }
                 updateSlider(true);
             };
 
             // Touch & Drag Support
             let isDown = false;
-            let startX, scrollLeft;
+            let startX = 0;
 
             viewport.addEventListener('mousedown', (e) => {
                 isDown = true;
                 startX = e.pageX;
-                track.style.transition = 'none';
             });
 
             window.addEventListener('mouseup', () => {
-                if (!isDown) return;
                 isDown = false;
-                updateSlider(true);
             });
 
             viewport.addEventListener('mousemove', (e) => {
                 if (!isDown) return;
                 const x = e.pageX;
                 const walk = (x - startX);
-                if (Math.abs(walk) > 80) {
+                if (Math.abs(walk) > 60) {
                     isDown = false;
-                    if (walk < 0 && currentPage < 2) {
-                        currentPage++;
-                    } else if (walk > 0 && currentPage > 0) {
-                        currentPage--;
+                    if (walk < 0) {
+                        window.slideNext();
+                    } else {
+                        window.slidePrev();
                     }
-                    updateSlider(true);
                 }
             });
 
@@ -330,14 +435,19 @@
                 const touchEndX = e.changedTouches[0].clientX;
                 const diff = touchStartX - touchEndX;
                 if (Math.abs(diff) > 50) {
-                    if (diff > 0 && currentPage < 2) {
-                        currentPage++;
-                    } else if (diff < 0 && currentPage > 0) {
-                        currentPage--;
+                    if (diff > 0) {
+                        window.slideNext();
+                    } else {
+                        window.slidePrev();
                     }
-                    updateSlider(true);
                 }
             }, { passive: true });
+
+            // Keyboard navigation
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') window.slidePrev();
+                if (e.key === 'ArrowRight') window.slideNext();
+            });
 
             window.addEventListener('resize', () => {
                 updateSlider(false);

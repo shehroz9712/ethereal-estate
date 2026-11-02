@@ -58,6 +58,25 @@
                   x-text="savedItems.length">0</span>
         </button>
 
+        <!-- Direct LOGIN / Client Portal Button (Always visible on all screens) -->
+        @auth
+            <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('user.dashboard') }}"
+               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#c5983e]/20 hover:bg-[#c5983e]/30 border border-[#c5983e] text-[#c5983e] text-xs tracking-wider transition-colors font-bold shadow-sm"
+               title="My Client Portal">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#c5983e]"></span>
+                <span class="text-[11px] uppercase tracking-wider font-bold">PORTAL</span>
+            </a>
+        @else
+            <a href="{{ route('login') }}"
+               class="inline-flex items-center gap-1 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs tracking-wider transition-all duration-200 font-bold shadow-md"
+               title="Client Login">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+                <span class="text-[11px] uppercase tracking-wider font-bold">LOGIN</span>
+            </a>
+        @endauth
+
         <!-- Mobile Menu Hamburger -->
         <button type="button"
                 @click="menuOpen = !menuOpen"
@@ -120,6 +139,25 @@
                 <span class="ml-0.5 px-1.5 py-0.2 rounded-full bg-[#c5983e] text-[9.5px] text-white font-bold"
                       x-text="savedItems.length">0</span>
             </button>
+
+            <!-- Direct LOGIN / Client Portal Button (Always visible on all screens) -->
+            @auth
+                <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('user.dashboard') }}"
+                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#fdfaf4] hover:bg-[#f6efe1] border border-[#c5983e] text-[#c5983e] text-xs tracking-wider transition-colors font-bold shadow-sm"
+                   title="My Client Portal">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#c5983e]"></span>
+                    <span class="text-[11px] uppercase tracking-wider font-bold">PORTAL</span>
+                </a>
+            @else
+                <a href="{{ route('login') }}"
+                   class="inline-flex items-center gap-1 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#0b2112] hover:bg-[#1a3823] text-white text-xs tracking-wider transition-all duration-200 font-bold shadow-md"
+                   title="Client Login">
+                    <svg class="w-3.5 h-3.5 text-[#c5983e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                    <span class="text-[11px] uppercase tracking-wider font-bold">LOGIN</span>
+                </a>
+            @endauth
 
             <!-- Mobile Menu Hamburger -->
             <button type="button"

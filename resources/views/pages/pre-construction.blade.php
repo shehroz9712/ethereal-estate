@@ -62,8 +62,33 @@
                     Welcome to Your New Home
                 </h1>
 
-                <!-- Right: Quick VIP Action -->
-                <div class="hidden sm:flex items-center gap-3 z-10">
+                <!-- Right: Quick Actions (Wishlist, Sign In, VIP Action) -->
+                <div class="hidden sm:flex items-center gap-3.5 z-10">
+                    <!-- Wishlist Trigger -->
+                    <button type="button"
+                            @click="savedDrawerOpen = true"
+                            class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fdfaf4] hover:bg-[#f6efe1] border border-[#c5983e]/40 text-xs text-gray-800 transition-colors cursor-pointer"
+                            title="Saved Properties">
+                        <span class="text-sm text-[#c5983e]">♥</span>
+                        <span class="text-[11px] uppercase tracking-wider font-medium">Saved</span>
+                        <span class="px-1.5 py-0.2 rounded-full bg-[#c5983e] text-[9.5px] text-white font-bold"
+                              x-text="savedItems.length">0</span>
+                    </button>
+
+                    @auth
+                        <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('user.dashboard') }}"
+                           class="text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline">
+                            Portal ↗
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}"
+                           class="text-xs uppercase tracking-wider font-medium text-gray-600 hover:text-[#c5983e] transition-colors">
+                            Sign In
+                        </a>
+                    @endauth
+
+                    <span class="w-[1px] h-3.5 bg-gray-200"></span>
+
                     <button type="button"
                             @click="openRegisterModal(null, 'Pre-Construction Ontario Masterlist')"
                             class="text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline cursor-pointer">
@@ -120,7 +145,7 @@
                     </select>
                 </div>
 
-                <!-- 4. House Type (Property type to house type) -->
+                <!-- 4. House Type (Property type to house type - Estate removed) -->
                 <div class="min-w-[165px] shrink-0">
                     <select name="type"
                             onchange="document.getElementById('filter-form').submit()"
@@ -130,34 +155,144 @@
                         <option value="Semi-Detached" {{ ($filters['type'] ?? '') === 'Semi-Detached' ? 'selected' : '' }}>SEMI-DETACHED</option>
                         <option value="Townhome" {{ ($filters['type'] ?? '') === 'Townhome' ? 'selected' : '' }}>TOWNHOME</option>
                         <option value="Condominium" {{ ($filters['type'] ?? '') === 'Condominium' ? 'selected' : '' }}>CONDOMINIUM</option>
-                        <option value="Estate" {{ ($filters['type'] ?? '') === 'Estate' ? 'selected' : '' }}>ESTATE</option>
                     </select>
                 </div>
 
-                <!-- 5. Bedrooms -->
-                <div class="min-w-[135px] shrink-0">
-                    <select name="bedrooms"
-                            onchange="document.getElementById('filter-form').submit()"
-                            class="w-full h-11 px-3.5 bg-white border border-gray-200 rounded-lg text-[13px] font-semibold uppercase tracking-wider text-gray-700 cursor-pointer focus:outline-none focus:border-[#c5983e] font-sans">
-                        <option value="">BEDROOMS</option>
-                        <option value="2+" {{ ($filters['bedrooms'] ?? '') === '2+' ? 'selected' : '' }}>2+ BEDS</option>
-                        <option value="3+" {{ ($filters['bedrooms'] ?? '') === '3+' ? 'selected' : '' }}>3+ BEDS</option>
-                        <option value="4+" {{ ($filters['bedrooms'] ?? '') === '4+' ? 'selected' : '' }}>4+ BEDS</option>
-                        <option value="5+" {{ ($filters['bedrooms'] ?? '') === '5+' ? 'selected' : '' }}>5+ BEDS</option>
-                    </select>
-                </div>
+                <!-- 5. Combined Bed & Bath Multi-Select Dropdown -->
+                @php
+                    $rawBeds = !empty($filters['bedrooms']) ? (is_array($filters['bedrooms']) ? $filters['bedrooms'] : explode(',', (string)$filters['bedrooms'])) : [];
+                    $rawBaths = !empty($filters['bathrooms']) ? (is_array($filters['bathrooms']) ? $filters['bathrooms'] : explode(',', (string)$filters['bathrooms'])) : [];
+                    $activeBeds = array_values(array_filter(array_map('trim', array_map('strval', $rawBeds))));
+                    $activeBaths = array_values(array_filter(array_map('trim', array_map('strval', $rawBaths))));
+                @endphp
+                <div x-data="{
+                        open: false,
+                        selectedBeds: {{ json_encode($activeBeds) }},
+                        selectedBaths: {{ json_encode($activeBaths) }},
+                        toggleBed(val) {
+                            val = String(val);
+                            if (this.selectedBeds.includes(val)) {
+                                this.selectedBeds = this.selectedBeds.filter(b => b !== val);
+                            } else {
+                                this.selectedBeds.push(val);
+                            }
+                        },
+                        toggleBath(val) {
+                            val = String(val);
+                            if (this.selectedBaths.includes(val)) {
+                                this.selectedBaths = this.selectedBaths.filter(b => b !== val);
+                            } else {
+                                this.selectedBaths.push(val);
+                            }
+                        },
+                        reset() {
+                            this.selectedBeds = [];
+                            this.selectedBaths = [];
+                            this.$nextTick(() => document.getElementById('filter-form').submit());
+                        },
+                        apply() {
+                            this.open = false;
+                            document.getElementById('filter-form').submit();
+                        },
+                        get label() {
+                            if (this.selectedBeds.length === 0 && this.selectedBaths.length === 0) {
+                                return 'BED & BATH';
+                            }
+                            let parts = [];
+                            if (this.selectedBeds.length > 0) {
+                                parts.push(this.selectedBeds.slice().sort().join(', ') + ' Bed' + (this.selectedBeds.length > 1 || this.selectedBeds[0] !== '1' ? 's' : ''));
+                            }
+                            if (this.selectedBaths.length > 0) {
+                                parts.push(this.selectedBaths.slice().sort().join(', ') + ' Bath' + (this.selectedBaths.length > 1 || this.selectedBaths[0] !== '1' ? 's' : ''));
+                            }
+                            return parts.join(' • ');
+                        }
+                    }"
+                    class="relative min-w-[170px] shrink-0"
+                    @click.outside="open = false">
 
-                <!-- 6. Bathrooms -->
-                <div class="min-w-[140px] shrink-0">
-                    <select name="bathrooms"
-                            onchange="document.getElementById('filter-form').submit()"
-                            class="w-full h-11 px-3.5 bg-white border border-gray-200 rounded-lg text-[13px] font-semibold uppercase tracking-wider text-gray-700 cursor-pointer focus:outline-none focus:border-[#c5983e] font-sans">
-                        <option value="">BATHROOMS</option>
-                        <option value="1+" {{ ($filters['bathrooms'] ?? '') === '1+' ? 'selected' : '' }}>1+ BATHS</option>
-                        <option value="2+" {{ ($filters['bathrooms'] ?? '') === '2+' ? 'selected' : '' }}>2+ BATHS</option>
-                        <option value="3+" {{ ($filters['bathrooms'] ?? '') === '3+' ? 'selected' : '' }}>3+ BATHS</option>
-                        <option value="4+" {{ ($filters['bathrooms'] ?? '') === '4+' ? 'selected' : '' }}>4+ BATHS</option>
-                    </select>
+                    <!-- Trigger Button -->
+                    <button type="button"
+                            @click="open = !open"
+                            class="w-full h-11 px-3.5 bg-white border border-gray-200 rounded-lg text-[13px] font-semibold uppercase tracking-wider text-gray-700 flex items-center justify-between gap-2 cursor-pointer focus:outline-none focus:border-[#c5983e] transition-colors"
+                            :class="(selectedBeds.length > 0 || selectedBaths.length > 0) ? 'border-[#c5983e] text-[#c5983e] bg-[#fdfaf4]' : ''">
+                        <span class="truncate max-w-[140px]" x-text="label">BED & BATH</span>
+                        <svg class="w-3.5 h-3.5 text-gray-400 shrink-0 transition-transform duration-200"
+                             :class="open ? 'rotate-180 text-[#c5983e]' : ''"
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+
+                    <!-- Hidden inputs so standard form submit sends the values -->
+                    <input type="hidden" name="bedrooms" :value="selectedBeds.join(',')" />
+                    <input type="hidden" name="bathrooms" :value="selectedBaths.join(',')" />
+
+                    <!-- Dropdown Flyout Panel -->
+                    <div x-show="open"
+                         x-transition:enter="transition ease-out duration-150"
+                         x-transition:enter-start="opacity-0 translate-y-1 scale-95"
+                         x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                         x-transition:leave="transition ease-in duration-100"
+                         x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                         x-transition:leave-end="opacity-0 translate-y-1 scale-95"
+                         class="absolute left-0 mt-2 w-72 sm:w-80 bg-white rounded-xl shadow-2xl border border-gray-200 p-4 z-50 select-none"
+                         style="display: none;">
+                        
+                        <!-- SECTION 1: BEDROOMS -->
+                        <div class="mb-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-gray-600">Bedrooms</span>
+                                <span class="text-[10px] text-gray-400 font-medium">Select single or multiple</span>
+                            </div>
+                            <div class="grid grid-cols-5 gap-1.5">
+                                <template x-for="bed in ['1', '2', '3', '4', '5+']" :key="bed">
+                                    <button type="button"
+                                            @click="toggleBed(bed)"
+                                            class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                            :class="selectedBeds.includes(bed) 
+                                                ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
+                                                : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
+                                        <span x-text="bed"></span>
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 2: BATHROOMS -->
+                        <div class="mb-4 pt-3 border-t border-gray-100">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-gray-600">Bathrooms</span>
+                                <span class="text-[10px] text-gray-400 font-medium">Select single or multiple</span>
+                            </div>
+                            <div class="grid grid-cols-5 gap-1.5">
+                                <template x-for="bath in ['1', '2', '3', '4', '5+']" :key="bath">
+                                    <button type="button"
+                                            @click="toggleBath(bath)"
+                                            class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                            :class="selectedBaths.includes(bath) 
+                                                ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
+                                                : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
+                                        <span x-text="bath"></span>
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- FOOTER: Reset and Apply buttons -->
+                        <div class="pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
+                            <button type="button"
+                                    @click="reset()"
+                                    class="px-3 py-1.5 text-xs text-gray-500 hover:text-gray-800 transition-colors cursor-pointer">
+                                Clear
+                            </button>
+                            <button type="button"
+                                    @click="apply()"
+                                    class="px-5 py-2 bg-[#0b2112] hover:bg-[#1a3823] text-white text-xs uppercase tracking-wider font-semibold rounded-lg transition-colors cursor-pointer shadow">
+                                Apply
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 @if(array_filter($filters))

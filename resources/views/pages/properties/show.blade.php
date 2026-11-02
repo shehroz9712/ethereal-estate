@@ -142,11 +142,45 @@
                     </button>
                 </div>
 
-                <div class="flex items-center gap-4">
+                <div class="flex items-center gap-3 flex-wrap">
+                    <!-- Wishlist Save Button -->
+                    <button type="button"
+                            @click="toggleSaveProperty({ id: {{ $property->id }}, title: '{{ addslashes($property->title) }}', city: '{{ addslashes($property->city) }}', price: '{{ addslashes($property->formatted_price) }}', image: '{{ $property->primary_image_url }}', url: '{{ route('properties.show', $property->slug) }}' })"
+                            class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border text-xs tracking-wider transition-all cursor-pointer"
+                            :class="isPropertySaved({{ $property->id }}) ? 'bg-red-50 border-red-200 text-red-600 font-semibold' : 'bg-gray-50 border-gray-200 text-gray-700 hover:border-[#c5983e]'">
+                        <span :class="isPropertySaved({{ $property->id }}) ? 'text-red-500' : 'text-[#c5983e]'"
+                              x-text="isPropertySaved({{ $property->id }}) ? '♥' : '♡'"></span>
+                        <span x-text="isPropertySaved({{ $property->id }}) ? 'Saved' : 'Save Property'"></span>
+                    </button>
+
+                    <!-- Open Wishlist Drawer -->
+                    <button type="button"
+                            @click="savedDrawerOpen = true"
+                            class="relative flex items-center gap-1 px-3 py-1.5 rounded-full bg-white border border-gray-200 text-gray-700 text-xs hover:border-[#c5983e] transition-colors cursor-pointer"
+                            title="View Wishlist">
+                        <span class="text-xs text-[#c5983e]">♥</span>
+                        <span class="hidden sm:inline text-[11px] uppercase tracking-wider font-medium">Wishlist</span>
+                        <span class="ml-0.5 px-1.5 py-0.2 rounded-full bg-[#c5983e] text-[9.5px] text-white font-bold"
+                              x-text="savedItems.length">0</span>
+                    </button>
+
+                    @auth
+                        <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('user.dashboard') }}"
+                           class="text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline pl-2 border-l border-gray-200">
+                            Portal ↗
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}"
+                           class="text-xs uppercase tracking-wider font-medium text-gray-600 hover:text-[#c5983e] transition-colors pl-2 border-l border-gray-200">
+                            Sign In
+                        </a>
+                    @endauth
+
                     <button type="button"
                             @click="openUnlockModal('VIP Priority Access')"
-                            class="text-xs uppercase tracking-[0.16em] font-semibold text-[#c5983e] hover:text-[#b08432] transition-colors cursor-pointer">
-                        Register Here For Full Access ↗
+                            class="px-4 py-1.5 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs uppercase tracking-wider font-semibold transition-all cursor-pointer hidden md:inline-flex items-center gap-1.5">
+                        <span>VIP Access</span>
+                        <span>↗</span>
                     </button>
                 </div>
             </div>
@@ -177,6 +211,40 @@
                             <div>Garages: <strong class="text-gray-900 font-semibold">{{ $property->garage }} Garage</strong></div>
                             <div>House Type: <strong class="text-gray-900 font-semibold">{{ $property->property_type }}</strong></div>
                             <div>Status: <strong class="text-[#c5983e] font-semibold uppercase">{{ str_replace('_', ' ', $property->status) }}</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- Wishlist & Client Access Card -->
+                    <div class="p-5 rounded-xl bg-white border border-gray-200 mb-6 flex flex-col gap-3 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="text-base text-[#c5983e]">♥</span>
+                                <p class="text-xs uppercase tracking-wider font-bold text-gray-800">Wishlist &amp; Saved Properties</p>
+                            </div>
+                            <button type="button"
+                                    @click="savedDrawerOpen = true"
+                                    class="text-[11px] uppercase tracking-wider text-[#c5983e] font-semibold hover:underline cursor-pointer">
+                                View (<span x-text="savedItems.length">0</span>) ↗
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 font-light">
+                            Save this home to your private portfolio list for price updates, release alerts, and priority floor plans.
+                        </p>
+                        <div class="flex items-center gap-2 pt-1">
+                            <button type="button"
+                                    @click="toggleSaveProperty({ id: {{ $property->id }}, title: '{{ addslashes($property->title) }}', city: '{{ addslashes($property->city) }}', price: '{{ addslashes($property->formatted_price) }}', image: '{{ $property->primary_image_url }}', url: '{{ route('properties.show', $property->slug) }}' })"
+                                    class="flex-1 py-2.5 rounded-lg text-xs uppercase tracking-wider font-semibold transition-all cursor-pointer flex items-center justify-center gap-2 border"
+                                    :class="isPropertySaved({{ $property->id }}) ? 'bg-red-50 text-red-600 border-red-200 shadow-sm' : 'bg-[#06130d] text-white hover:bg-[#1a2e1e] border-transparent shadow'">
+                                <span :class="isPropertySaved({{ $property->id }}) ? 'text-red-500' : 'text-[#c5983e]'"
+                                      x-text="isPropertySaved({{ $property->id }}) ? '♥ Saved in Wishlist' : '♡ Add to Saved Properties'"></span>
+                            </button>
+                            @guest
+                                <a href="{{ route('login') }}"
+                                   class="px-3.5 py-2.5 rounded-lg border border-gray-200 text-xs uppercase tracking-wider text-gray-700 hover:border-[#c5983e] hover:text-[#c5983e] font-medium transition-colors text-center whitespace-nowrap"
+                                   title="Sign In to sync wishlist">
+                                    Sign In
+                                </a>
+                            @endguest
                         </div>
                     </div>
 

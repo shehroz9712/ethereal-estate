@@ -13,8 +13,14 @@ use Illuminate\View\View;
 
 class AuthController extends Controller
 {
-    public function showLoginForm(): View
+    public function showLoginForm(Request $request): View
     {
+        if ($request->filled('redirect')) {
+            session(['url.intended' => $request->get('redirect')]);
+        }
+        if ($request->filled('info')) {
+            session()->flash('info', $request->get('info'));
+        }
         return view('auth.login');
     }
 

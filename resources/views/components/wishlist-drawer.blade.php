@@ -41,7 +41,27 @@
 
             <!-- Drawer Body -->
             <div class="flex-1 overflow-y-auto p-6 space-y-4">
-                <template x-if="savedItems.length === 0">
+                <!-- If Not Logged In -->
+                <template x-if="!isAuthenticated">
+                    <div class="py-16 text-center text-gray-500 space-y-4">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-[#fdfaf4] border border-[#c5983e]/40 text-[#c5983e] flex items-center justify-center text-2xl shadow-sm">
+                            🔒
+                        </div>
+                        <h4 class="font-fragment text-lg uppercase tracking-wider text-gray-900">Sign In Required</h4>
+                        <p class="text-xs text-gray-500 max-w-xs mx-auto leading-relaxed">
+                            Please sign in to your account to save homes, view your personal wishlist, and receive VIP release alerts.
+                        </p>
+                        <div class="pt-2">
+                            <a href="{{ route('login') }}"
+                               class="inline-block px-6 py-3 bg-[#0b2112] text-white text-xs uppercase tracking-wider font-semibold rounded-lg hover:bg-[#1a3823] transition-colors shadow">
+                                Login to View Saved Homes ↗
+                            </a>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- If Logged In but Empty -->
+                <template x-if="isAuthenticated && savedItems.length === 0">
                     <div class="py-16 text-center text-gray-500 space-y-3">
                         <div class="w-14 h-14 mx-auto rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-xl">
                             ♡

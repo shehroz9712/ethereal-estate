@@ -99,9 +99,9 @@
         </div>
 
         <!-- ═══════════ FILTER BAR (Increased Font Size, Price Range, House Type, KM) ═══════════ -->
-        <div class="bg-white shrink-0 px-6 sm:px-10 lg:px-14 py-3 border-b border-gray-100">
+        <div class="relative z-40 bg-white shrink-0 px-6 sm:px-10 lg:px-14 py-3 border-b border-gray-100">
             <form method="GET" action="{{ route('pre-construction') }}" id="filter-form"
-                  class="flex items-center gap-3 overflow-x-auto select-none no-scrollbar flex-wrap sm:flex-nowrap">
+                  class="flex items-center gap-3 select-none flex-wrap xl:flex-nowrap">
 
                 <!-- 1. Search by city, town, postal code or area... -->
                 <div class="flex-[2.5] min-w-[240px] sm:min-w-[280px]">
@@ -171,19 +171,15 @@
                         selectedBaths: {{ json_encode($activeBaths) }},
                         toggleBed(val) {
                             val = String(val);
-                            if (this.selectedBeds.includes(val)) {
-                                this.selectedBeds = this.selectedBeds.filter(b => b !== val);
-                            } else {
-                                this.selectedBeds.push(val);
-                            }
+                            this.selectedBeds = this.selectedBeds.includes(val) 
+                                ? this.selectedBeds.filter(b => b !== val) 
+                                : [...this.selectedBeds, val];
                         },
                         toggleBath(val) {
                             val = String(val);
-                            if (this.selectedBaths.includes(val)) {
-                                this.selectedBaths = this.selectedBaths.filter(b => b !== val);
-                            } else {
-                                this.selectedBaths.push(val);
-                            }
+                            this.selectedBaths = this.selectedBaths.includes(val) 
+                                ? this.selectedBaths.filter(b => b !== val) 
+                                : [...this.selectedBaths, val];
                         },
                         reset() {
                             this.selectedBeds = [];
@@ -208,7 +204,7 @@
                             return parts.join(' • ');
                         }
                     }"
-                    class="relative min-w-[170px] shrink-0"
+                    class="relative min-w-[160px] sm:min-w-[175px] shrink-0"
                     @click.outside="open = false">
 
                     <!-- Trigger Button -->
@@ -216,7 +212,7 @@
                             @click="open = !open"
                             class="w-full h-11 px-3.5 bg-white border border-gray-200 rounded-lg text-[13px] font-semibold uppercase tracking-wider text-gray-700 flex items-center justify-between gap-2 cursor-pointer focus:outline-none focus:border-[#c5983e] transition-colors"
                             :class="(selectedBeds.length > 0 || selectedBaths.length > 0) ? 'border-[#c5983e] text-[#c5983e] bg-[#fdfaf4]' : ''">
-                        <span class="truncate max-w-[140px]" x-text="label">BED & BATH</span>
+                        <span class="truncate flex-1 text-left" x-text="label" :title="label">BED & BATH</span>
                         <svg class="w-3.5 h-3.5 text-gray-400 shrink-0 transition-transform duration-200"
                              :class="open ? 'rotate-180 text-[#c5983e]' : ''"
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -230,52 +226,112 @@
 
                     <!-- Dropdown Flyout Panel -->
                     <div x-show="open"
-                         x-transition:enter="transition ease-out duration-150"
-                         x-transition:enter-start="opacity-0 translate-y-1 scale-95"
+                         x-cloak
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 translate-y-2 scale-95"
                          x-transition:enter-end="opacity-100 translate-y-0 scale-100"
-                         x-transition:leave="transition ease-in duration-100"
+                         x-transition:leave="transition ease-in duration-150"
                          x-transition:leave-start="opacity-100 translate-y-0 scale-100"
-                         x-transition:leave-end="opacity-0 translate-y-1 scale-95"
-                         class="absolute left-0 mt-2 w-72 sm:w-80 bg-white rounded-xl shadow-2xl border border-gray-200 p-4 z-50 select-none"
-                         style="display: none;">
+                         x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+                         class="absolute right-0 top-full mt-2 w-72 sm:w-84 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.20)] border border-gray-200/90 p-4 sm:p-5 z-50 select-none max-w-[calc(100vw-2rem)]">
                         
                         <!-- SECTION 1: BEDROOMS -->
                         <div class="mb-4">
                             <div class="flex items-center justify-between mb-2">
-                                <span class="text-[11px] font-bold uppercase tracking-wider text-gray-600">Bedrooms</span>
-                                <span class="text-[10px] text-gray-400 font-medium">Select single or multiple</span>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-gray-700">Bedrooms</span>
+                                <span class="text-[10px] text-gray-400 font-medium">Single or Multiple</span>
                             </div>
                             <div class="grid grid-cols-5 gap-1.5">
-                                <template x-for="bed in ['1', '2', '3', '4', '5+']" :key="bed">
-                                    <button type="button"
-                                            @click="toggleBed(bed)"
-                                            class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
-                                            :class="selectedBeds.includes(bed) 
-                                                ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
-                                                : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
-                                        <span x-text="bed"></span>
-                                    </button>
-                                </template>
+                                <button type="button"
+                                        @click="toggleBed('1')"
+                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                        :class="selectedBeds.includes('1') 
+                                            ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
+                                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
+                                    1
+                                </button>
+                                <button type="button"
+                                        @click="toggleBed('2')"
+                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                        :class="selectedBeds.includes('2') 
+                                            ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
+                                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
+                                    2
+                                </button>
+                                <button type="button"
+                                        @click="toggleBed('3')"
+                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                        :class="selectedBeds.includes('3') 
+                                            ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
+                                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
+                                    3
+                                </button>
+                                <button type="button"
+                                        @click="toggleBed('4')"
+                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                        :class="selectedBeds.includes('4') 
+                                            ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
+                                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
+                                    4
+                                </button>
+                                <button type="button"
+                                        @click="toggleBed('5+')"
+                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                        :class="selectedBeds.includes('5+') 
+                                            ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
+                                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
+                                    5+
+                                </button>
                             </div>
                         </div>
 
                         <!-- SECTION 2: BATHROOMS -->
                         <div class="mb-4 pt-3 border-t border-gray-100">
                             <div class="flex items-center justify-between mb-2">
-                                <span class="text-[11px] font-bold uppercase tracking-wider text-gray-600">Bathrooms</span>
-                                <span class="text-[10px] text-gray-400 font-medium">Select single or multiple</span>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-gray-700">Bathrooms</span>
+                                <span class="text-[10px] text-gray-400 font-medium">Single or Multiple</span>
                             </div>
                             <div class="grid grid-cols-5 gap-1.5">
-                                <template x-for="bath in ['1', '2', '3', '4', '5+']" :key="bath">
-                                    <button type="button"
-                                            @click="toggleBath(bath)"
-                                            class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
-                                            :class="selectedBaths.includes(bath) 
-                                                ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
-                                                : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
-                                        <span x-text="bath"></span>
-                                    </button>
-                                </template>
+                                <button type="button"
+                                        @click="toggleBath('1')"
+                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                        :class="selectedBaths.includes('1') 
+                                            ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
+                                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
+                                    1
+                                </button>
+                                <button type="button"
+                                        @click="toggleBath('2')"
+                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                        :class="selectedBaths.includes('2') 
+                                            ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
+                                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
+                                    2
+                                </button>
+                                <button type="button"
+                                        @click="toggleBath('3')"
+                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                        :class="selectedBaths.includes('3') 
+                                            ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
+                                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
+                                    3
+                                </button>
+                                <button type="button"
+                                        @click="toggleBath('4')"
+                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                        :class="selectedBaths.includes('4') 
+                                            ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
+                                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
+                                    4
+                                </button>
+                                <button type="button"
+                                        @click="toggleBath('5+')"
+                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                        :class="selectedBaths.includes('5+') 
+                                            ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
+                                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
+                                    5+
+                                </button>
                             </div>
                         </div>
 
@@ -283,12 +339,12 @@
                         <div class="pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
                             <button type="button"
                                     @click="reset()"
-                                    class="px-3 py-1.5 text-xs text-gray-500 hover:text-gray-800 transition-colors cursor-pointer">
+                                    class="px-3 py-1.5 text-xs text-gray-500 hover:text-red-600 font-medium transition-colors cursor-pointer">
                                 Clear
                             </button>
                             <button type="button"
                                     @click="apply()"
-                                    class="px-5 py-2 bg-[#0b2112] hover:bg-[#1a3823] text-white text-xs uppercase tracking-wider font-semibold rounded-lg transition-colors cursor-pointer shadow">
+                                    class="px-5 py-2 bg-[#0b2112] hover:bg-[#1a3823] text-white text-xs uppercase tracking-wider font-semibold rounded-lg transition-colors cursor-pointer shadow-sm">
                                 Apply
                             </button>
                         </div>

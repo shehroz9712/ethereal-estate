@@ -15,6 +15,21 @@
 
     @stack('styles')
 </head>
+@php
+    $initialSavedItems = [];
+    if (auth()->check()) {
+        $initialSavedItems = auth()->user()->savedProperties->map(function ($p) {
+            return [
+                'id' => $p->id,
+                'title' => $p->title,
+                'city' => $p->city,
+                'price' => $p->formatted_price,
+                'image' => $p->primary_image_url,
+                'url' => route('properties.show', $p->slug),
+            ];
+        })->values()->all();
+    }
+@endphp
 <body class="min-h-full flex flex-col bg-white text-gray-900 selection:bg-amber-100 selection:text-amber-900 {{ $bodyClass ?? '' }}"
       x-data="{ 
           menuOpen: false,
@@ -24,14 +39,7 @@
           activePropertyId: null,
           activePropertyTitle: '',
           isAuthenticated: {{ auth()->check() ? 'true' : 'false' }},
-          savedItems: @json(auth()->check() ? auth()->user()->savedProperties->map(fn($p) => [
-              'id' => $p->id,
-              'title' => $p->title,
-              'city' => $p->city,
-              'price' => $p->formatted_price,
-              'image' => $p->primary_image_url,
-              'url' => route('properties.show', $p->slug)
-          ]) : []),
+          savedItems: @json($initialSavedItems),
           init() {
               if (!this.isAuthenticated) {
                   this.savedItems = [];

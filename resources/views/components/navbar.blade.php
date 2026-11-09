@@ -22,72 +22,120 @@
              alt="Ethereal Estates"
              class="h-10 sm:h-12 md:h-14 w-auto object-contain transition-opacity duration-300 group-hover:opacity-85" />
     </a>
+    <!-- Logo (Hidden on homepage because BADA LOGO is placed in screen center) -->
+    @if ($activePage !== 'home')
+        <a href="{{ route('home') }}" class="shrink-0 group block">
+            <img src="{{ asset('assets/images/logo.png') }}"
+                 alt="Ethereal Estates"
+                 class="h-10 sm:h-12 md:h-14 w-auto object-contain transition-opacity duration-300 group-hover:opacity-85" />
+        </a>
+    @else
+        <!-- Empty placeholder on homepage to balance alignment -->
+        <div class="w-10"></div>
+    @endif
 
-    <!-- Desktop Nav Links -->
-    <nav class="hidden lg:flex items-center gap-6 xl:gap-8">
-        @foreach ($links as $key => $link)
-            <a href="{{ route($link['route']) }}"
-               class="flex items-center gap-1.5 text-[12px] uppercase tracking-[0.17em] font-medium transition-colors duration-200 {{ $activePage === $key ? 'text-[#c5983e]' : 'text-white hover:text-[#c5983e]' }}">
-                {{ $link['label'] }}
-                <span class="text-[#c5983e] text-xs">↗</span>
-            </a>
-        @endforeach
-    </nav>
+    <!-- Desktop Nav Links (Hidden on homepage per user request: "homepage par upar menu section nahi rakhna hai") -->
+    @if ($activePage !== 'home')
+        <nav class="hidden lg:flex items-center gap-6 xl:gap-8">
+            @foreach ($links as $key => $link)
+                <a href="{{ route($link['route']) }}"
+                   class="flex items-center gap-1.5 text-[12px] uppercase tracking-[0.17em] font-medium transition-colors duration-200 {{ $activePage === $key ? 'text-[#c5983e]' : 'text-white hover:text-[#c5983e]' }}">
+                    {{ $link['label'] }}
+                    <span class="text-[#c5983e] text-xs">↗</span>
+                </a>
+            @endforeach
+        </nav>
+    @endif
 
-    <!-- Right Utility Buttons: Search & Wishlist & Menu Toggle -->
-    <div class="flex items-center gap-3 sm:gap-4">
-        <!-- Search Trigger Button -->
-        <button type="button"
-                @click="openSearchModal()"
-                class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs tracking-wider transition-colors cursor-pointer"
-                title="Search Properties">
-            <svg class="w-3.5 h-3.5 text-[#c5983e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-            <span class="hidden md:inline text-[11px] uppercase tracking-wider font-medium">Search</span>
-        </button>
+    <!-- Right Side Header Actions -->
+    @if ($activePage === 'home')
+        <!-- Homepage Right Header: Direct Login + Burger Menu (Three lines) on all screen sizes -->
+        <div class="flex items-center gap-3 sm:gap-4">
+            @auth
+                <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('user.dashboard') }}"
+                   class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#c5983e]/20 hover:bg-[#c5983e]/30 border border-[#c5983e] text-[#c5983e] text-xs tracking-wider transition-colors font-bold shadow-sm"
+                   title="My Client Portal">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#c5983e]"></span>
+                    <span class="text-[11px] uppercase tracking-wider font-bold">PORTAL</span>
+                </a>
+            @else
+                <a href="{{ route('login') }}"
+                   class="inline-flex items-center gap-1 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs tracking-wider transition-all duration-200 font-bold shadow-md"
+                   title="Client Login">
+                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                    <span class="text-[11px] uppercase tracking-wider font-bold">LOGIN</span>
+                </a>
+            @endauth
 
-        <!-- Saved Properties / Wishlist Trigger -->
-        <button type="button"
-                @click="savedDrawerOpen = true"
-                class="relative flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs tracking-wider transition-colors cursor-pointer"
-                title="Saved Properties">
-            <span class="text-sm text-[#c5983e]">♥</span>
-            <span class="hidden md:inline text-[11px] uppercase tracking-wider font-medium">Saved</span>
-            <span class="ml-0.5 px-1.5 py-0.2 rounded-full bg-[#c5983e] text-[9.5px] text-white font-bold"
-                  x-text="savedItems.length">0</span>
-        </button>
-
-        <!-- Direct LOGIN / Client Portal Button (Always visible on all screens) -->
-        @auth
-            <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('user.dashboard') }}"
-               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#c5983e]/20 hover:bg-[#c5983e]/30 border border-[#c5983e] text-[#c5983e] text-xs tracking-wider transition-colors font-bold shadow-sm"
-               title="My Client Portal">
-                <span class="w-1.5 h-1.5 rounded-full bg-[#c5983e]"></span>
-                <span class="text-[11px] uppercase tracking-wider font-bold">PORTAL</span>
-            </a>
-        @else
-            <a href="{{ route('login') }}"
-               class="inline-flex items-center gap-1 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs tracking-wider transition-all duration-200 font-bold shadow-md"
-               title="Client Login">
-                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            <!-- Burger Menu (Three Lines wala button) -->
+            <button type="button"
+                    @click="menuOpen = !menuOpen"
+                    class="flex items-center gap-2 p-2 sm:px-3 sm:py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white hover:text-[#c5983e] focus:outline-none cursor-pointer transition-colors shadow-sm"
+                    aria-label="Toggle Navigation Menu">
+                <span class="hidden sm:inline text-[11px] uppercase tracking-[0.2em] font-semibold text-white/90">Menu</span>
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
-                <span class="text-[11px] uppercase tracking-wider font-bold">LOGIN</span>
-            </a>
-        @endauth
+            </button>
+        </div>
+    @else
+        <!-- Standard Right Utility Buttons on other dark pages -->
+        <div class="flex items-center gap-3 sm:gap-4">
+            <!-- Search Trigger Button -->
+            <button type="button"
+                    @click="openSearchModal()"
+                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs tracking-wider transition-colors cursor-pointer"
+                    title="Search Properties">
+                <svg class="w-3.5 h-3.5 text-[#c5983e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <span class="hidden md:inline text-[11px] uppercase tracking-wider font-medium">Search</span>
+            </button>
 
-        <!-- Mobile Menu Hamburger -->
-        <button type="button"
-                @click="menuOpen = !menuOpen"
-                class="p-2 text-white hover:text-[#c5983e] focus:outline-none cursor-pointer"
-                aria-label="Toggle Navigation Menu">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path x-show="!menuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                <path x-show="menuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
-    </div>
+            <!-- Saved Properties / Wishlist Trigger -->
+            <button type="button"
+                    @click="savedDrawerOpen = true"
+                    class="relative flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs tracking-wider transition-colors cursor-pointer"
+                    title="Saved Properties">
+                <span class="text-sm text-[#c5983e]">♥</span>
+                <span class="hidden md:inline text-[11px] uppercase tracking-wider font-medium">Saved</span>
+                <span class="ml-0.5 px-1.5 py-0.2 rounded-full bg-[#c5983e] text-[9.5px] text-white font-bold"
+                      x-text="savedItems.length">0</span>
+            </button>
+
+            <!-- Direct LOGIN / Client Portal Button -->
+            @auth
+                <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('user.dashboard') }}"
+                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#c5983e]/20 hover:bg-[#c5983e]/30 border border-[#c5983e] text-[#c5983e] text-xs tracking-wider transition-colors font-bold shadow-sm"
+                   title="My Client Portal">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#c5983e]"></span>
+                    <span class="text-[11px] uppercase tracking-wider font-bold">PORTAL</span>
+                </a>
+            @else
+                <a href="{{ route('login') }}"
+                   class="inline-flex items-center gap-1 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs tracking-wider transition-all duration-200 font-bold shadow-md"
+                   title="Client Login">
+                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                    <span class="text-[11px] uppercase tracking-wider font-bold">LOGIN</span>
+                </a>
+            @endauth
+
+            <!-- Mobile Menu Hamburger -->
+            <button type="button"
+                    @click="menuOpen = !menuOpen"
+                    class="p-2 text-white hover:text-[#c5983e] focus:outline-none cursor-pointer"
+                    aria-label="Toggle Navigation Menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path x-show="!menuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    <path x-show="menuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+    @endif
 </header>
 
 @else

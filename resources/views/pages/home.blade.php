@@ -22,27 +22,10 @@
             <div class="h-[76px] shrink-0"></div>
 
             <!-- Central Content Area -->
-            <main class="flex-1 flex items-center justify-center px-6 sm:px-10 lg:px-16 py-6">
-                <div class="max-w-4xl w-full mx-auto text-center space-y-7">
+            <main class="flex-1 flex items-center justify-center px-6 sm:px-10 lg:px-16 py-4 sm:py-6">
+                <div class="max-w-4xl w-full mx-auto text-center space-y-6 sm:space-y-7">
                     
-                    <!-- Tagline & Brand Identity (with Logo) -->
-                    <div class="flex flex-col items-center space-y-3">
-                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#c5983e] text-xs uppercase tracking-[0.22em] font-medium">
-                            <span class="w-2 h-2 rounded-full bg-[#c5983e] animate-ping"></span>
-                            Platinum VIP Developer Allocations
-                        </div>
-
-                        <h1 class="font-fragment text-3xl sm:text-5xl lg:text-[56px] text-white uppercase tracking-[0.04em] leading-[1.12] drop-shadow-2xl">
-                            Invest in Tomorrow's Address,<br class="hidden sm:inline" />
-                            at Today's Price.
-                        </h1>
-
-                        <p class="text-white/85 text-xs sm:text-base font-light tracking-wide max-w-2xl mx-auto">
-                            Ontario's curated pre-construction advisory. Seamlessly connecting discerning buyers with premier developer releases.
-                        </p>
-                    </div>
-
-                    <!-- ═══════════ LUXURY SEARCH BAR (on Home Page) ═══════════ -->
+                    <!-- ═══════════ 1. LUXURY SEARCH BAR (Logo ke UPAR) ═══════════ -->
                     <div class="max-w-2xl mx-auto w-full">
                         <form action="{{ route('pre-construction') }}" method="GET" class="relative flex items-center shadow-2xl">
                             <div class="relative w-full">
@@ -54,9 +37,9 @@
                                 <input type="text"
                                        name="search"
                                        placeholder="Search by city, town, postal code or area..."
-                                       class="w-full h-14 sm:h-16 pl-12 pr-36 bg-white/95 backdrop-blur-md text-gray-900 placeholder-gray-400 text-xs sm:text-sm rounded-full border border-white/30 focus:outline-none focus:ring-2 focus:ring-[#c5983e] shadow-2xl transition-all" />
+                                       class="w-full h-13 sm:h-15 pl-12 pr-32 sm:pr-36 bg-white/95 backdrop-blur-md text-gray-900 placeholder-gray-400 text-xs sm:text-sm rounded-full border border-white/30 focus:outline-none focus:ring-2 focus:ring-[#c5983e] shadow-2xl transition-all font-sans" />
                                 <button type="submit"
-                                        class="absolute right-2 top-2 bottom-2 px-5 sm:px-7 bg-[#c5983e] hover:bg-[#b08432] text-white text-xs uppercase tracking-wider font-semibold rounded-full transition-all duration-300 shadow-md flex items-center gap-1.5 cursor-pointer">
+                                        class="absolute right-1.5 sm:right-2 top-1.5 sm:top-2 bottom-1.5 sm:bottom-2 px-4 sm:px-6 bg-[#c5983e] hover:bg-[#b08432] text-white text-xs uppercase tracking-wider font-semibold rounded-full transition-all duration-300 shadow-md flex items-center gap-1.5 cursor-pointer">
                                     <span>Explore</span>
                                     <span>↗</span>
                                 </button>
@@ -64,7 +47,7 @@
                         </form>
 
                         <!-- Quick Popular Search Tags -->
-                        <div class="flex items-center justify-center flex-wrap gap-2 pt-3 text-[11px] text-white/70">
+                        <div class="flex items-center justify-center flex-wrap gap-2 pt-2 text-[11px] text-white/70">
                             <span class="text-white/50 uppercase tracking-widest text-[9.5px]">Trending:</span>
                             @foreach(['Bowmanville', 'Oshawa', 'Whitby', 'Ajax', 'Oakville'] as $city)
                                 <a href="{{ route('pre-construction', ['search' => $city]) }}"
@@ -75,44 +58,72 @@
                         </div>
                     </div>
 
-                    <!-- ═══════════ 3 CLEAN CATEGORY PILL CARDS ═══════════ -->
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 max-w-3xl mx-auto pt-2">
-                        <!-- 1. Pre-Construction -->
-                        <a href="{{ route('pre-construction') }}"
-                           class="group p-4 rounded-xl bg-black/40 hover:bg-black/60 border border-white/15 hover:border-[#c5983e]/70 backdrop-blur-md transition-all duration-300 flex items-center justify-between text-left">
-                            <div>
-                                <span class="text-[9.5px] uppercase tracking-[0.2em] text-[#c5983e] font-semibold block">01 / Priority</span>
-                                <h3 class="font-fragment text-sm sm:text-base uppercase tracking-wider text-white group-hover:text-[#c5983e] transition-colors">Pre-Construction</h3>
-                            </div>
-                            <span class="text-[#c5983e] text-sm group-hover:translate-x-1 transition-transform">↗</span>
-                        </a>
-
-                        <!-- 2. Featured Listings -->
-                        <a href="{{ route('properties.index') }}"
-                           class="group p-4 rounded-xl bg-black/40 hover:bg-black/60 border border-white/15 hover:border-[#c5983e]/70 backdrop-blur-md transition-all duration-300 flex items-center justify-between text-left">
-                            <div>
-                                <span class="text-[9.5px] uppercase tracking-[0.2em] text-[#c5983e] font-semibold block">02 / Curated</span>
-                                <h3 class="font-fragment text-sm sm:text-base uppercase tracking-wider text-white group-hover:text-[#c5983e] transition-colors">Featured Listings</h3>
-                            </div>
-                            <span class="text-[#c5983e] text-sm group-hover:translate-x-1 transition-transform">↗</span>
-                        </a>
-
-                        <!-- 3. Rebate Calculator -->
-                        <a href="{{ route('rebate-calculator') }}"
-                           class="group p-4 rounded-xl bg-black/40 hover:bg-black/60 border border-white/15 hover:border-[#c5983e]/70 backdrop-blur-md transition-all duration-300 flex items-center justify-between text-left">
-                            <div>
-                                <span class="text-[9.5px] uppercase tracking-[0.2em] text-[#c5983e] font-semibold block">03 / Eligibility</span>
-                                <h3 class="font-fragment text-sm sm:text-base uppercase tracking-wider text-white group-hover:text-[#c5983e] transition-colors">Rebate Calculator</h3>
-                            </div>
-                            <span class="text-[#c5983e] text-sm group-hover:translate-x-1 transition-transform">↗</span>
+                    <!-- ═══════════ 2. BADA LOGO (Center Mein) ═══════════ -->
+                    <div class="flex flex-col items-center justify-center my-1 sm:my-3">
+                        <a href="{{ route('home') }}" class="inline-block group transform hover:scale-[1.02] transition-transform duration-300">
+                            <img src="{{ asset('assets/images/logo-hero.svg') }}"
+                                 alt="Ethereal Estates"
+                                 class="w-full max-w-[320px] sm:max-w-[460px] md:max-w-[560px] lg:max-w-[620px] h-auto object-contain filter drop-shadow-[0_16px_36px_rgba(0,0,0,0.85)]" />
                         </a>
                     </div>
+
+                    <!-- ═══════════ 3. TAGLINE / TEXT (Logo ke NEECHE — Placeholder) ═══════════ -->
+                    <div class="flex flex-col items-center space-y-2.5 max-w-2xl mx-auto text-center">
+                        <!-- <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#c5983e] text-[11px] uppercase tracking-[0.22em] font-medium">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#c5983e] animate-ping"></span>
+                            Platinum VIP Developer Allocations
+                        </div> -->
+
+                        <!-- Tagline Heading (Placeholder) -->
+                        <!-- <h1 class="font-fragment text-2xl sm:text-3xl lg:text-[42px] text-white uppercase tracking-[0.04em] leading-[1.14] drop-shadow-2xl">
+                            Invest in Tomorrow's Address,<br class="hidden sm:inline" />
+                            at Today's Price.
+                        </h1> -->
+
+                        <!-- Tagline Subtext (Placeholder) -->
+                        <p class="text-white/85 text-xs sm:text-sm font-light tracking-wide max-w-xl mx-auto leading-relaxed">
+                            Ontario's curated pre-construction advisory. Seamlessly connecting discerning buyers with premier developer releases.
+                        </p>
+                    </div>
+
+                    <!-- ═══════════ 4. 3 CLEAN CATEGORY PILL CARDS ═══════════ -->
+                    <!-- <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto pt-1">
+                        1. Pre-Construction
+                        <a href="{{ route('pre-construction') }}"
+                           class="group p-3.5 rounded-xl bg-black/40 hover:bg-black/60 border border-white/15 hover:border-[#c5983e]/70 backdrop-blur-md transition-all duration-300 flex items-center justify-between text-left">
+                            <div>
+                                <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5983e] font-semibold block">01 / Priority</span>
+                                <h3 class="font-fragment text-xs sm:text-sm uppercase tracking-wider text-white group-hover:text-[#c5983e] transition-colors">Pre-Construction</h3>
+                            </div>
+                            <span class="text-[#c5983e] text-xs group-hover:translate-x-1 transition-transform">↗</span>
+                        </a>
+
+                        2. Featured Listings
+                        <a href="{{ route('properties.index') }}"
+                           class="group p-3.5 rounded-xl bg-black/40 hover:bg-black/60 border border-white/15 hover:border-[#c5983e]/70 backdrop-blur-md transition-all duration-300 flex items-center justify-between text-left">
+                            <div>
+                                <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5983e] font-semibold block">02 / Curated</span>
+                                <h3 class="font-fragment text-xs sm:text-sm uppercase tracking-wider text-white group-hover:text-[#c5983e] transition-colors">Featured Listings</h3>
+                            </div>
+                            <span class="text-[#c5983e] text-xs group-hover:translate-x-1 transition-transform">↗</span>
+                        </a>
+
+                        3. Rebate Calculator
+                        <a href="{{ route('rebate-calculator') }}"
+                           class="group p-3.5 rounded-xl bg-black/40 hover:bg-black/60 border border-white/15 hover:border-[#c5983e]/70 backdrop-blur-md transition-all duration-300 flex items-center justify-between text-left">
+                            <div>
+                                <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5983e] font-semibold block">03 / Eligibility</span>
+                                <h3 class="font-fragment text-xs sm:text-sm uppercase tracking-wider text-white group-hover:text-[#c5983e] transition-colors">Rebate Calculator</h3>
+                            </div>
+                            <span class="text-[#c5983e] text-xs group-hover:translate-x-1 transition-transform">↗</span>
+                        </a>
+                    </div> -->
 
                 </div>
             </main>
 
             <!-- Bottom Brand & Advisory Bar -->
-            <div class="px-6 sm:px-10 lg:px-16 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/50 border-t border-white/10 bg-black/30 backdrop-blur-sm shrink-0">
+            <!-- <div class="px-6 sm:px-10 lg:px-16 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/50 border-t border-white/10 bg-black/30 backdrop-blur-sm shrink-0">
                 <div class="flex items-center gap-3">
                     <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" class="h-4 w-auto opacity-75" />
                     <span>Invest in Tomorrow's Address</span>
@@ -124,7 +135,7 @@
                     <span>•</span>
                     <a href="{{ route('about') }}" class="hover:text-white transition-colors">Who We Are</a>
                 </div>
-            </div>
+            </div> -->
 
         </div>
 

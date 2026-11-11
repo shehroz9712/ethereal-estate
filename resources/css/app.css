@@ -63,6 +63,17 @@
   --border-dark: rgba(255, 255, 255, 0.12);
 }
 
+html {
+  font-size: 15px;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 14.5px;
+  }
+}
+
 html, body {
   margin: 0;
   padding: 0;

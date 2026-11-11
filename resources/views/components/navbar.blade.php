@@ -93,10 +93,9 @@
                     @click="savedDrawerOpen = true"
                     class="relative flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs tracking-wider transition-colors cursor-pointer"
                     title="Saved Properties">
-                <span class="text-sm text-[#c5983e]">♥</span>
-                <span class="hidden md:inline text-[11px] uppercase tracking-wider font-medium">Saved</span>
-                <span class="ml-0.5 px-1.5 py-0.2 rounded-full bg-[#c5983e] text-[9.5px] text-white font-bold"
-                      x-text="savedItems.length">0</span>
+                                    <span class="text-[#c5983e] text-xs">↗</span>
+
+               
             </button>
 
             <!-- Direct LOGIN / Client Portal Button -->
@@ -105,7 +104,7 @@
                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#c5983e]/20 hover:bg-[#c5983e]/30 border border-[#c5983e] text-[#c5983e] text-xs tracking-wider transition-colors font-bold shadow-sm"
                    title="My Client Portal">
                     <span class="w-1.5 h-1.5 rounded-full bg-[#c5983e]"></span>
-                    <span class="text-[11px] uppercase tracking-wider font-bold">PORTAL</span>
+                    <span class="text-[11px] uppercase tracking-wider font-bold">My Account</span>
                 </a>
             @else
                 <a href="{{ route('login') }}"

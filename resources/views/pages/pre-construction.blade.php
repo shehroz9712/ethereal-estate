@@ -51,15 +51,12 @@
                         </svg>
                         Back
                     </a>
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fdfaf4] border border-[#c5983e]/40 text-[#c5983e] text-[11px] font-semibold uppercase tracking-wider select-none">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#c5983e]"></span>
-                        Pre-Construction Collection
-                    </span>
+                  
                 </div>
 
                 <!-- Centre: Heading "WELCOME TO YOUR NEW HOME" -->
                 <h1 class="font-fragment text-xl sm:text-2xl md:text-3xl lg:text-[30px] uppercase tracking-[0.05em] text-[#111111] absolute left-1/2 -translate-x-1/2 text-center whitespace-nowrap leading-tight select-none font-normal">
-                    Welcome to Your New Home
+                   Pre-Construction Collection
                 </h1>
 
                 <!-- Right: Quick Actions (Wishlist, Sign In, VIP Action) -->

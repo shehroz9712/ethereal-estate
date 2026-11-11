@@ -5,14 +5,14 @@
         <!-- Top grid -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 pb-14 border-b border-white/10">
 
-            <!-- Col 1: Brand & Contact (spans 6 cols) -->
-            <div class="lg:col-span-6 space-y-5">
+            <!-- Col 1: Brand & Contact (spans 5 cols) -->
+            <div class="sm:col-span-2 lg:col-span-5 space-y-5">
                 <a href="{{ route('home') }}" class="inline-block mb-2 group">
                     <x-logo-hero class="h-12 sm:h-14 md:h-16 w-auto" />
                 </a>
                 <p class="text-[12px] tracking-[0.25em] text-[#c5983e] font-serif italic">Let's Talk Real Estate</p>
                 <a href="mailto:office@etherealestates.ca"
-                   class="font-fragment text-2xl sm:text-3xl lg:text-[34px] text-white hover:text-[#c5983e] transition-colors block leading-none">
+                   class="font-fragment text-2xl sm:text-3xl lg:text-[28px] xl:text-[34px] text-white hover:text-[#c5983e] transition-colors block leading-none">
                     office@etherealestates.ca
                 </a>
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 text-xs text-white/60 font-light pt-2">
@@ -34,29 +34,128 @@
                 </div>
             </div>
 
-            <!-- Col 2: Discover More (spans 3 cols) -->
+            <!-- Col 2: Navigation & Listings (spans 3 cols) -->
             <div class="lg:col-span-3">
-                <h3 class="font-fragment text-base uppercase tracking-[0.12em] text-white mb-5">Discover More</h3>
+                <h3 class="font-fragment text-sm sm:text-base uppercase tracking-[0.14em] text-white mb-5">Navigation</h3>
                 <ul class="space-y-3 text-xs text-white/60 font-light">
-                    <li><a href="{{ route('pre-construction') }}" class="hover:text-[#c5983e] transition-colors">Pre-Construction</a></li>
-                    <li><a href="{{ route('properties.index') }}" class="hover:text-[#c5983e] transition-colors">Featured Listings</a></li>
-                    <li><a href="{{ route('about') }}" class="hover:text-[#c5983e] transition-colors">Who We Are</a></li>
-                    <li><a href="{{ route('our-story') }}" class="hover:text-[#c5983e] transition-colors">Our Story</a></li>
-                    <li><a href="{{ route('rebate-calculator') }}" class="hover:text-[#c5983e] transition-colors">Rebate Calculator</a></li>
-                    <li><a href="{{ route('genius') }}" class="hover:text-[#c5983e] transition-colors">The Genius Experience</a></li>
+                    <li>
+                        <a href="{{ route('pre-construction') }}" class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors">
+                            <span>Pre-Construction</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('properties.index') }}" class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors">
+                            <span>Featured Listings</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('rebate-calculator') }}" class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors">
+                            <span>Calculate Your Rebate</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <button type="button"
+                                @click="savedDrawerOpen = true"
+                                class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors cursor-pointer text-left font-light">
+                            <span>Saved Properties</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button"
+                                @click="openSearchModal()"
+                                class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors cursor-pointer text-left font-light">
+                            <span>Search Properties</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                        </button>
+                    </li>
                 </ul>
             </div>
 
-            <!-- Col 3: Legal & Portal (spans 3 cols) -->
-            <div class="lg:col-span-3">
-                <h3 class="font-fragment text-base uppercase tracking-[0.12em] text-white mb-5">Navigation & VIP</h3>
+            <!-- Col 3: Company & Journal (spans 2 cols) -->
+            <div class="lg:col-span-2">
+                <h3 class="font-fragment text-sm sm:text-base uppercase tracking-[0.14em] text-white mb-5">Company</h3>
                 <ul class="space-y-3 text-xs text-white/60 font-light">
-                    <li><a href="{{ route('join-ethereal') }}" class="hover:text-[#c5983e] transition-colors">Join Ethereal</a></li>
-                    <li><a href="{{ route('contact') }}" class="hover:text-[#c5983e] transition-colors">Contact Us</a></li>
-                    <li><a href="{{ route('login') }}" class="hover:text-[#c5983e] transition-colors">Client Sign In</a></li>
-                    <li><a href="{{ route('register') }}" class="hover:text-[#c5983e] transition-colors">Register for VIP Allocations</a></li>
-                    <li><a href="#" class="hover:text-[#c5983e] transition-colors">Terms of Service</a></li>
-                    <li><a href="#" class="hover:text-[#c5983e] transition-colors">Privacy Policy</a></li>
+                    <li>
+                        <a href="{{ route('about') }}" class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors">
+                            <span>Who We Are</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('our-story') }}" class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors">
+                            <span>Our Story</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('news.index') }}" class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors">
+                            <span>Ethereal Edit</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('join-ethereal') }}" class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors">
+                            <span>Join Ethereal</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('contact') }}" class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors">
+                            <span>Contact Us</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Col 4: VIP Portal & Legal (spans 2 cols) -->
+            <div class="lg:col-span-2">
+                <h3 class="font-fragment text-sm sm:text-base uppercase tracking-[0.14em] text-white mb-5">Client Portal</h3>
+                <ul class="space-y-3 text-xs text-white/60 font-light">
+                    @auth
+                        <li>
+                            <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('user.dashboard') }}"
+                               class="group/link inline-flex items-center gap-1.5 text-[#c5983e] hover:text-[#d4af37] transition-colors font-medium">
+                                <span>{{ auth()->user()->isAdmin() ? 'Admin Panel' : 'My Account' }}</span>
+                                <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('user.saved-properties') }}" class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors">
+                                <span>Saved Portfolio</span>
+                                <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                            </a>
+                        </li>
+                    @else
+                        <li>
+                            <a href="{{ route('login') }}" class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors">
+                                <span>Client Sign In</span>
+                                <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('register') }}" class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors">
+                                <span>VIP Allocations</span>
+                                <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                            </a>
+                        </li>
+                    @endauth
+                    <li>
+                        <a href="#" class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors">
+                            <span>Terms of Service</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="group/link inline-flex items-center gap-1.5 hover:text-[#c5983e] transition-colors">
+                            <span>Privacy Policy</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-[#c5983e]/0 group-hover/link:text-[#c5983e] transition-all transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"></i>
+                        </a>
+                    </li>
                 </ul>
             </div>
 

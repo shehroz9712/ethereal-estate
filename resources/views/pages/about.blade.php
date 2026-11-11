@@ -73,7 +73,7 @@
                     </p>
                 </div>
 
-                <!-- Live Realistic Sales Closed Counter (Persists on Refresh & Increments Naturally) -->
+                <!-- Live Realistic Sales Closed Counter (Persists on Refresh & Increments at Enhanced Live Speed) -->
                 <div x-data="{
                         salesCount: 1482,
                         justIncremented: false,
@@ -81,8 +81,8 @@
                             // Reference epoch baseline (Jan 1, 2025 at 1,420 base sales)
                             const baseEpoch = 1735689600000;
                             const baseCount = 1420;
-                            // Natural steady growth: ~1 sale per 8 hours over history
-                            const naturalCount = baseCount + Math.floor(Math.max(0, Date.now() - baseEpoch) / (1000 * 60 * 60 * 8));
+                            // Natural steady growth baseline
+                            const naturalCount = baseCount + Math.floor(Math.max(0, Date.now() - baseEpoch) / (1000 * 60 * 60 * 4));
                             
                             // Check localStorage so page refreshes NEVER reset backwards
                             const stored = parseInt(localStorage.getItem('ethereal_sales_closed_count') || '0', 10);
@@ -91,22 +91,25 @@
                                 localStorage.setItem('ethereal_sales_closed_count', this.salesCount);
                             } catch (e) {}
 
-                            // Realistic slow ticking schedule (random delay between 25s - 45s per increment)
-                            this.scheduleNextIncrement();
-                        },
-                        scheduleNextIncrement() {
-                            const delay = Math.floor(Math.random() * (45000 - 25000 + 1)) + 25000;
+                            // Rapid live ticking: first increment in 1.5s, then every 2.5s - 5s
                             setTimeout(() => {
-                                this.salesCount++;
-                                try {
-                                    localStorage.setItem('ethereal_sales_closed_count', this.salesCount);
-                                } catch (e) {}
-                                this.justIncremented = true;
-                                setTimeout(() => {
-                                    this.justIncremented = false;
-                                }, 4000);
-                                this.scheduleNextIncrement();
-                            }, delay);
+                                this.triggerIncrement();
+                            }, 1500);
+                        },
+                        triggerIncrement() {
+                            this.salesCount++;
+                            try {
+                                localStorage.setItem('ethereal_sales_closed_count', this.salesCount);
+                            } catch (e) {}
+                            this.justIncremented = true;
+                            setTimeout(() => {
+                                this.justIncremented = false;
+                            }, 1600);
+
+                            const nextDelay = Math.floor(Math.random() * (5000 - 2500 + 1)) + 2500;
+                            setTimeout(() => {
+                                this.triggerIncrement();
+                            }, nextDelay);
                         },
                         get formattedCount() {
                             return Number(this.salesCount).toLocaleString('en-US');
@@ -151,10 +154,8 @@
                                       :class="justIncremented ? 'scale-105 text-[#c5983e]' : ''"
                                       x-text="formattedCount">
                                 </span>
-                                <span class="text-xs uppercase tracking-wider font-semibold text-emerald-400 flex items-center gap-1">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
-                                    </svg>
+                                <span class="text-xs uppercase tracking-wider font-semibold text-emerald-400 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-arrow-trend-up text-xs text-emerald-400"></i>
                                     Active Sales
                                 </span>
                             </div>

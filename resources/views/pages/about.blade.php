@@ -11,11 +11,9 @@
 
             <div class="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
                 
-                <!-- Bigger Logo (per specification) -->
-                <div class="mb-4">
-                    <img src="{{ asset('assets/images/logo.png') }}"
-                         alt="Ethereal Estates"
-                         class="h-12 sm:h-16 lg:h-20 w-auto object-contain mx-auto drop-shadow-2xl" />
+                <!-- Logo: 'ethereal' in center, line to left end -->
+                <div class="mb-4 flex justify-center">
+                    <x-logo-hero class="h-9 sm:h-11 md:h-12 lg:h-14 w-auto" />
                 </div>
 
                 <!-- Small 'About Us / Who We Are' below the bigger logo (per specification) -->

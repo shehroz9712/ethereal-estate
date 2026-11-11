@@ -152,6 +152,7 @@ class Property extends Model
                 $q->where('title', 'like', "%{$s}%")
                   ->orWhere('city', 'like', "%{$s}%")
                   ->orWhere('address', 'like', "%{$s}%")
+                  ->orWhere('property_type', 'like', "%{$s}%")
                   ->orWhere('developer', 'like', "%{$s}%")
                   ->orWhere('short_description', 'like', "%{$s}%")
                   ->orWhere('full_description', 'like', "%{$s}%");
@@ -164,7 +165,11 @@ class Property extends Model
 
         $type = $filters['type'] ?? $filters['house_type'] ?? null;
         if (!empty($type) && !in_array(strtolower($type), ['all', 'all house types', 'property type', 'house type'])) {
-            $query->where('property_type', 'like', "%{$type}%");
+            $query->where(function ($q) use ($type) {
+                $q->where('property_type', 'like', "%{$type}%")
+                  ->orWhere('title', 'like', "%{$type}%")
+                  ->orWhere('short_description', 'like', "%{$type}%");
+            });
         }
 
         if (!empty($filters['bedrooms'])) {
@@ -266,6 +271,45 @@ class Property extends Model
                     $query->where('price', '<=', $val);
                 }
             }
+        }
+
+        // Distance in KM / Miles (from Ontario reference center or searched city)
+        $dist = $filters['km'] ?? $filters['miles'] ?? null;
+        if (!empty($dist) && is_numeric($dist)) {
+            $kmVal = (float) $dist;
+            if (!empty($filters['miles'])) {
+                $kmVal = $kmVal * 1.60934;
+            }
+
+            $refLat = 43.6532;
+            $refLng = -79.3832;
+
+            if (!empty($filters['city'])) {
+                $matchedCity = self::where('city', $filters['city'])->whereNotNull('latitude')->whereNotNull('longitude')->first();
+                if ($matchedCity) {
+                    $refLat = (float) $matchedCity->latitude;
+                    $refLng = (float) $matchedCity->longitude;
+                }
+            } elseif (!empty($filters['search'])) {
+                $matchedSearch = self::where('city', 'like', "%" . trim($filters['search']) . "%")
+                    ->whereNotNull('latitude')
+                    ->whereNotNull('longitude')
+                    ->first();
+                if ($matchedSearch) {
+                    $refLat = (float) $matchedSearch->latitude;
+                    $refLng = (float) $matchedSearch->longitude;
+                }
+            }
+
+            $query->whereNotNull('latitude')
+                  ->whereNotNull('longitude')
+                  ->whereRaw("
+                      (6371 * acos(
+                          least(1.0, greatest(-1.0,
+                              cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude))
+                          ))
+                      )) <= ?
+                  ", [$refLat, $refLng, $refLat, $kmVal]);
         }
 
         return $query;

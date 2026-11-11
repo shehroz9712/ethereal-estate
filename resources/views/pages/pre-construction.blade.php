@@ -1,6 +1,18 @@
 <x-layouts.app :hideFooter="true" activePage="pre-construction" title="Homes Worth The Wait — Pre-Construction — Ethereal Estates" bodyClass="overflow-hidden h-screen bg-white">
 
     @push('styles')
+    @php
+    $pinPositions = [
+        1 => ['left' => '52%',   'top' => '38%'],
+        2 => ['left' => '44.3%', 'top' => '15%'],
+        3 => ['left' => '16.1%', 'top' => '78%'],
+        4 => ['left' => '33.4%', 'top' => '51%'],
+        5 => ['left' => '74.8%', 'top' => '55%'],
+        6 => ['left' => '90.3%', 'top' => '68%'],
+        7 => ['left' => '28%',   'top' => '25%'],
+        8 => ['left' => '20%',   'top' => '35%'],
+    ];
+    @endphp
     <style>
         html,
         body {
@@ -126,8 +138,20 @@
                             name="search"
                             value="{{ $filters['search'] ?? '' }}"
                             placeholder="Search by city, town, postal code or area..."
-                            class="w-full h-11 pl-10 pr-4 bg-white border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#c5983e] focus:ring-1 focus:ring-[#c5983e] transition-colors font-sans"
-                            onchange="document.getElementById('filter-form').submit()" />
+                            class="w-full h-11 pl-10 pr-16 bg-white border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#c5983e] focus:ring-1 focus:ring-[#c5983e] transition-colors font-sans"
+                            onkeydown="if(event.key === 'Enter'){ event.preventDefault(); document.getElementById('filter-form').submit(); }" />
+                        @if(!empty($filters['search']))
+                            <a href="{{ route('pre-construction', array_diff_key($filters, ['search' => ''])) }}"
+                               class="absolute right-9 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-500 text-xs p-1 transition-colors"
+                               title="Clear search">
+                                <i class="fa-solid fa-xmark"></i>
+                            </a>
+                        @endif
+                        <button type="submit"
+                                class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-md bg-[#0b2112] hover:bg-[#c5983e] text-white flex items-center justify-center transition-colors cursor-pointer shadow-xs"
+                                title="Search">
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -167,6 +191,7 @@
                         <option value="Detached" {{ ($filters['type'] ?? '') === 'Detached' ? 'selected' : '' }}>DETACHED</option>
                         <option value="Semi-Detached" {{ ($filters['type'] ?? '') === 'Semi-Detached' ? 'selected' : '' }}>SEMI-DETACHED</option>
                         <option value="Townhome" {{ ($filters['type'] ?? '') === 'Townhome' ? 'selected' : '' }}>TOWNHOME</option>
+                        <option value="Bungalow" {{ ($filters['type'] ?? '') === 'Bungalow' ? 'selected' : '' }}>BUNGALOW</option>
                         <option value="Condominium" {{ ($filters['type'] ?? '') === 'Condominium' ? 'selected' : '' }}>CONDOMINIUM</option>
                     </select>
                 </div>
@@ -414,104 +439,40 @@
                 <!-- Interactive Custom Black-and-Gold Pointer Overlay -->
                 <div class="absolute inset-0 w-full h-full pointer-events-auto">
 
-                    <!-- Custom Pointer 1: Orchard South -->
-                    <div class="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer z-20 group"
-                        style="left: 52%; top: 38%;"
-                        id="pin-1"
-                        onclick="selectPreconListing(1)">
-                        <span class="pin-pulse-glow hidden absolute -inset-2.5 rounded-full border border-[#c5983e]/80 pin-glow-ring pointer-events-none"></span>
-                        <div class="flex flex-col items-center">
-                            <div class="w-8 h-8 rounded-full bg-[#111111] border-2 border-[#c5983e] shadow-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-115">
-                                <span class="w-2.5 h-2.5 rounded-full bg-[#c5983e]"></span>
+                    @forelse($properties as $property)
+                        @php
+                            $pos = $pinPositions[$property->id] ?? ['left' => '50%', 'top' => '50%'];
+                        @endphp
+                        <!-- Custom Pointer {{ $property->id }}: {{ $property->title }} -->
+                        <div class="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer z-20 group"
+                            style="left: {{ $pos['left'] }}; top: {{ $pos['top'] }};"
+                            id="pin-{{ $property->id }}"
+                            onclick="selectPreconListing({{ $property->id }})">
+                            <span class="pin-pulse-glow hidden absolute -inset-2.5 rounded-full border border-[#c5983e]/80 pin-glow-ring pointer-events-none"></span>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 h-8 rounded-full bg-[#111111] border-2 border-[#c5983e] shadow-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-115">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-[#c5983e]"></span>
+                                </div>
+                                <div class="w-0 h-0 border-solid border-t-[#111111] border-t-[7px] border-x-transparent border-x-[5px] border-b-0 -mt-[1px]"></div>
                             </div>
-                            <div class="w-0 h-0 border-solid border-t-[#111111] border-t-[7px] border-x-transparent border-x-[5px] border-b-0 -mt-[1px]"></div>
                         </div>
-                    </div>
-
-                    <!-- Custom Pointer 2: Chateau 9 -->
-                    <div class="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer z-20 group"
-                        style="left: 44.3%; top: 15%;"
-                        id="pin-2"
-                        onclick="selectPreconListing(2)">
-                        <span class="pin-pulse-glow hidden absolute -inset-2.5 rounded-full border border-[#c5983e]/80 pin-glow-ring pointer-events-none"></span>
-                        <div class="flex flex-col items-center">
-                            <div class="w-8 h-8 rounded-full bg-[#111111] border-2 border-[#c5983e] shadow-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-115">
-                                <span class="w-2.5 h-2.5 rounded-full bg-[#c5983e]"></span>
-                            </div>
-                            <div class="w-0 h-0 border-solid border-t-[#111111] border-t-[7px] border-x-transparent border-x-[5px] border-b-0 -mt-[1px]"></div>
-                        </div>
-                    </div>
-
-                    <!-- Custom Pointer 3: Ellia at Unity -->
-                    <div class="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer z-20 group"
-                        style="left: 16.1%; top: 78%;"
-                        id="pin-3"
-                        onclick="selectPreconListing(3)">
-                        <span class="pin-pulse-glow hidden absolute -inset-2.5 rounded-full border border-[#c5983e]/80 pin-glow-ring pointer-events-none"></span>
-                        <div class="flex flex-col items-center">
-                            <div class="w-8 h-8 rounded-full bg-[#111111] border-2 border-[#c5983e] shadow-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-115">
-                                <span class="w-2.5 h-2.5 rounded-full bg-[#c5983e]"></span>
-                            </div>
-                            <div class="w-0 h-0 border-solid border-t-[#111111] border-t-[7px] border-x-transparent border-x-[5px] border-b-0 -mt-[1px]"></div>
-                        </div>
-                    </div>
-
-                    <!-- Custom Pointer 4: Mirra Townhomes -->
-                    <div class="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer z-20 group"
-                        style="left: 33.4%; top: 51%;"
-                        id="pin-4"
-                        onclick="selectPreconListing(4)">
-                        <span class="pin-pulse-glow hidden absolute -inset-2.5 rounded-full border border-[#c5983e]/80 pin-glow-ring pointer-events-none"></span>
-                        <div class="flex flex-col items-center">
-                            <div class="w-8 h-8 rounded-full bg-[#111111] border-2 border-[#c5983e] shadow-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-115">
-                                <span class="w-2.5 h-2.5 rounded-full bg-[#c5983e]"></span>
-                            </div>
-                            <div class="w-0 h-0 border-solid border-t-[#111111] border-t-[7px] border-x-transparent border-x-[5px] border-b-0 -mt-[1px]"></div>
-                        </div>
-                    </div>
-
-                    <!-- Custom Pointer 5: Highland Reserve -->
-                    <div class="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer z-20 group"
-                        style="left: 74.8%; top: 55%;"
-                        id="pin-5"
-                        onclick="selectPreconListing(5)">
-                        <span class="pin-pulse-glow hidden absolute -inset-2.5 rounded-full border border-[#c5983e]/80 pin-glow-ring pointer-events-none"></span>
-                        <div class="flex flex-col items-center">
-                            <div class="w-8 h-8 rounded-full bg-[#111111] border-2 border-[#c5983e] shadow-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-115">
-                                <span class="w-2.5 h-2.5 rounded-full bg-[#c5983e]"></span>
-                            </div>
-                            <div class="w-0 h-0 border-solid border-t-[#111111] border-t-[7px] border-x-transparent border-x-[5px] border-b-0 -mt-[1px]"></div>
-                        </div>
-                    </div>
-
-                    <!-- Custom Pointer 6: Orchard West -->
-                    <div class="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer z-20 group"
-                        style="left: 90.3%; top: 68%;"
-                        id="pin-6"
-                        onclick="selectPreconListing(6)">
-                        <span class="pin-pulse-glow hidden absolute -inset-2.5 rounded-full border border-[#c5983e]/80 pin-glow-ring pointer-events-none"></span>
-                        <div class="flex flex-col items-center">
-                            <div class="w-8 h-8 rounded-full bg-[#111111] border-2 border-[#c5983e] shadow-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-115">
-                                <span class="w-2.5 h-2.5 rounded-full bg-[#c5983e]"></span>
-                            </div>
-                            <div class="w-0 h-0 border-solid border-t-[#111111] border-t-[7px] border-x-transparent border-x-[5px] border-b-0 -mt-[1px]"></div>
-                        </div>
-                    </div>
+                    @empty
+                    @endforelse
 
                     <!-- Floating Property Detail Popup -->
                     <div id="map-popup"
                         class="absolute z-30 transition-all duration-300 ease-out bg-white rounded-xl shadow-2xl border border-gray-100 p-3.5 min-w-[220px] transform -translate-x-1/2 -translate-y-full"
-                        style="left: 52%; top: 32%; display: block;">
+                        style="left: 52%; top: 32%; display: none;">
                         <div class="relative">
                             <button type="button"
                                 onclick="closeMapPopup()"
                                 class="absolute -top-1.5 -right-1.5 text-gray-400 hover:text-gray-700 text-xs w-4 h-4 rounded-full flex items-center justify-center cursor-pointer">
                                 <i class="fa-solid fa-xmark text-xs"></i>
                             </button>
-                            <p id="pop-city" class="text-[9.5px] uppercase tracking-[0.2em] font-semibold text-gray-400 mb-0.5">BOWMANVILLE</p>
-                            <h4 id="pop-title" class="font-fragment text-base uppercase text-[#111] leading-tight mb-1 font-medium">ORCHARD SOUTH</h4>
-                            <p id="pop-price" class="text-xs font-semibold text-[#c5983e] mb-2.5">From $1,250,000</p>
-                            <a id="pop-link" href="{{ route('properties.show', 'orchard-south') }}"
+                            <p id="pop-city" class="text-[9.5px] uppercase tracking-[0.2em] font-semibold text-gray-400 mb-0.5">CITY</p>
+                            <h4 id="pop-title" class="font-fragment text-base uppercase text-[#111] leading-tight mb-1 font-medium">COMMUNITY</h4>
+                            <p id="pop-price" class="text-xs font-semibold text-[#c5983e] mb-2.5">PRICE</p>
+                            <a id="pop-link" href="#"
                                 class="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-[#0b2e1b] hover:text-[#c5983e] transition-colors underline">
                                 <span>Explore Community</span>
                                 <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
@@ -532,54 +493,19 @@
     @push('scripts')
     <script>
         const PRECON_DATA = {
-            1: {
-                title: 'ORCHARD SOUTH',
-                city: 'BOWMANVILLE',
-                price: 'From $1,250,000',
-                url: '{{ route('properties.show', 'orchard-south') }}',
-                left: '52%',
-                top: '38%'
-            },
-            2: {
-                title: 'CHATEAU 9',
-                city: 'BOWMANVILLE',
-                price: 'From $1,450,000',
-                url: '{{ route('properties.show', 'chateau-9') }}',
-                left: '44.3%',
-                top: '15%'
-            },
-            3: {
-                title: 'ELLIA AT UNITY',
-                city: 'BOWMANVILLE',
-                price: 'From $998,000',
-                url: '{{ route('properties.show', 'ellia-at-unity') }}',
-                left: '16.1%',
-                top: '78%'
-            },
-            4: {
-                title: 'MIRRA TOWNHOMES',
-                city: 'OSHAWA',
-                price: 'From $849,000',
-                url: '{{ route('properties.show', 'mirra-townhomes') }}',
-                left: '33.4%',
-                top: '51%'
-            },
-            5: {
-                title: 'HIGHLAND RESERVE',
-                city: 'WHITBY',
-                price: 'From $1,190,000',
-                url: '{{ route('properties.show', 'highland-reserve') }}',
-                left: '74.8%',
-                top: '55%'
-            },
-            6: {
-                title: 'ORCHARD WEST',
-                city: 'AJAX',
-                price: 'From $1,050,000',
-                url: '{{ route('properties.show', 'orchard-west') }}',
-                left: '90.3%',
-                top: '68%'
-            }
+            @foreach($properties as $property)
+                @php
+                    $pos = $pinPositions[$property->id] ?? ['left' => '50%', 'top' => '50%'];
+                @endphp
+                {{ $property->id }}: {
+                    title: @json(strtoupper($property->title)),
+                    city: @json(strtoupper($property->city)),
+                    price: @json($property->formatted_price),
+                    url: @json(route('properties.show', $property->slug)),
+                    left: '{{ $pos['left'] }}',
+                    top: '{{ $pos['top'] }}'
+                },
+            @endforeach
         };
 
         function selectPreconListing(id) {
@@ -615,7 +541,6 @@
                 document.getElementById('pop-link').href = data.url;
 
                 popup.style.left = data.left;
-                // Position popup above the custom pointer pin
                 const topPercent = parseFloat(data.top);
                 popup.style.top = (topPercent - 5) + '%';
                 popup.style.display = 'block';
@@ -628,8 +553,12 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Select first property by default (Orchard South)
-            selectPreconListing(1);
+            const keys = Object.keys(PRECON_DATA);
+            if (keys.length > 0) {
+                selectPreconListing(parseInt(keys[0]));
+            } else {
+                closeMapPopup();
+            }
         });
     </script>
     @endpush

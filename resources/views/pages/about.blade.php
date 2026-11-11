@@ -429,7 +429,7 @@
                                    onclick="event.stopPropagation()"
                                    class="px-3 py-1.5 rounded-full bg-white/15 hover:bg-[#c5983e] text-white text-[10.5px] uppercase tracking-wider font-semibold transition-colors flex items-center gap-1.5 shadow-sm"
                                    title="Email {{ $member['name'] }}">
-                                    <span>✉</span>
+                                    <i class="fa-solid fa-envelope text-white text-xs"></i>
                                     <span>Email</span>
                                 </a>
 
@@ -438,7 +438,7 @@
                                    onclick="event.stopPropagation()"
                                    class="px-3 py-1.5 rounded-full bg-white/15 hover:bg-[#c5983e] text-white text-[10.5px] uppercase tracking-wider font-semibold transition-colors flex items-center gap-1.5 shadow-sm"
                                    title="Call {{ $member['name'] }}">
-                                    <span>📞</span>
+                                    <i class="fa-solid fa-phone text-white text-xs"></i>
                                     <span>Call</span>
                                 </a>
 
@@ -449,7 +449,7 @@
                                    onclick="event.stopPropagation()"
                                    class="px-3 py-1.5 rounded-full bg-white/15 hover:bg-[#c5983e] text-white text-[10.5px] uppercase tracking-wider font-semibold transition-colors flex items-center gap-1.5 shadow-sm"
                                    title="Connect on LinkedIn">
-                                    <span>in</span>
+                                    <i class="fa-brands fa-linkedin-in text-white text-xs"></i>
                                     <span>LinkedIn</span>
                                 </a>
 
@@ -460,7 +460,7 @@
                                    onclick="event.stopPropagation()"
                                    class="px-3 py-1.5 rounded-full bg-white/15 hover:bg-[#c5983e] text-white text-[10.5px] uppercase tracking-wider font-semibold transition-colors flex items-center gap-1.5 shadow-sm"
                                    title="Follow on Instagram">
-                                    <span>📸</span>
+                                    <i class="fa-brands fa-instagram text-white text-xs"></i>
                                     <span>Instagram</span>
                                 </a>
                             </div>

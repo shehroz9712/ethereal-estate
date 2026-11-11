@@ -2,23 +2,28 @@
 
     @push('styles')
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
             overflow: hidden;
             background-color: #ffffff;
         }
+
         #precon-wrap {
             height: calc(100dvh - 68px);
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
+
         #precon-scroll::-webkit-scrollbar {
             width: 3.5px;
         }
+
         #precon-scroll::-webkit-scrollbar-track {
             background: transparent;
         }
+
         #precon-scroll::-webkit-scrollbar-thumb {
             background: #c5983e80;
             border-radius: 3px;
@@ -26,10 +31,22 @@
 
         /* Animated Pin Highlight */
         @keyframes pinPulse {
-            0% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.4); opacity: 0.3; }
-            100% { transform: scale(1.7); opacity: 0; }
+            0% {
+                transform: scale(1);
+                opacity: 0.9;
+            }
+
+            50% {
+                transform: scale(1.4);
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: scale(1.7);
+                opacity: 0;
+            }
         }
+
         .pin-glow-ring {
             animation: pinPulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
         }
@@ -41,54 +58,54 @@
         <!-- ═══════════ SUBHEADER ROW ═══════════ -->
         <div class="bg-white shrink-0 px-6 sm:px-10 lg:px-14 py-3.5 border-b border-gray-100/90">
             <div class="relative flex items-center justify-between">
-                
+
                 <!-- Left: Back link + Redesigned Category Badge (No brackets) -->
                 <div class="flex items-center gap-3 z-10">
                     <a href="{{ route('home') }}"
-                       class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gray-500 hover:text-[#c5983e] transition-colors font-sans">
+                        class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gray-500 hover:text-[#c5983e] transition-colors font-sans">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
                         Back
                     </a>
-                  
+
                 </div>
 
                 <!-- Centre: Heading "WELCOME TO YOUR NEW HOME" -->
                 <h1 class="font-fragment text-xl sm:text-2xl md:text-3xl lg:text-[30px] uppercase tracking-[0.05em] text-[#111111] absolute left-1/2 -translate-x-1/2 text-center whitespace-nowrap leading-tight select-none font-normal">
-                   Pre-Construction Collection
+                    Pre-Construction Collection
                 </h1>
 
                 <!-- Right: Quick Actions (Wishlist, Sign In, VIP Action) -->
                 <div class="hidden sm:flex items-center gap-3.5 z-10">
                     <!-- Wishlist Trigger -->
                     <button type="button"
-                            @click="savedDrawerOpen = true"
-                            class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fdfaf4] hover:bg-[#f6efe1] border border-[#c5983e]/40 text-xs text-gray-800 transition-colors cursor-pointer"
-                            title="Saved Properties">
+                        @click="savedDrawerOpen = true"
+                        class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fdfaf4] hover:bg-[#f6efe1] border border-[#c5983e]/40 text-xs text-gray-800 transition-colors cursor-pointer"
+                        title="Saved Properties">
                         <span class="text-sm text-[#c5983e]">♥</span>
                         <span class="text-[11px] uppercase tracking-wider font-medium">Saved</span>
                         <span class="px-1.5 py-0.2 rounded-full bg-[#c5983e] text-[9.5px] text-white font-bold"
-                              x-text="savedItems.length">0</span>
+                            x-text="savedItems.length">0</span>
                     </button>
 
                     @auth
-                        <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('user.dashboard') }}"
-                           class="text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline">
-                            Portal ↗
-                        </a>
+                    <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('user.dashboard') }}"
+                        class="text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline">
+                        My Account ↗
+                    </a>
                     @else
-                        <a href="{{ route('login') }}"
-                           class="text-xs uppercase tracking-wider font-medium text-gray-600 hover:text-[#c5983e] transition-colors">
-                            Sign In
-                        </a>
+                    <a href="{{ route('login') }}"
+                        class="text-xs uppercase tracking-wider font-medium text-gray-600 hover:text-[#c5983e] transition-colors">
+                        Sign In
+                    </a>
                     @endauth
 
                     <span class="w-[1px] h-3.5 bg-gray-200"></span>
 
                     <button type="button"
-                            @click="openRegisterModal(null, 'Pre-Construction Ontario Masterlist')"
-                            class="text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline cursor-pointer">
+                        @click="openRegisterModal(null, 'Pre-Construction Ontario Masterlist')"
+                        class="text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline cursor-pointer">
                         VIP Price List ↗
                     </button>
                 </div>
@@ -96,30 +113,30 @@
         </div>
 
         <!-- ═══════════ FILTER BAR (Increased Font Size, Price Range, House Type, KM) ═══════════ -->
-        <div class="relative z-40 bg-white shrink-0 px-6 sm:px-10 lg:px-14 py-3 border-b border-gray-100">
+        <div class="relative z-40 bg-white shrink-0 px-6 sm:px-10 lg:px-14 py-3.5 border-b border-gray-100 overflow-visible">
             <form method="GET" action="{{ route('pre-construction') }}" id="filter-form"
-                  class="flex items-center gap-3 select-none flex-wrap xl:flex-nowrap">
+                class="flex items-center gap-3 select-none flex-wrap xl:flex-nowrap overflow-visible">
 
                 <!-- 1. Search by city, town, postal code or area... -->
                 <div class="flex-[2.5] min-w-[240px] sm:min-w-[280px]">
                     <div class="relative flex items-center">
                         <svg class="w-4 h-4 text-gray-400 absolute left-3.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                         <input type="text"
-                               name="search"
-                               value="{{ $filters['search'] ?? '' }}"
-                               placeholder="Search by city, town, postal code or area..."
-                               class="w-full h-11 pl-10 pr-4 bg-white border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#c5983e] focus:ring-1 focus:ring-[#c5983e] transition-colors font-sans"
-                               onchange="document.getElementById('filter-form').submit()" />
+                            name="search"
+                            value="{{ $filters['search'] ?? '' }}"
+                            placeholder="Search by city, town, postal code or area..."
+                            class="w-full h-11 pl-10 pr-4 bg-white border border-gray-200 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#c5983e] focus:ring-1 focus:ring-[#c5983e] transition-colors font-sans"
+                            onchange="document.getElementById('filter-form').submit()" />
                     </div>
                 </div>
 
                 <!-- 2. Distance KM (Miles converted to KM) -->
                 <div class="min-w-[125px] shrink-0">
                     <select name="km"
-                            onchange="document.getElementById('filter-form').submit()"
-                            class="w-full h-11 px-3.5 bg-white border border-gray-200 rounded-lg text-[13px] font-semibold uppercase tracking-wider text-gray-700 cursor-pointer focus:outline-none focus:border-[#c5983e] font-sans">
+                        onchange="document.getElementById('filter-form').submit()"
+                        class="w-full h-11 px-3.5 bg-white border border-gray-200 rounded-lg text-[13px] font-semibold uppercase tracking-wider text-gray-700 cursor-pointer focus:outline-none focus:border-[#c5983e] font-sans">
                         <option value="">DISTANCE</option>
                         <option value="10" {{ ($filters['km'] ?? '') === '10' ? 'selected' : '' }}>10 KM</option>
                         <option value="25" {{ ($filters['km'] ?? '') === '25' ? 'selected' : '' }}>25 KM</option>
@@ -131,8 +148,8 @@
                 <!-- 3. Price Range (Realm Website Style) -->
                 <div class="min-w-[190px] shrink-0">
                     <select name="price_range"
-                            onchange="document.getElementById('filter-form').submit()"
-                            class="w-full h-11 px-3.5 bg-white border border-gray-200 rounded-lg text-[13px] font-semibold uppercase tracking-wider text-gray-700 cursor-pointer focus:outline-none focus:border-[#c5983e] font-sans">
+                        onchange="document.getElementById('filter-form').submit()"
+                        class="w-full h-11 px-3.5 bg-white border border-gray-200 rounded-lg text-[13px] font-semibold uppercase tracking-wider text-gray-700 cursor-pointer focus:outline-none focus:border-[#c5983e] font-sans">
                         <option value="">PRICE RANGE</option>
                         <option value="Under $750K" {{ ($filters['price_range'] ?? '') === 'Under $750K' ? 'selected' : '' }}>UNDER $750,000</option>
                         <option value="$750K - $1M" {{ ($filters['price_range'] ?? '') === '$750K - $1M' ? 'selected' : '' }}>$750,000 – $1,000,000</option>
@@ -145,8 +162,8 @@
                 <!-- 4. House Type (Property type to house type - Estate removed) -->
                 <div class="min-w-[165px] shrink-0">
                     <select name="type"
-                            onchange="document.getElementById('filter-form').submit()"
-                            class="w-full h-11 px-3.5 bg-white border border-gray-200 rounded-lg text-[13px] font-semibold uppercase tracking-wider text-gray-700 cursor-pointer focus:outline-none focus:border-[#c5983e] font-sans">
+                        onchange="document.getElementById('filter-form').submit()"
+                        class="w-full h-11 px-3.5 bg-white border border-gray-200 rounded-lg text-[13px] font-semibold uppercase tracking-wider text-gray-700 cursor-pointer focus:outline-none focus:border-[#c5983e] font-sans">
                         <option value="">HOUSE TYPE</option>
                         <option value="Detached" {{ ($filters['type'] ?? '') === 'Detached' ? 'selected' : '' }}>DETACHED</option>
                         <option value="Semi-Detached" {{ ($filters['type'] ?? '') === 'Semi-Detached' ? 'selected' : '' }}>SEMI-DETACHED</option>
@@ -157,10 +174,10 @@
 
                 <!-- 5. Combined Bed & Bath Multi-Select Dropdown -->
                 @php
-                    $rawBeds = !empty($filters['bedrooms']) ? (is_array($filters['bedrooms']) ? $filters['bedrooms'] : explode(',', (string)$filters['bedrooms'])) : [];
-                    $rawBaths = !empty($filters['bathrooms']) ? (is_array($filters['bathrooms']) ? $filters['bathrooms'] : explode(',', (string)$filters['bathrooms'])) : [];
-                    $activeBeds = array_values(array_filter(array_map('trim', array_map('strval', $rawBeds))));
-                    $activeBaths = array_values(array_filter(array_map('trim', array_map('strval', $rawBaths))));
+                $rawBeds = !empty($filters['bedrooms']) ? (is_array($filters['bedrooms']) ? $filters['bedrooms'] : explode(',', (string)$filters['bedrooms'])) : [];
+                $rawBaths = !empty($filters['bathrooms']) ? (is_array($filters['bathrooms']) ? $filters['bathrooms'] : explode(',', (string)$filters['bathrooms'])) : [];
+                $activeBeds = array_values(array_filter(array_map('trim', array_map('strval', $rawBeds))));
+                $activeBaths = array_values(array_filter(array_map('trim', array_map('strval', $rawBaths))));
                 @endphp
                 <div x-data="{
                         open: false,
@@ -206,14 +223,14 @@
 
                     <!-- Trigger Button -->
                     <button type="button"
-                            @click="open = !open"
-                            class="w-full h-11 px-3.5 bg-white border border-gray-200 rounded-lg text-[13px] font-semibold uppercase tracking-wider text-gray-700 flex items-center justify-between gap-2 cursor-pointer focus:outline-none focus:border-[#c5983e] transition-colors"
-                            :class="(selectedBeds.length > 0 || selectedBaths.length > 0) ? 'border-[#c5983e] text-[#c5983e] bg-[#fdfaf4]' : ''">
+                        @click="open = !open"
+                        class="w-full h-11 px-3.5 bg-white border border-gray-200 rounded-lg text-[13px] font-semibold uppercase tracking-wider text-gray-700 flex items-center justify-between gap-2 cursor-pointer focus:outline-none focus:border-[#c5983e] transition-colors box-border"
+                        :class="(open || selectedBeds.length > 0 || selectedBaths.length > 0) ? '!border-[#c5983e] !text-[#c5983e] !bg-[#fdfaf4]' : ''">
                         <span class="truncate flex-1 text-left" x-text="label" :title="label">BED & BATH</span>
                         <svg class="w-3.5 h-3.5 text-gray-400 shrink-0 transition-transform duration-200"
-                             :class="open ? 'rotate-180 text-[#c5983e]' : ''"
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            :class="open ? 'rotate-180 !text-[#c5983e]' : ''"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
 
@@ -223,15 +240,15 @@
 
                     <!-- Dropdown Flyout Panel -->
                     <div x-show="open"
-                         x-cloak
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 translate-y-2 scale-95"
-                         x-transition:enter-end="opacity-100 translate-y-0 scale-100"
-                         x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100 translate-y-0 scale-100"
-                         x-transition:leave-end="opacity-0 translate-y-2 scale-95"
-                         class="absolute right-0 top-full mt-2 w-72 sm:w-84 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.20)] border border-gray-200/90 p-4 sm:p-5 z-50 select-none max-w-[calc(100vw-2rem)]">
-                        
+                        x-cloak
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                        x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+                        class="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-72 sm:w-84 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.20)] border border-gray-200/90 p-4 sm:p-5 z-50 select-none max-w-[calc(100vw-2rem)]">
+
                         <!-- SECTION 1: BEDROOMS -->
                         <div class="mb-4">
                             <div class="flex items-center justify-between mb-2">
@@ -240,41 +257,41 @@
                             </div>
                             <div class="grid grid-cols-5 gap-1.5">
                                 <button type="button"
-                                        @click="toggleBed('1')"
-                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
-                                        :class="selectedBeds.includes('1') 
+                                    @click="toggleBed('1')"
+                                    class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                    :class="selectedBeds.includes('1') 
                                             ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
                                             : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
                                     1
                                 </button>
                                 <button type="button"
-                                        @click="toggleBed('2')"
-                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
-                                        :class="selectedBeds.includes('2') 
+                                    @click="toggleBed('2')"
+                                    class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                    :class="selectedBeds.includes('2') 
                                             ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
                                             : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
                                     2
                                 </button>
                                 <button type="button"
-                                        @click="toggleBed('3')"
-                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
-                                        :class="selectedBeds.includes('3') 
+                                    @click="toggleBed('3')"
+                                    class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                    :class="selectedBeds.includes('3') 
                                             ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
                                             : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
                                     3
                                 </button>
                                 <button type="button"
-                                        @click="toggleBed('4')"
-                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
-                                        :class="selectedBeds.includes('4') 
+                                    @click="toggleBed('4')"
+                                    class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                    :class="selectedBeds.includes('4') 
                                             ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
                                             : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
                                     4
                                 </button>
                                 <button type="button"
-                                        @click="toggleBed('5+')"
-                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
-                                        :class="selectedBeds.includes('5+') 
+                                    @click="toggleBed('5+')"
+                                    class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                    :class="selectedBeds.includes('5+') 
                                             ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
                                             : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
                                     5+
@@ -290,41 +307,41 @@
                             </div>
                             <div class="grid grid-cols-5 gap-1.5">
                                 <button type="button"
-                                        @click="toggleBath('1')"
-                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
-                                        :class="selectedBaths.includes('1') 
+                                    @click="toggleBath('1')"
+                                    class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                    :class="selectedBaths.includes('1') 
                                             ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
                                             : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
                                     1
                                 </button>
                                 <button type="button"
-                                        @click="toggleBath('2')"
-                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
-                                        :class="selectedBaths.includes('2') 
+                                    @click="toggleBath('2')"
+                                    class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                    :class="selectedBaths.includes('2') 
                                             ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
                                             : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
                                     2
                                 </button>
                                 <button type="button"
-                                        @click="toggleBath('3')"
-                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
-                                        :class="selectedBaths.includes('3') 
+                                    @click="toggleBath('3')"
+                                    class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                    :class="selectedBaths.includes('3') 
                                             ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
                                             : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
                                     3
                                 </button>
                                 <button type="button"
-                                        @click="toggleBath('4')"
-                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
-                                        :class="selectedBaths.includes('4') 
+                                    @click="toggleBath('4')"
+                                    class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                    :class="selectedBaths.includes('4') 
                                             ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
                                             : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
                                     4
                                 </button>
                                 <button type="button"
-                                        @click="toggleBath('5+')"
-                                        class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
-                                        :class="selectedBaths.includes('5+') 
+                                    @click="toggleBath('5+')"
+                                    class="h-9 rounded-lg text-xs font-semibold uppercase transition-all flex items-center justify-center cursor-pointer border"
+                                    :class="selectedBaths.includes('5+') 
                                             ? 'bg-[#c5983e] text-white border-[#c5983e] shadow-sm font-bold' 
                                             : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'">
                                     5+
@@ -335,13 +352,13 @@
                         <!-- FOOTER: Reset and Apply buttons -->
                         <div class="pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
                             <button type="button"
-                                    @click="reset()"
-                                    class="px-3 py-1.5 text-xs text-gray-500 hover:text-red-600 font-medium transition-colors cursor-pointer">
+                                @click="reset()"
+                                class="px-3 py-1.5 text-xs text-gray-500 hover:text-red-600 font-medium transition-colors cursor-pointer">
                                 Clear
                             </button>
                             <button type="button"
-                                    @click="apply()"
-                                    class="px-5 py-2 bg-[#0b2112] hover:bg-[#1a3823] text-white text-xs uppercase tracking-wider font-semibold rounded-lg transition-colors cursor-pointer shadow-sm">
+                                @click="apply()"
+                                class="px-5 py-2 bg-[#0b2112] hover:bg-[#1a3823] text-white text-xs uppercase tracking-wider font-semibold rounded-lg transition-colors cursor-pointer shadow-sm">
                                 Apply
                             </button>
                         </div>
@@ -349,11 +366,11 @@
                 </div>
 
                 @if(array_filter($filters))
-                    <div class="shrink-0 pl-1">
-                        <a href="{{ route('pre-construction') }}" class="h-11 px-3.5 rounded-lg border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 text-xs uppercase tracking-wider font-semibold whitespace-nowrap inline-flex items-center">
-                            Clear ✕
-                        </a>
-                    </div>
+                <div class="shrink-0 pl-1">
+                    <a href="{{ route('pre-construction') }}" class="h-11 px-3.5 rounded-lg border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 text-xs uppercase tracking-wider font-semibold whitespace-nowrap inline-flex items-center">
+                        Clear ✕
+                    </a>
+                </div>
                 @endif
             </form>
         </div>
@@ -388,21 +405,21 @@
 
             <!-- RIGHT COLUMN: Map Container with custom black-and-gold pointers -->
             <div class="hidden md:flex flex-1 min-w-0 min-h-0 rounded-[22px] lg:rounded-[26px] overflow-hidden shadow-[0_2px_14px_rgba(0,0,0,0.03)] border border-gray-200/80 relative bg-[#f5f6f3] select-none"
-                 id="map-container">
-                
+                id="map-container">
+
                 <!-- Base Figma Map Image -->
                 <img src="{{ asset('assets/images/precon-map.jpg') }}"
-                     alt="Pre-Construction Ontario Map"
-                     class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none" />
+                    alt="Pre-Construction Ontario Map"
+                    class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none" />
 
                 <!-- Interactive Custom Black-and-Gold Pointer Overlay -->
                 <div class="absolute inset-0 w-full h-full pointer-events-auto">
 
                     <!-- Custom Pointer 1: Orchard South -->
                     <div class="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer z-20 group"
-                         style="left: 52%; top: 38%;"
-                         id="pin-1"
-                         onclick="selectPreconListing(1)">
+                        style="left: 52%; top: 38%;"
+                        id="pin-1"
+                        onclick="selectPreconListing(1)">
                         <span class="pin-pulse-glow hidden absolute -inset-2.5 rounded-full border border-[#c5983e]/80 pin-glow-ring pointer-events-none"></span>
                         <div class="flex flex-col items-center">
                             <div class="w-8 h-8 rounded-full bg-[#111111] border-2 border-[#c5983e] shadow-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-115">
@@ -414,9 +431,9 @@
 
                     <!-- Custom Pointer 2: Chateau 9 -->
                     <div class="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer z-20 group"
-                         style="left: 44.3%; top: 15%;"
-                         id="pin-2"
-                         onclick="selectPreconListing(2)">
+                        style="left: 44.3%; top: 15%;"
+                        id="pin-2"
+                        onclick="selectPreconListing(2)">
                         <span class="pin-pulse-glow hidden absolute -inset-2.5 rounded-full border border-[#c5983e]/80 pin-glow-ring pointer-events-none"></span>
                         <div class="flex flex-col items-center">
                             <div class="w-8 h-8 rounded-full bg-[#111111] border-2 border-[#c5983e] shadow-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-115">
@@ -428,9 +445,9 @@
 
                     <!-- Custom Pointer 3: Ellia at Unity -->
                     <div class="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer z-20 group"
-                         style="left: 16.1%; top: 78%;"
-                         id="pin-3"
-                         onclick="selectPreconListing(3)">
+                        style="left: 16.1%; top: 78%;"
+                        id="pin-3"
+                        onclick="selectPreconListing(3)">
                         <span class="pin-pulse-glow hidden absolute -inset-2.5 rounded-full border border-[#c5983e]/80 pin-glow-ring pointer-events-none"></span>
                         <div class="flex flex-col items-center">
                             <div class="w-8 h-8 rounded-full bg-[#111111] border-2 border-[#c5983e] shadow-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-115">
@@ -442,9 +459,9 @@
 
                     <!-- Custom Pointer 4: Mirra Townhomes -->
                     <div class="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer z-20 group"
-                         style="left: 33.4%; top: 51%;"
-                         id="pin-4"
-                         onclick="selectPreconListing(4)">
+                        style="left: 33.4%; top: 51%;"
+                        id="pin-4"
+                        onclick="selectPreconListing(4)">
                         <span class="pin-pulse-glow hidden absolute -inset-2.5 rounded-full border border-[#c5983e]/80 pin-glow-ring pointer-events-none"></span>
                         <div class="flex flex-col items-center">
                             <div class="w-8 h-8 rounded-full bg-[#111111] border-2 border-[#c5983e] shadow-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-115">
@@ -456,9 +473,9 @@
 
                     <!-- Custom Pointer 5: Highland Reserve -->
                     <div class="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer z-20 group"
-                         style="left: 74.8%; top: 55%;"
-                         id="pin-5"
-                         onclick="selectPreconListing(5)">
+                        style="left: 74.8%; top: 55%;"
+                        id="pin-5"
+                        onclick="selectPreconListing(5)">
                         <span class="pin-pulse-glow hidden absolute -inset-2.5 rounded-full border border-[#c5983e]/80 pin-glow-ring pointer-events-none"></span>
                         <div class="flex flex-col items-center">
                             <div class="w-8 h-8 rounded-full bg-[#111111] border-2 border-[#c5983e] shadow-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-115">
@@ -470,9 +487,9 @@
 
                     <!-- Custom Pointer 6: Orchard West -->
                     <div class="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer z-20 group"
-                         style="left: 90.3%; top: 68%;"
-                         id="pin-6"
-                         onclick="selectPreconListing(6)">
+                        style="left: 90.3%; top: 68%;"
+                        id="pin-6"
+                        onclick="selectPreconListing(6)">
                         <span class="pin-pulse-glow hidden absolute -inset-2.5 rounded-full border border-[#c5983e]/80 pin-glow-ring pointer-events-none"></span>
                         <div class="flex flex-col items-center">
                             <div class="w-8 h-8 rounded-full bg-[#111111] border-2 border-[#c5983e] shadow-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-115">
@@ -484,17 +501,17 @@
 
                     <!-- Floating Property Detail Popup -->
                     <div id="map-popup"
-                         class="absolute z-30 transition-all duration-300 ease-out bg-white rounded-xl shadow-2xl border border-gray-100 p-3.5 min-w-[220px] transform -translate-x-1/2 -translate-y-full"
-                         style="left: 52%; top: 32%; display: block;">
+                        class="absolute z-30 transition-all duration-300 ease-out bg-white rounded-xl shadow-2xl border border-gray-100 p-3.5 min-w-[220px] transform -translate-x-1/2 -translate-y-full"
+                        style="left: 52%; top: 32%; display: block;">
                         <div class="relative">
                             <button type="button"
-                                    onclick="closeMapPopup()"
-                                    class="absolute -top-1.5 -right-1.5 text-gray-400 hover:text-gray-700 text-xs w-4 h-4 rounded-full flex items-center justify-center cursor-pointer">✕</button>
+                                onclick="closeMapPopup()"
+                                class="absolute -top-1.5 -right-1.5 text-gray-400 hover:text-gray-700 text-xs w-4 h-4 rounded-full flex items-center justify-center cursor-pointer">✕</button>
                             <p id="pop-city" class="text-[9.5px] uppercase tracking-[0.2em] font-semibold text-gray-400 mb-0.5">BOWMANVILLE</p>
                             <h4 id="pop-title" class="font-fragment text-base uppercase text-[#111] leading-tight mb-1 font-medium">ORCHARD SOUTH</h4>
                             <p id="pop-price" class="text-xs font-semibold text-[#c5983e] mb-2.5">From $1,250,000</p>
                             <a id="pop-link" href="{{ route('properties.show', 'orchard-south') }}"
-                               class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-[#0b2e1b] hover:text-[#c5983e] transition-colors underline">
+                                class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-[#0b2e1b] hover:text-[#c5983e] transition-colors underline">
                                 Explore Community ↗
                             </a>
                         </div>
@@ -513,12 +530,54 @@
     @push('scripts')
     <script>
         const PRECON_DATA = {
-            1: { title: 'ORCHARD SOUTH', city: 'BOWMANVILLE', price: 'From $1,250,000', url: '{{ route('properties.show', 'orchard-south') }}', left: '52%', top: '38%' },
-            2: { title: 'CHATEAU 9', city: 'BOWMANVILLE', price: 'From $1,450,000', url: '{{ route('properties.show', 'chateau-9') }}', left: '44.3%', top: '15%' },
-            3: { title: 'ELLIA AT UNITY', city: 'BOWMANVILLE', price: 'From $998,000', url: '{{ route('properties.show', 'ellia-at-unity') }}', left: '16.1%', top: '78%' },
-            4: { title: 'MIRRA TOWNHOMES', city: 'OSHAWA', price: 'From $849,000', url: '{{ route('properties.show', 'mirra-townhomes') }}', left: '33.4%', top: '51%' },
-            5: { title: 'HIGHLAND RESERVE', city: 'WHITBY', price: 'From $1,190,000', url: '{{ route('properties.show', 'highland-reserve') }}', left: '74.8%', top: '55%' },
-            6: { title: 'ORCHARD WEST', city: 'AJAX', price: 'From $1,050,000', url: '{{ route('properties.show', 'orchard-west') }}', left: '90.3%', top: '68%' }
+            1: {
+                title: 'ORCHARD SOUTH',
+                city: 'BOWMANVILLE',
+                price: 'From $1,250,000',
+                url: '{{ route('properties.show', 'orchard-south') }}',
+                left: '52%',
+                top: '38%'
+            },
+            2: {
+                title: 'CHATEAU 9',
+                city: 'BOWMANVILLE',
+                price: 'From $1,450,000',
+                url: '{{ route('properties.show', 'chateau-9') }}',
+                left: '44.3%',
+                top: '15%'
+            },
+            3: {
+                title: 'ELLIA AT UNITY',
+                city: 'BOWMANVILLE',
+                price: 'From $998,000',
+                url: '{{ route('properties.show', 'ellia-at-unity') }}',
+                left: '16.1%',
+                top: '78%'
+            },
+            4: {
+                title: 'MIRRA TOWNHOMES',
+                city: 'OSHAWA',
+                price: 'From $849,000',
+                url: '{{ route('properties.show', 'mirra-townhomes') }}',
+                left: '33.4%',
+                top: '51%'
+            },
+            5: {
+                title: 'HIGHLAND RESERVE',
+                city: 'WHITBY',
+                price: 'From $1,190,000',
+                url: '{{ route('properties.show', 'highland-reserve') }}',
+                left: '74.8%',
+                top: '55%'
+            },
+            6: {
+                title: 'ORCHARD WEST',
+                city: 'AJAX',
+                price: 'From $1,050,000',
+                url: '{{ route('properties.show', 'orchard-west') }}',
+                left: '90.3%',
+                top: '68%'
+            }
         };
 
         function selectPreconListing(id) {
@@ -530,7 +589,10 @@
             const row = document.getElementById('prop-row-' + id);
             if (row) {
                 row.classList.add('!bg-[#fdfaf4]', 'ring-1', 'ring-[#c5983e]/70');
-                row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                row.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest'
+                });
             }
 
             // Update Map Pins Pulsing Highlight

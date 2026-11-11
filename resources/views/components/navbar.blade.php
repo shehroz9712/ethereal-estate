@@ -50,7 +50,7 @@ $links = [
             class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#c5983e]/20 hover:bg-[#c5983e]/30 border border-[#c5983e] text-[#c5983e] text-xs tracking-wider transition-colors font-bold shadow-sm"
             title="My Client Portal">
             <span class="w-1.5 h-1.5 rounded-full bg-[#c5983e]"></span>
-            <span class="text-[11px] uppercase tracking-wider font-bold">PORTAL</span>
+            <span class="text-[11px] uppercase tracking-wider font-bold">My Account</span>
         </a>
         @else
         <a href="{{ route('login') }}"
@@ -188,7 +188,7 @@ $links = [
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#fdfaf4] hover:bg-[#f6efe1] border border-[#c5983e] text-[#c5983e] text-xs tracking-wider transition-colors font-bold shadow-sm"
                 title="My Client Portal">
                 <span class="w-1.5 h-1.5 rounded-full bg-[#c5983e]"></span>
-                <span class="text-[11px] uppercase tracking-wider font-bold">PORTAL</span>
+                <span class="text-[11px] uppercase tracking-wider font-bold">My Account</span>
             </a>
             @else
             <a href="{{ route('login') }}"

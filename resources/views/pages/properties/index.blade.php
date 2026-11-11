@@ -80,7 +80,7 @@
     <div class="bg-white border-b border-gray-100 py-3.5 px-6 sm:px-10 lg:px-14">
         <div class="flex items-center justify-between">
             
-            <!-- Left: Back link + Redesigned Category Pill (No brackets) -->
+            <!-- Left: Back link -->
             <div class="flex items-center gap-3 z-10">
                 <a href="{{ route('home') }}"
                    class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gray-500 hover:text-[#c5983e] transition-colors font-sans">
@@ -89,24 +89,12 @@
                     </svg>
                     Back
                 </a>
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fdfaf4] border border-[#c5983e]/40 text-[#c5983e] text-[11px] font-semibold uppercase tracking-wider select-none">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#c5983e]"></span>
-                    Featured Listings
-                </span>
             </div>
 
-            <!-- Centre: Heading with Logo -->
-            <div class="absolute left-1/2 -translate-x-1/2 text-center whitespace-nowrap leading-tight select-none">
-                <div class="flex items-center justify-center gap-2">
-                    <img src="{{ asset('assets/images/logo-dark.png') }}"
-                         onerror="this.src='{{ asset('assets/images/logo.png') }}'"
-                         alt="Ethereal Estates"
-                         class="h-6 sm:h-7 w-auto object-contain hidden sm:inline-block" />
-                    <h1 class="font-fragment text-lg sm:text-2xl md:text-[28px] uppercase tracking-[0.05em] text-[#111111] font-normal">
-                        Distinctive Living Across Ontario
-                    </h1>
-                </div>
-            </div>
+            <!-- Centre: Heading -->
+            <h1 class="font-fragment text-xl sm:text-2xl md:text-3xl lg:text-[30px] uppercase tracking-[0.05em] text-[#111111] absolute left-1/2 -translate-x-1/2 text-center whitespace-nowrap leading-tight select-none font-normal">
+                Featured Listings
+            </h1>
 
             <!-- Right: Pagination Number Pills with Arrow buttons -->
             <div id="pg-pills" class="flex items-center gap-1.5 shrink-0 z-10">

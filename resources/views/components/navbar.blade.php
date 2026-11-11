@@ -35,7 +35,7 @@ $links = [
         <a href="{{ route($link['route']) }}"
             class="flex items-center gap-1.5 text-[12px] uppercase tracking-[0.17em] font-medium transition-colors duration-200 {{ $activePage === $key ? 'text-[#c5983e]' : 'text-white hover:text-[#c5983e]' }}">
             {{ $link['label'] }}
-            <span class="text-[#c5983e] text-xs">↗</span>
+            <i class="fa-solid fa-arrow-up rotate-45 text-[10px] text-[#c5983e]"></i>
         </a>
         @endforeach
     </nav>
@@ -54,11 +54,9 @@ $links = [
         </a>
         @else
         <a href="{{ route('login') }}"
-            class="inline-flex items-center gap-1 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs tracking-wider transition-all duration-200 font-bold shadow-md"
+            class="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs tracking-wider transition-all duration-200 font-bold shadow-md"
             title="Client Login">
-            <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
+            <i class="fa-solid fa-user text-xs text-white"></i>
             <span class="text-[11px] uppercase tracking-wider font-bold">LOGIN</span>
         </a>
         @endauth
@@ -69,9 +67,7 @@ $links = [
             class="flex items-center gap-2 p-2 sm:px-3 sm:py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white hover:text-[#c5983e] focus:outline-none cursor-pointer transition-colors shadow-sm"
             aria-label="Toggle Navigation Menu">
             <span class="hidden sm:inline text-[11px] uppercase tracking-[0.2em] font-semibold text-white/90">Menu</span>
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+            <i class="fa-solid fa-bars text-sm text-white"></i>
         </button>
     </div>
     @else
@@ -82,18 +78,16 @@ $links = [
             @click="openSearchModal()"
             class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs tracking-wider transition-colors cursor-pointer"
             title="Search Properties">
-            <svg class="w-3.5 h-3.5 text-[#c5983e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
+            <i class="fa-solid fa-magnifying-glass text-xs text-[#c5983e]"></i>
             <span class="hidden md:inline text-[11px] uppercase tracking-wider font-medium">Search</span>
         </button>
 
         <!-- Saved Properties / Wishlist Trigger -->
         <button type="button"
             @click="savedDrawerOpen = true"
-            class="relative flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs tracking-wider transition-colors cursor-pointer"
+            class="relative flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs tracking-wider transition-colors cursor-pointer"
             title="Saved Properties">
-            <span class="text-sm text-[#c5983e]">♥</span>
+            <i class="fa-solid fa-arrow-up rotate-45 text-[11px] text-[#c5983e]"></i>
             <span class="hidden md:inline text-[11px] uppercase tracking-wider font-medium">Saved</span>
             <span class="ml-0.5 px-1.5 py-0.2 rounded-full bg-[#c5983e] text-[9.5px] text-white font-bold"
                 x-text="savedItems.length">0</span>
@@ -109,11 +103,9 @@ $links = [
         </a>
         @else
         <a href="{{ route('login') }}"
-            class="inline-flex items-center gap-1 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs tracking-wider transition-all duration-200 font-bold shadow-md"
+            class="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs tracking-wider transition-all duration-200 font-bold shadow-md"
             title="Client Login">
-            <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
+            <i class="fa-solid fa-user text-xs text-white"></i>
             <span class="text-[11px] uppercase tracking-wider font-bold">LOGIN</span>
         </a>
         @endauth
@@ -123,10 +115,8 @@ $links = [
             @click="menuOpen = !menuOpen"
             class="p-2 text-white hover:text-[#c5983e] focus:outline-none cursor-pointer"
             aria-label="Toggle Navigation Menu">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path x-show="!menuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                <path x-show="menuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <i x-show="!menuOpen" class="fa-solid fa-bars text-lg"></i>
+            <i x-show="menuOpen" class="fa-solid fa-xmark text-lg"></i>
         </button>
     </div>
     @endif
@@ -153,7 +143,7 @@ $links = [
             <a href="{{ route($link['route']) }}"
                 class="flex items-center gap-1.5 text-[12px] uppercase tracking-[0.17em] font-medium transition-colors duration-200 {{ $activePage === $key ? 'text-[#c5983e]' : 'text-gray-900 hover:text-[#c5983e]' }}">
                 {{ $link['label'] }}
-                <span class="text-[#c5983e] text-xs">↗</span>
+                <i class="fa-solid fa-arrow-up rotate-45 text-[10px] text-[#c5983e]"></i>
             </a>
             @endforeach
         </nav>
@@ -165,18 +155,16 @@ $links = [
                 @click="openSearchModal()"
                 class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-800 text-xs tracking-wider transition-colors cursor-pointer"
                 title="Search Properties">
-                <svg class="w-3.5 h-3.5 text-[#c5983e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
+                <i class="fa-solid fa-magnifying-glass text-xs text-[#c5983e]"></i>
                 <span class="hidden md:inline text-[11px] uppercase tracking-wider font-medium">Search</span>
             </button>
 
             <!-- Saved Properties / Wishlist Trigger -->
             <button type="button"
                 @click="savedDrawerOpen = true"
-                class="relative flex items-center gap-1 px-3 py-1.5 rounded-full bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-800 text-xs tracking-wider transition-colors cursor-pointer"
+                class="relative flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-800 text-xs tracking-wider transition-colors cursor-pointer"
                 title="Saved Properties">
-                <span class="text-sm text-[#c5983e]">♥</span>
+                <i class="fa-solid fa-arrow-up rotate-45 text-[11px] text-[#c5983e]"></i>
                 <span class="hidden md:inline text-[11px] uppercase tracking-wider font-medium">Saved</span>
                 <span class="ml-0.5 px-1.5 py-0.2 rounded-full bg-[#c5983e] text-[9.5px] text-white font-bold"
                     x-text="savedItems.length">0</span>
@@ -192,11 +180,9 @@ $links = [
             </a>
             @else
             <a href="{{ route('login') }}"
-                class="inline-flex items-center gap-1 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#0b2112] hover:bg-[#1a3823] text-white text-xs tracking-wider transition-all duration-200 font-bold shadow-md"
+                class="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#0b2112] hover:bg-[#1a3823] text-white text-xs tracking-wider transition-all duration-200 font-bold shadow-md"
                 title="Client Login">
-                <svg class="w-3.5 h-3.5 text-[#c5983e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
+                <i class="fa-solid fa-user text-xs text-[#c5983e]"></i>
                 <span class="text-[11px] uppercase tracking-wider font-bold">LOGIN</span>
             </a>
             @endauth
@@ -206,10 +192,8 @@ $links = [
                 @click="menuOpen = !menuOpen"
                 class="p-2 text-gray-900 hover:text-[#c5983e] focus:outline-none cursor-pointer"
                 aria-label="Toggle Navigation Menu">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path x-show="!menuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    <path x-show="menuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <i x-show="!menuOpen" class="fa-solid fa-bars text-lg"></i>
+                <i x-show="menuOpen" class="fa-solid fa-xmark text-lg"></i>
             </button>
         </div>
     </div>
@@ -235,7 +219,7 @@ $links = [
         <button type="button"
             @click="menuOpen = false"
             class="text-white hover:text-[#c5983e] p-2 text-lg cursor-pointer">
-            ✕
+            <i class="fa-solid fa-xmark text-xl"></i>
         </button>
     </div>
 
@@ -244,22 +228,22 @@ $links = [
         <div class="space-y-3.5 sm:space-y-4 font-fragment text-base sm:text-lg lg:text-xl uppercase tracking-[0.06em]">
             <div>
                 <a href="{{ route('pre-construction') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
-                    Pre-Construction <span class="text-sm text-[#c5983e]">↗</span>
+                    Pre-Construction <i class="fa-solid fa-arrow-up rotate-45 text-xs text-[#c5983e]"></i>
                 </a>
             </div>
             <div>
                 <a href="{{ route('properties.index') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
-                    Featured Listings <span class="text-sm text-[#c5983e]">↗</span>
+                    Featured Listings <i class="fa-solid fa-arrow-up rotate-45 text-xs text-[#c5983e]"></i>
                 </a>
             </div>
             <div>
                 <button type="button" @click="menuOpen = false; savedDrawerOpen = true;" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all text-left uppercase cursor-pointer">
-                    Saved Properties <span class="text-sm text-[#c5983e]">♥</span>
+                    Saved Properties <i class="fa-solid fa-arrow-up rotate-45 text-xs text-[#c5983e]"></i>
                 </button>
             </div>
             <div>
                 <a href="{{ route('rebate-calculator') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
-                    Rebate Calculator <span class="text-sm text-[#c5983e]">↗</span>
+                    Rebate Calculator <i class="fa-solid fa-arrow-up rotate-45 text-xs text-[#c5983e]"></i>
                 </a>
             </div>
         </div>
@@ -267,27 +251,27 @@ $links = [
         <div class="space-y-3.5 sm:space-y-4 font-fragment text-base sm:text-lg lg:text-xl uppercase tracking-[0.06em]">
             <div>
                 <a href="{{ route('about') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
-                    Who We Are <span class="text-sm text-[#c5983e]">↗</span>
+                    Who We Are <i class="fa-solid fa-arrow-up rotate-45 text-xs text-[#c5983e]"></i>
                 </a>
             </div>
             <div>
                 <a href="{{ route('our-story') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
-                    Our Story <span class="text-sm text-[#c5983e]">↗</span>
+                    Our Story <i class="fa-solid fa-arrow-up rotate-45 text-xs text-[#c5983e]"></i>
                 </a>
             </div>
             <div>
                 <a href="{{ route('news.index') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
-                    Ethereal Edit <span class="text-sm text-[#c5983e]">↗</span>
+                    Ethereal Edit <i class="fa-solid fa-arrow-up rotate-45 text-xs text-[#c5983e]"></i>
                 </a>
             </div>
             <div>
                 <a href="{{ route('join-ethereal') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
-                    Join Ethereal <span class="text-sm text-[#c5983e]">↗</span>
+                    Join Ethereal <i class="fa-solid fa-arrow-up rotate-45 text-xs text-[#c5983e]"></i>
                 </a>
             </div>
             <div>
                 <a href="{{ route('contact') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
-                    Contact Us <span class="text-sm text-[#c5983e]">↗</span>
+                    Contact Us <i class="fa-solid fa-arrow-up rotate-45 text-xs text-[#c5983e]"></i>
                 </a>
             </div>
         </div>

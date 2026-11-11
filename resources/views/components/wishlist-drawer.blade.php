@@ -26,7 +26,7 @@
             <!-- Drawer Header -->
             <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-[#0b2112] text-white">
                 <div class="flex items-center gap-2">
-                    <span class="text-[#c5983e] text-lg">♥</span>
+                    <i class="fa-solid fa-heart text-[#c5983e] text-base"></i>
                     <h3 class="font-fragment text-lg uppercase tracking-wider text-white">Saved Properties</h3>
                     <span class="px-2 py-0.5 rounded-full bg-[#c5983e] text-[10px] text-white font-bold"
                           x-text="savedItems.length">
@@ -35,7 +35,7 @@
                 <button type="button"
                         @click="savedDrawerOpen = false"
                         class="text-white/60 hover:text-white p-1 rounded transition-colors cursor-pointer">
-                    ✕
+                    <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
 
@@ -45,7 +45,7 @@
                 <template x-if="!isAuthenticated">
                     <div class="py-16 text-center text-gray-500 space-y-4">
                         <div class="w-16 h-16 mx-auto rounded-full bg-[#fdfaf4] border border-[#c5983e]/40 text-[#c5983e] flex items-center justify-center text-2xl shadow-sm">
-                            🔒
+                            <i class="fa-solid fa-lock text-xl text-[#c5983e]"></i>
                         </div>
                         <h4 class="font-fragment text-lg uppercase tracking-wider text-gray-900">Sign In Required</h4>
                         <p class="text-xs text-gray-500 max-w-xs mx-auto leading-relaxed">
@@ -53,8 +53,9 @@
                         </p>
                         <div class="pt-2">
                             <a href="{{ route('login') }}"
-                               class="inline-block px-6 py-3 bg-[#0b2112] text-white text-xs uppercase tracking-wider font-semibold rounded-lg hover:bg-[#1a3823] transition-colors shadow">
-                                Login to View Saved Homes ↗
+                               class="inline-flex items-center gap-1.5 px-6 py-3 bg-[#0b2112] text-white text-xs uppercase tracking-wider font-semibold rounded-lg hover:bg-[#1a3823] transition-colors shadow">
+                                <span>Login to View Saved Homes</span>
+                                <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                             </a>
                         </div>
                     </div>
@@ -64,7 +65,7 @@
                 <template x-if="isAuthenticated && savedItems.length === 0">
                     <div class="py-16 text-center text-gray-500 space-y-3">
                         <div class="w-14 h-14 mx-auto rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-xl">
-                            ♡
+                            <i class="fa-regular fa-heart text-xl text-gray-400"></i>
                         </div>
                         <p class="font-fragment text-base uppercase tracking-wider text-gray-700">Your Wishlist is Empty</p>
                         <p class="text-xs text-gray-400 max-w-xs mx-auto leading-relaxed">
@@ -73,8 +74,9 @@
                         <div class="pt-2">
                             <a href="{{ route('pre-construction') }}"
                                @click="savedDrawerOpen = false"
-                               class="inline-block px-5 py-2.5 bg-[#c5983e] text-white text-xs uppercase tracking-wider font-semibold rounded hover:bg-[#b08432] transition-colors">
-                                Explore Listings ↗
+                               class="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#c5983e] text-white text-xs uppercase tracking-wider font-semibold rounded hover:bg-[#b08432] transition-colors">
+                                <span>Explore Listings</span>
+                                <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                             </a>
                         </div>
                     </div>
@@ -95,8 +97,9 @@
                             </div>
                             <div class="flex items-center justify-between pt-1">
                                 <a :href="item.url || '{{ route('properties.index') }}'"
-                                   class="text-[11px] font-semibold uppercase tracking-wider text-[#0b2112] hover:text-[#c5983e] underline">
-                                    View Details ↗
+                                   class="inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-[#0b2112] hover:text-[#c5983e] underline">
+                                    <span>View Details</span>
+                                    <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
                                 </a>
                                 <button type="button"
                                         @click="removeSavedItem(item.id)"
@@ -113,15 +116,17 @@
             <div class="p-6 border-t border-gray-100 bg-gray-50 space-y-3">
                 @auth
                     <a href="{{ route('user.saved-properties') }}"
-                       class="block w-full text-center py-3 bg-[#0b2112] hover:bg-[#1a3823] text-white text-xs uppercase tracking-wider font-semibold rounded transition-colors">
-                        View Client Dashboard Wishlist ↗
+                       class="inline-flex items-center justify-center gap-1.5 w-full text-center py-3 bg-[#0b2112] hover:bg-[#1a3823] text-white text-xs uppercase tracking-wider font-semibold rounded transition-colors">
+                        <span>View Client Dashboard Wishlist</span>
+                        <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                     </a>
                 @else
                     <div class="text-center space-y-2">
                         <p class="text-[11px] text-gray-500">Sign in to sync your wishlist across all devices.</p>
                         <a href="{{ route('login') }}"
-                           class="inline-block text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline">
-                            Sign In / Create Account ↗
+                           class="inline-flex items-center gap-1 text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline">
+                            <span>Sign In / Create Account</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                         </a>
                     </div>
                 @endauth

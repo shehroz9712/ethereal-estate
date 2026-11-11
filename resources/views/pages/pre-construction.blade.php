@@ -10,7 +10,9 @@
         }
 
         #precon-wrap {
-            height: calc(100dvh - 68px);
+            flex: 1 1 0%;
+            min-height: 0;
+            height: 100%;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -59,19 +61,16 @@
         <div class="bg-white shrink-0 px-6 sm:px-10 lg:px-14 py-3.5 border-b border-gray-100/90">
             <div class="relative flex items-center justify-between">
 
-                <!-- Left: Back link + Redesigned Category Badge (No brackets) -->
+                <!-- Left: Back link -->
                 <div class="flex items-center gap-3 z-10">
                     <a href="{{ route('home') }}"
                         class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gray-500 hover:text-[#c5983e] transition-colors font-sans">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
+                        <i class="fa-solid fa-arrow-left text-xs"></i>
                         Back
                     </a>
-
                 </div>
 
-                <!-- Centre: Heading "WELCOME TO YOUR NEW HOME" -->
+                <!-- Centre: Heading -->
                 <h1 class="font-fragment text-xl sm:text-2xl md:text-3xl lg:text-[30px] uppercase tracking-[0.05em] text-[#111111] absolute left-1/2 -translate-x-1/2 text-center whitespace-nowrap leading-tight select-none font-normal">
                     Pre-Construction Collection
                 </h1>
@@ -83,7 +82,7 @@
                         @click="savedDrawerOpen = true"
                         class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fdfaf4] hover:bg-[#f6efe1] border border-[#c5983e]/40 text-xs text-gray-800 transition-colors cursor-pointer"
                         title="Saved Properties">
-                        <span class="text-sm text-[#c5983e]">♥</span>
+                        <i class="fa-solid fa-arrow-up rotate-45 text-[11px] text-[#c5983e]"></i>
                         <span class="text-[11px] uppercase tracking-wider font-medium">Saved</span>
                         <span class="px-1.5 py-0.2 rounded-full bg-[#c5983e] text-[9.5px] text-white font-bold"
                             x-text="savedItems.length">0</span>
@@ -91,8 +90,9 @@
 
                     @auth
                     <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('user.dashboard') }}"
-                        class="text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline">
-                        My Account ↗
+                        class="inline-flex items-center gap-1 text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline">
+                        <span>My Account</span>
+                        <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                     </a>
                     @else
                     <a href="{{ route('login') }}"
@@ -105,8 +105,9 @@
 
                     <button type="button"
                         @click="openRegisterModal(null, 'Pre-Construction Ontario Masterlist')"
-                        class="text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline cursor-pointer">
-                        VIP Price List ↗
+                        class="inline-flex items-center gap-1 text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline cursor-pointer">
+                        <span>VIP Price List</span>
+                        <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                     </button>
                 </div>
             </div>
@@ -120,9 +121,7 @@
                 <!-- 1. Search by city, town, postal code or area... -->
                 <div class="flex-[2.5] min-w-[240px] sm:min-w-[280px]">
                     <div class="relative flex items-center">
-                        <svg class="w-4 h-4 text-gray-400 absolute left-3.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
+                        <i class="fa-solid fa-magnifying-glass text-xs text-gray-400 absolute left-3.5 pointer-events-none"></i>
                         <input type="text"
                             name="search"
                             value="{{ $filters['search'] ?? '' }}"
@@ -210,10 +209,12 @@
                             }
                             let parts = [];
                             if (this.selectedBeds.length > 0) {
-                                parts.push(this.selectedBeds.slice().sort().join(', ') + ' Bed' + (this.selectedBeds.length > 1 || this.selectedBeds[0] !== '1' ? 's' : ''));
+                                const sortedBeds = this.selectedBeds.slice().sort((a, b) => parseInt(a) - parseInt(b));
+                                parts.push(sortedBeds.join(', ') + ' Bed' + (sortedBeds.length > 1 || sortedBeds[0] !== '1' ? 's' : ''));
                             }
                             if (this.selectedBaths.length > 0) {
-                                parts.push(this.selectedBaths.slice().sort().join(', ') + ' Bath' + (this.selectedBaths.length > 1 || this.selectedBaths[0] !== '1' ? 's' : ''));
+                                const sortedBaths = this.selectedBaths.slice().sort((a, b) => parseInt(a) - parseInt(b));
+                                parts.push(sortedBaths.join(', ') + ' Bath' + (sortedBaths.length > 1 || sortedBaths[0] !== '1' ? 's' : ''));
                             }
                             return parts.join(' • ');
                         }
@@ -224,14 +225,11 @@
                     <!-- Trigger Button -->
                     <button type="button"
                         @click="open = !open"
-                        class="w-full h-11 px-3.5 bg-white border border-gray-200 rounded-lg text-[13px] font-semibold uppercase tracking-wider text-gray-700 flex items-center justify-between gap-2 cursor-pointer focus:outline-none focus:border-[#c5983e] transition-colors box-border"
+                        class="w-full h-11 px-3.5 bg-white border border-gray-200 rounded-lg text-[13px] font-semibold uppercase tracking-wider text-gray-700 flex items-center justify-between gap-2 cursor-pointer focus:outline-none focus:border-[#c5983e] transition-colors"
                         :class="(open || selectedBeds.length > 0 || selectedBaths.length > 0) ? '!border-[#c5983e] !text-[#c5983e] !bg-[#fdfaf4]' : ''">
-                        <span class="truncate flex-1 text-left" x-text="label" :title="label">BED & BATH</span>
-                        <svg class="w-3.5 h-3.5 text-gray-400 shrink-0 transition-transform duration-200"
-                            :class="open ? 'rotate-180 !text-[#c5983e]' : ''"
-                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
+                        <span class="truncate flex-1 text-left font-sans" x-text="label" :title="label">BED & BATH</span>
+                        <i class="fa-solid fa-chevron-down text-xs text-gray-400 shrink-0 transition-transform duration-200"
+                            :class="open ? 'rotate-180 !text-[#c5983e]' : ''"></i>
                     </button>
 
                     <!-- Hidden inputs so standard form submit sends the values -->
@@ -367,8 +365,9 @@
 
                 @if(array_filter($filters))
                 <div class="shrink-0 pl-1">
-                    <a href="{{ route('pre-construction') }}" class="h-11 px-3.5 rounded-lg border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 text-xs uppercase tracking-wider font-semibold whitespace-nowrap inline-flex items-center">
-                        Clear ✕
+                    <a href="{{ route('pre-construction') }}" class="h-11 px-3.5 rounded-lg border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 text-xs uppercase tracking-wider font-semibold whitespace-nowrap inline-flex items-center gap-1.5">
+                        <span>Clear</span>
+                        <i class="fa-solid fa-xmark text-xs"></i>
                     </a>
                 </div>
                 @endif
@@ -506,13 +505,16 @@
                         <div class="relative">
                             <button type="button"
                                 onclick="closeMapPopup()"
-                                class="absolute -top-1.5 -right-1.5 text-gray-400 hover:text-gray-700 text-xs w-4 h-4 rounded-full flex items-center justify-center cursor-pointer">✕</button>
+                                class="absolute -top-1.5 -right-1.5 text-gray-400 hover:text-gray-700 text-xs w-4 h-4 rounded-full flex items-center justify-center cursor-pointer">
+                                <i class="fa-solid fa-xmark text-xs"></i>
+                            </button>
                             <p id="pop-city" class="text-[9.5px] uppercase tracking-[0.2em] font-semibold text-gray-400 mb-0.5">BOWMANVILLE</p>
                             <h4 id="pop-title" class="font-fragment text-base uppercase text-[#111] leading-tight mb-1 font-medium">ORCHARD SOUTH</h4>
                             <p id="pop-price" class="text-xs font-semibold text-[#c5983e] mb-2.5">From $1,250,000</p>
                             <a id="pop-link" href="{{ route('properties.show', 'orchard-south') }}"
-                                class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-[#0b2e1b] hover:text-[#c5983e] transition-colors underline">
-                                Explore Community ↗
+                                class="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-[#0b2e1b] hover:text-[#c5983e] transition-colors underline">
+                                <span>Explore Community</span>
+                                <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
                             </a>
                         </div>
                         <!-- Little arrow pointer -->

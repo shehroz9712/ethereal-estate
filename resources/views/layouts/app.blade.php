@@ -13,6 +13,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Urbanist:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
 
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
 
@@ -136,7 +139,7 @@
     <x-navbar :dark="$navDark ?? false" :activePage="$activePage ?? ''" />
 
     <!-- Main Content -->
-    <main class="flex-1">
+    <main class="flex-1 min-h-0 flex flex-col">
         {{ $slot }}
     </main>
 

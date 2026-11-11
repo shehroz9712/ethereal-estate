@@ -84,9 +84,7 @@
             <div class="flex items-center gap-3 z-10">
                 <a href="{{ route('home') }}"
                    class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gray-500 hover:text-[#c5983e] transition-colors font-sans">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                    </svg>
+                    <i class="fa-solid fa-arrow-left text-xs"></i>
                     Back
                 </a>
             </div>
@@ -103,9 +101,7 @@
                         class="pg-num-pill transition-all"
                         onclick="slidePrev()"
                         title="Previous Properties">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
-                    </svg>
+                    <i class="fa-solid fa-chevron-left text-xs"></i>
                 </button>
                 <button type="button" class="pg-num-pill active" data-page="0" onclick="goToPage(0)">1</button>
                 <button type="button" class="pg-num-pill" data-page="1" onclick="goToPage(1)">2</button>
@@ -115,9 +111,7 @@
                         class="pg-num-pill transition-all"
                         onclick="slideNext()"
                         title="Next Properties">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
-                    </svg>
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
                 </button>
             </div>
 
@@ -133,9 +127,7 @@
                 onclick="slidePrev()"
                 aria-label="Previous properties"
                 class="absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 hover:bg-white text-gray-900 border border-gray-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.12)] flex items-center justify-center transition-all duration-200 hover:scale-105 hover:border-[#c5983e] hover:text-[#c5983e] cursor-pointer">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
-            </svg>
+            <i class="fa-solid fa-chevron-left text-sm"></i>
         </button>
 
         <!-- Floating Right Arrow -->
@@ -144,9 +136,7 @@
                 onclick="slideNext()"
                 aria-label="Next properties"
                 class="absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 hover:bg-white text-gray-900 border border-gray-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.12)] flex items-center justify-center transition-all duration-200 hover:scale-105 hover:border-[#c5983e] hover:text-[#c5983e] cursor-pointer">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
-            </svg>
+            <i class="fa-solid fa-chevron-right text-sm"></i>
         </button>
 
         <div id="cards-viewport">
@@ -179,9 +169,8 @@
                                         @click="toggleSaveProperty({ id: {{ $prop->id }}, title: '{{ addslashes($prop->title) }}', city: '{{ addslashes($prop->city) }}', price: '{{ addslashes($prop->formatted_price) }}', image: '{{ $prop->primary_image_url }}', url: '{{ route('properties.show', $prop->slug) }}' })"
                                         class="w-8 h-8 rounded-full bg-black/50 hover:bg-black/80 backdrop-blur-md flex items-center justify-center text-white transition-colors cursor-pointer text-sm shadow-md"
                                         title="Save Property to Wishlist">
-                                    <span :class="isPropertySaved({{ $prop->id }}) ? 'text-red-400' : 'text-white'"
-                                          x-text="isPropertySaved({{ $prop->id }}) ? '♥' : '♡'">
-                                    </span>
+                                    <i class="text-xs transition-colors"
+                                       :class="isPropertySaved({{ $prop->id }}) ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart text-white'"></i>
                                 </button>
                             </div>
                         </div>
@@ -257,7 +246,8 @@
                                 <div class="pt-4 border-t border-gray-100 flex items-center justify-between">
                                     <a href="{{ route('properties.show', $prop->slug) }}"
                                        class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-[#0b2112] hover:text-[#c5983e] transition-colors">
-                                        Explore Community ↗
+                                        <span>Explore Community</span>
+                                        <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                                     </a>
                                     <button type="button"
                                             @click="openRegisterModal({{ $prop->id }}, '{{ addslashes($prop->title) }}')"

@@ -31,9 +31,8 @@
                 @click.stop="toggleSaveProperty({ id: {{ $property->id }}, title: '{{ addslashes($property->title) }}', city: '{{ addslashes($property->city) }}', price: '{{ addslashes($property->formatted_price) }}', image: '{{ $property->primary_image_url }}', url: '{{ route('properties.show', $property->slug) }}' })"
                 class="w-7 h-7 rounded-full bg-black/50 hover:bg-black/80 backdrop-blur-md flex items-center justify-center text-white transition-colors cursor-pointer text-xs shadow-md"
                 title="Save Property to Wishlist">
-            <span :class="isPropertySaved({{ $property->id }}) ? 'text-red-400' : 'text-white'"
-                  x-text="isPropertySaved({{ $property->id }}) ? '♥' : '♡'">
-            </span>
+            <i class="text-xs transition-colors"
+               :class="isPropertySaved({{ $property->id }}) ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart text-white'"></i>
         </button>
     </div>
 

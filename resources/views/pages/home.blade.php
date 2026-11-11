@@ -58,12 +58,10 @@
                         </div>
                     </div>
 
-                    <!-- ═══════════ 2. BADA LOGO (Center Mein) ═══════════ -->
+                    <!-- ═══════════ 2. BADA LOGO (Center Mein, Line attached to 'e' extending left) ═══════════ -->
                     <div class="flex flex-col items-center justify-center my-1 sm:my-3">
                         <a href="{{ route('home') }}" class="inline-block group transform hover:scale-[1.02] transition-transform duration-300">
-                            <img src="{{ asset('assets/images/logo-hero.svg') }}"
-                                 alt="Ethereal Estates"
-                                 class="w-full max-w-[320px] sm:max-w-[460px] md:max-w-[560px] lg:max-w-[620px] h-auto object-contain filter drop-shadow-[0_16px_36px_rgba(0,0,0,0.85)]" />
+                            <x-logo-hero class="h-16 sm:h-20 md:h-24 lg:h-28 w-auto" />
                         </a>
                     </div>
 

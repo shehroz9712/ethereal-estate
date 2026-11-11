@@ -1,5 +1,5 @@
 <!-- ══════════ FOOTER ══════════ -->
-<footer class="bg-[#060e09] text-white pt-16 pb-12 px-6 sm:px-10 lg:px-16 border-t border-white/10">
+<footer class="bg-[#060e09] text-white pt-16 pb-12 px-6 sm:px-10 lg:px-16 border-t border-white/10 overflow-hidden relative">
     <div class="max-w-7xl mx-auto">
 
         <!-- Top grid -->
@@ -7,10 +7,8 @@
 
             <!-- Col 1: Brand & Contact (spans 6 cols) -->
             <div class="lg:col-span-6 space-y-5">
-                <a href="{{ route('home') }}" class="inline-block mb-2">
-                    <img src="{{ asset('assets/images/logo.png') }}"
-                         alt="Ethereal Estates"
-                         class="h-12 sm:h-14 md:h-16 w-auto object-contain" />
+                <a href="{{ route('home') }}" class="inline-block mb-2 group">
+                    <x-logo-hero class="h-12 sm:h-14 md:h-16 w-auto" />
                 </a>
                 <p class="text-[12px] tracking-[0.25em] text-[#c5983e] font-serif italic">Let's Talk Real Estate</p>
                 <a href="mailto:office@etherealestates.ca"

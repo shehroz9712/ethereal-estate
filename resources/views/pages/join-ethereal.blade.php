@@ -97,8 +97,9 @@
                     </div>
 
                     <div class="text-center pt-2">
-                        <button type="submit" class="btn-gold px-12 py-3.5 cursor-pointer">
-                            Submit Application ↗
+                        <button type="submit" class="btn-gold px-12 py-3.5 cursor-pointer inline-flex items-center gap-2">
+                            <span>Submit Application</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                         </button>
                     </div>
                 </form>

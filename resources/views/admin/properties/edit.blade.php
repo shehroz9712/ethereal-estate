@@ -3,16 +3,18 @@
         
         <div class="flex items-center justify-between pb-4 border-b border-gray-200">
             <div>
-                <a href="{{ route('admin.properties.index') }}" class="text-xs text-gray-500 hover:text-gray-900 mb-1 inline-block">
-                    ← Back to Properties List
+                <a href="{{ route('admin.properties.index') }}" class="text-xs text-gray-500 hover:text-gray-900 mb-1 inline-flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                    <span>Back to Properties List</span>
                 </a>
                 <h1 class="font-fragment text-2xl uppercase tracking-wide text-gray-900">
                     Edit: {{ $property->title }}
                 </h1>
             </div>
             <a href="{{ route('properties.show', $property->slug) }}" target="_blank"
-               class="text-xs font-semibold text-[#d5a94e] hover:underline">
-                View Public Listing ↗
+               class="text-xs font-semibold text-[#d5a94e] hover:underline inline-flex items-center gap-1">
+                <span>View Public Listing</span>
+                <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
             </a>
         </div>
 

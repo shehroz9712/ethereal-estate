@@ -67,9 +67,18 @@
             </a>
             <div class="pt-6 mt-6 border-t border-gray-200">
                 <p class="text-[10px] uppercase tracking-[0.16em] text-gray-400 font-semibold px-4 mb-2">Explore Real Estate</p>
-                <a href="{{ route('pre-construction') }}" class="block px-4 py-1.5 text-xs text-gray-500 hover:text-[#d5a94e] transition-colors">Pre-Construction ↗</a>
-                <a href="{{ route('properties.index') }}" class="block px-4 py-1.5 text-xs text-gray-500 hover:text-[#d5a94e] transition-colors">Featured Properties ↗</a>
-                <a href="{{ route('rebate-calculator') }}" class="block px-4 py-1.5 text-xs text-gray-500 hover:text-[#d5a94e] transition-colors">Rebate Calculator ↗</a>
+                <a href="{{ route('pre-construction') }}" class="flex items-center justify-between px-4 py-1.5 text-xs text-gray-500 hover:text-[#d5a94e] transition-colors">
+                    <span>Pre-Construction</span>
+                    <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
+                </a>
+                <a href="{{ route('properties.index') }}" class="flex items-center justify-between px-4 py-1.5 text-xs text-gray-500 hover:text-[#d5a94e] transition-colors">
+                    <span>Featured Properties</span>
+                    <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
+                </a>
+                <a href="{{ route('rebate-calculator') }}" class="flex items-center justify-between px-4 py-1.5 text-xs text-gray-500 hover:text-[#d5a94e] transition-colors">
+                    <span>Rebate Calculator</span>
+                    <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
+                </a>
             </div>
         </aside>
 

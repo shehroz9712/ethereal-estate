@@ -55,29 +55,19 @@
         <!-- Specifications / Amenities Bar -->
         <div class="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-gray-100 pt-3.5 mt-auto text-[11.5px] text-gray-600">
             <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
-                <svg class="w-3.5 h-3.5 text-[#c5983e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 9.5V17h18V9.5M3 13h18M7 9.5V8a1 1 0 011-1h8a1 1 0 011 1v1.5"/>
-                </svg>
+                <i class="fa-solid fa-bed text-[#c5983e] text-xs"></i>
                 {{ $property->bedrooms }} Bed
             </span>
             <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
-                <svg class="w-3.5 h-3.5 text-[#c5983e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M4 12h16v3a4 4 0 01-4 4H8a4 4 0 01-4-4v-3zm0 0V7a2 2 0 012-2h2v3"/>
-                </svg>
+                <i class="fa-solid fa-bath text-[#c5983e] text-xs"></i>
                 {{ (int)$property->bathrooms }} Bath
             </span>
             <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
-                <svg class="w-3.5 h-3.5 text-[#c5983e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <rect x="2" y="8" width="20" height="13" rx="1" stroke-width="1.6"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M2 11h20M9 21v-4h6v4"/>
-                </svg>
+                <i class="fa-solid fa-warehouse text-[#c5983e] text-xs"></i>
                 {{ $property->garage }} Garage
             </span>
             <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
-                <svg class="w-3.5 h-3.5 text-[#c5983e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <rect x="3" y="3" width="18" height="18" rx="1" stroke-width="1.6"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 8h18M8 3v18"/>
-                </svg>
+                <i class="fa-solid fa-ruler-combined text-[#c5983e] text-xs"></i>
                 {{ number_format($property->sqft) }} Sq.Ft
             </span>
         </div>

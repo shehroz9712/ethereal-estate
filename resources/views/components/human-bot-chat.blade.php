@@ -143,9 +143,7 @@
             <button type="button"
                     @click="chatOpen = false"
                     class="text-white/60 hover:text-white transition-colors p-1.5 rounded-full hover:bg-white/10 cursor-pointer">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
+                <i class="fa-solid fa-xmark text-lg"></i>
             </button>
         </div>
 
@@ -179,8 +177,9 @@
                     <button type="button"
                             @click="submitLead()"
                             :disabled="connecting"
-                            class="w-full py-2 bg-[#c5983e] hover:bg-[#b08432] text-white text-[11px] uppercase tracking-wider font-semibold rounded transition-colors cursor-pointer">
-                        <span x-text="connecting ? 'Connecting...' : 'Request Instant Connection ↗'"></span>
+                            class="w-full py-2 bg-[#c5983e] hover:bg-[#b08432] text-white text-[11px] uppercase tracking-wider font-semibold rounded transition-colors cursor-pointer inline-flex items-center justify-center gap-1.5">
+                        <span x-text="connecting ? 'Connecting...' : 'Request Instant Connection'"></span>
+                        <i x-show="!connecting" class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
                     </button>
                 </div>
             </template>
@@ -190,18 +189,21 @@
         <div class="p-2 bg-white border-t border-gray-100 flex gap-1.5 overflow-x-auto no-scrollbar shrink-0">
             <button type="button"
                     @click="sendUserMessage('I want VIP Pre-Construction floor plans')"
-                    class="text-[10px] uppercase tracking-wider whitespace-nowrap bg-gray-50 hover:bg-[#c5983e]/15 border border-gray-200 text-gray-700 px-3 py-1.5 rounded-full transition-colors cursor-pointer">
-                🏢 VIP Floor Plans
+                    class="text-[10px] uppercase tracking-wider whitespace-nowrap bg-gray-50 hover:bg-[#c5983e]/15 border border-gray-200 text-gray-700 px-3 py-1.5 rounded-full transition-colors cursor-pointer inline-flex items-center gap-1.5">
+                <i class="fa-solid fa-building text-[#c5983e] text-[10px]"></i>
+                <span>VIP Floor Plans</span>
             </button>
             <button type="button"
                     @click="sendUserMessage('What are the latest developer price sheets?')"
-                    class="text-[10px] uppercase tracking-wider whitespace-nowrap bg-gray-50 hover:bg-[#c5983e]/15 border border-gray-200 text-gray-700 px-3 py-1.5 rounded-full transition-colors cursor-pointer">
-                💰 Price Sheets
+                    class="text-[10px] uppercase tracking-wider whitespace-nowrap bg-gray-50 hover:bg-[#c5983e]/15 border border-gray-200 text-gray-700 px-3 py-1.5 rounded-full transition-colors cursor-pointer inline-flex items-center gap-1.5">
+                <i class="fa-solid fa-file-invoice-dollar text-[#c5983e] text-[10px]"></i>
+                <span>Price Sheets</span>
             </button>
             <button type="button"
                     @click="sendUserMessage('Connect me with an advisor')"
-                    class="text-[10px] uppercase tracking-wider whitespace-nowrap bg-gray-50 hover:bg-[#c5983e]/15 border border-gray-200 text-gray-700 px-3 py-1.5 rounded-full transition-colors cursor-pointer">
-                📞 Speak with Advisor
+                    class="text-[10px] uppercase tracking-wider whitespace-nowrap bg-gray-50 hover:bg-[#c5983e]/15 border border-gray-200 text-gray-700 px-3 py-1.5 rounded-full transition-colors cursor-pointer inline-flex items-center gap-1.5">
+                <i class="fa-solid fa-phone text-[#c5983e] text-[10px]"></i>
+                <span>Speak with Advisor</span>
             </button>
         </div>
 
@@ -215,9 +217,7 @@
             <button type="button"
                     @click="sendUserMessage()"
                     class="w-9 h-9 rounded-full bg-[#0b2112] hover:bg-[#c5983e] text-white flex items-center justify-center transition-colors cursor-pointer shrink-0">
-                <svg class="w-4 h-4 transform rotate-45 -mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
-                </svg>
+                <i class="fa-solid fa-paper-plane text-xs"></i>
             </button>
         </div>
 
@@ -232,7 +232,7 @@
             <span class="text-xs font-medium text-gray-800 tracking-wide transition-opacity duration-300"
                   x-text="advisors[currentAdvisorIdx].prompt">
             </span>
-            <span class="text-xs text-[#c5983e] font-bold">💬</span>
+            <i class="fa-solid fa-comment-dots text-xs text-[#c5983e]"></i>
         </div>
 
         <!-- Circular Human Bot Button with Gold Border & Active Pulse -->

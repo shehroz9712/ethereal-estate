@@ -12,8 +12,9 @@
                 </p>
             </div>
             <button type="button" @click="createOpen = !createOpen"
-                    class="px-4 py-2.5 bg-[#d5a94e] hover:bg-[#c4983e] text-gray-900 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm self-start sm:self-auto cursor-pointer">
-                <span x-text="createOpen ? '✕ Close Post Editor' : '+ New Editorial Post'"></span>
+                    class="px-4 py-2.5 bg-[#d5a94e] hover:bg-[#c4983e] text-gray-900 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm self-start sm:self-auto cursor-pointer inline-flex items-center gap-1.5">
+                <i :class="createOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-plus'"></i>
+                <span x-text="createOpen ? 'Close Post Editor' : 'New Editorial Post'"></span>
             </button>
         </div>
 

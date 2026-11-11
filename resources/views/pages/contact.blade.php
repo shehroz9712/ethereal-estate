@@ -126,7 +126,8 @@
                     <div class="pt-2">
                         <button type="submit"
                                 class="inline-flex items-center gap-2 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-[11px] uppercase tracking-[0.18em] font-semibold px-9 py-3.5 transition-colors shadow-sm cursor-pointer">
-                            Submit Message ↗
+                            <span>Submit Message</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                         </button>
                     </div>
                 </form>

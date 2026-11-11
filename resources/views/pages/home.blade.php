@@ -29,19 +29,17 @@
                     <div class="max-w-2xl mx-auto w-full">
                         <form action="{{ route('pre-construction') }}" method="GET" class="relative flex items-center shadow-2xl">
                             <div class="relative w-full">
-                                <div class="absolute inset-y-0 left-0 pl-4.5 flex items-center pointer-events-none text-gray-400">
-                                    <svg class="w-5 h-5 text-[#c5983e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                                    </svg>
+                                <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400">
+                                    <i class="fa-solid fa-magnifying-glass text-[#c5983e] text-sm sm:text-base"></i>
                                 </div>
                                 <input type="text"
                                        name="search"
                                        placeholder="Search by city, town, postal code or area..."
-                                       class="w-full h-13 sm:h-15 pl-12 pr-32 sm:pr-36 bg-white/95 backdrop-blur-md text-gray-900 placeholder-gray-400 text-xs sm:text-sm rounded-full border border-white/30 focus:outline-none focus:ring-2 focus:ring-[#c5983e] shadow-2xl transition-all font-sans" />
+                                       class="w-full h-13 sm:h-15 pl-12 sm:pl-14 pr-32 sm:pr-36 bg-white/95 backdrop-blur-md text-gray-900 placeholder-gray-400 text-xs sm:text-sm rounded-full border border-white/30 focus:outline-none focus:ring-2 focus:ring-[#c5983e] shadow-2xl transition-all font-sans" />
                                 <button type="submit"
                                         class="absolute right-1.5 sm:right-2 top-1.5 sm:top-2 bottom-1.5 sm:bottom-2 px-4 sm:px-6 bg-[#c5983e] hover:bg-[#b08432] text-white text-xs uppercase tracking-wider font-semibold rounded-full transition-all duration-300 shadow-md flex items-center gap-1.5 cursor-pointer">
                                     <span>Explore</span>
-                                    <span>↗</span>
+                                    <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                                 </button>
                             </div>
                         </form>
@@ -93,7 +91,7 @@
                                 <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5983e] font-semibold block">01 / Priority</span>
                                 <h3 class="font-fragment text-xs sm:text-sm uppercase tracking-wider text-white group-hover:text-[#c5983e] transition-colors">Pre-Construction</h3>
                             </div>
-                            <span class="text-[#c5983e] text-xs group-hover:translate-x-1 transition-transform">↗</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[#c5983e] text-xs group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
                         </a>
 
                         2. Featured Listings
@@ -103,7 +101,7 @@
                                 <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5983e] font-semibold block">02 / Curated</span>
                                 <h3 class="font-fragment text-xs sm:text-sm uppercase tracking-wider text-white group-hover:text-[#c5983e] transition-colors">Featured Listings</h3>
                             </div>
-                            <span class="text-[#c5983e] text-xs group-hover:translate-x-1 transition-transform">↗</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[#c5983e] text-xs group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
                         </a>
 
                         3. Rebate Calculator
@@ -113,7 +111,7 @@
                                 <span class="text-[9px] uppercase tracking-[0.2em] text-[#c5983e] font-semibold block">03 / Eligibility</span>
                                 <h3 class="font-fragment text-xs sm:text-sm uppercase tracking-wider text-white group-hover:text-[#c5983e] transition-colors">Rebate Calculator</h3>
                             </div>
-                            <span class="text-[#c5983e] text-xs group-hover:translate-x-1 transition-transform">↗</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[#c5983e] text-xs group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
                         </a>
                     </div> -->
 
@@ -127,8 +125,9 @@
                     <span>Invest in Tomorrow's Address</span>
                 </div>
                 <div class="flex items-center gap-4 text-[11px] uppercase tracking-wider">
-                    <button type="button" @click="openRegisterModal()" class="text-[#c5983e] hover:underline cursor-pointer">
-                        Connect with Follow Up Boss VIP Desk ↗
+                    <button type="button" @click="openRegisterModal()" class="text-[#c5983e] hover:underline cursor-pointer inline-flex items-center gap-1">
+                        <span>Connect with Follow Up Boss VIP Desk</span>
+                        <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
                     </button>
                     <span>•</span>
                     <a href="{{ route('about') }}" class="hover:text-white transition-colors">Who We Are</a>

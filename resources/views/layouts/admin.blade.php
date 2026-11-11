@@ -26,7 +26,9 @@
                 <a href="{{ route('admin.dashboard') }}" class="block">
                     <img src="{{ asset('assets/images/logo.png') }}" alt="Ethereal Estates" class="h-9 sm:h-10 w-auto" />
                 </a>
-                <button type="button" @click="sidebarOpen = false" class="md:hidden text-gray-400 hover:text-white">✕</button>
+                <button type="button" @click="sidebarOpen = false" class="md:hidden text-gray-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
             </div>
 
             <!-- Nav Items -->
@@ -67,7 +69,7 @@
                 <a href="{{ route('home') }}" target="_blank"
                    class="flex items-center justify-between px-3 py-2 rounded text-xs text-white/70 hover:text-white hover:bg-white/10 transition-colors">
                     <span>View Public Website</span>
-                    <span class="text-[#d5a94e]">↗</span>
+                    <i class="fa-solid fa-arrow-up rotate-45 text-[#d5a94e] text-xs"></i>
                 </a>
                 <div class="flex items-center justify-between px-3 pt-2">
                     <div class="flex items-center gap-2.5">

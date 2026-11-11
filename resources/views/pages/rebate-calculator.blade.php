@@ -1,8 +1,9 @@
 <x-layouts.app activePage="rebate" title="Rebate Calculator — Ethereal Estates">
 
     <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-8 pb-4">
-        <a href="{{ route('home') }}" class="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] text-gray-400 hover:text-[#d5a94e] transition-colors mb-4">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>Back
+        <a href="{{ route('home') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gray-500 hover:text-[#c5983e] transition-colors mb-4">
+            <i class="fa-solid fa-arrow-left text-xs"></i>
+            Back
         </a>
         <h1 class="font-fragment text-2xl sm:text-4xl lg:text-5xl uppercase tracking-[0.04em] text-gray-900 leading-tight">
             Know Your Rebate Before You Buy
@@ -60,8 +61,9 @@
                     </div>
                 </div>
 
-                <a href="{{ route('pre-construction') }}" class="btn-gold-outline text-xs">
-                    Explore Communities ↗
+                <a href="{{ route('pre-construction') }}" class="btn-gold-outline text-xs inline-flex items-center gap-2">
+                    <span>Explore Communities</span>
+                    <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                 </a>
             </div>
 
@@ -142,8 +144,9 @@
 
                     <button type="button"
                             onclick="window.dispatchEvent(new CustomEvent('open-vip-modal', { detail: { title: 'Rebate Inquiries' } }))"
-                            class="w-full btn-gold justify-center text-xs py-3.5 mt-4 cursor-pointer">
-                        Lock In Your Rebate Allocation ↗
+                            class="w-full btn-gold justify-center text-xs py-3.5 mt-4 cursor-pointer inline-flex items-center gap-2">
+                        <span>Lock In Your Rebate Allocation</span>
+                        <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                     </button>
                 </div>
             </div>

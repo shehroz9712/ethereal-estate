@@ -72,7 +72,7 @@
                                 @click="openUnlockModal('All Available Plans')"
                                 class="px-7 py-3.5 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs uppercase tracking-wider font-semibold transition-all shadow-xl flex items-center gap-2 cursor-pointer">
                             <span>Register Here For Full Access</span>
-                            <span>↗</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                         </button>
 
                         <button type="button"
@@ -85,8 +85,9 @@
                         <button type="button"
                                 @click="toggleSaveProperty({ id: {{ $property->id }}, title: '{{ addslashes($property->title) }}', city: '{{ addslashes($property->city) }}', price: '{{ addslashes($property->formatted_price) }}', image: '{{ $property->primary_image_url }}', url: '{{ route('properties.show', $property->slug) }}' })"
                                 class="px-5 py-3.5 rounded-full bg-black/50 hover:bg-black/80 backdrop-blur-md border border-white/20 text-white text-xs uppercase tracking-wider transition-colors cursor-pointer flex items-center gap-2">
+                            <i class="fa-solid" :class="isPropertySaved({{ $property->id }}) ? 'fa-heart text-red-400' : 'fa-heart text-white/80'"></i>
                             <span :class="isPropertySaved({{ $property->id }}) ? 'text-red-400' : 'text-white'"
-                                  x-text="isPropertySaved({{ $property->id }}) ? '♥ Saved to Wishlist' : '♡ Save Property'">
+                                  x-text="isPropertySaved({{ $property->id }}) ? 'Saved to Wishlist' : 'Save Property'">
                             </span>
                         </button>
                     </div>
@@ -148,17 +149,16 @@
                             @click="toggleSaveProperty({ id: {{ $property->id }}, title: '{{ addslashes($property->title) }}', city: '{{ addslashes($property->city) }}', price: '{{ addslashes($property->formatted_price) }}', image: '{{ $property->primary_image_url }}', url: '{{ route('properties.show', $property->slug) }}' })"
                             class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border text-xs tracking-wider transition-all cursor-pointer"
                             :class="isPropertySaved({{ $property->id }}) ? 'bg-red-50 border-red-200 text-red-600 font-semibold' : 'bg-gray-50 border-gray-200 text-gray-700 hover:border-[#c5983e]'">
-                        <span :class="isPropertySaved({{ $property->id }}) ? 'text-red-500' : 'text-[#c5983e]'"
-                              x-text="isPropertySaved({{ $property->id }}) ? '♥' : '♡'"></span>
+                        <i class="fa-solid text-xs" :class="isPropertySaved({{ $property->id }}) ? 'fa-heart text-red-500' : 'fa-heart text-[#c5983e]'"></i>
                         <span x-text="isPropertySaved({{ $property->id }}) ? 'Saved' : 'Save Property'"></span>
                     </button>
 
                     <!-- Open Wishlist Drawer -->
                     <button type="button"
                             @click="savedDrawerOpen = true"
-                            class="relative flex items-center gap-1 px-3 py-1.5 rounded-full bg-white border border-gray-200 text-gray-700 text-xs hover:border-[#c5983e] transition-colors cursor-pointer"
+                            class="relative flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-gray-200 text-gray-700 text-xs hover:border-[#c5983e] transition-colors cursor-pointer"
                             title="View Wishlist">
-                        <span class="text-xs text-[#c5983e]">♥</span>
+                        <i class="fa-solid fa-heart text-[#c5983e] text-xs"></i>
                         <span class="hidden sm:inline text-[11px] uppercase tracking-wider font-medium">Wishlist</span>
                         <span class="ml-0.5 px-1.5 py-0.2 rounded-full bg-[#c5983e] text-[9.5px] text-white font-bold"
                               x-text="savedItems.length">0</span>
@@ -166,8 +166,9 @@
 
                     @auth
                         <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('user.dashboard') }}"
-                           class="text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline pl-2 border-l border-gray-200">
-                            Portal ↗
+                           class="text-xs uppercase tracking-wider font-semibold text-[#c5983e] hover:underline pl-2 border-l border-gray-200 inline-flex items-center gap-1">
+                            <span>Portal</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
                         </a>
                     @else
                         <a href="{{ route('login') }}"
@@ -180,7 +181,7 @@
                             @click="openUnlockModal('VIP Priority Access')"
                             class="px-4 py-1.5 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs uppercase tracking-wider font-semibold transition-all cursor-pointer hidden md:inline-flex items-center gap-1.5">
                         <span>VIP Access</span>
-                        <span>↗</span>
+                        <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                     </button>
                 </div>
             </div>
@@ -218,13 +219,14 @@
                     <div class="p-5 rounded-xl bg-white border border-gray-200 mb-6 flex flex-col gap-3 shadow-sm">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2">
-                                <span class="text-base text-[#c5983e]">♥</span>
+                                <i class="fa-solid fa-heart text-[#c5983e] text-sm"></i>
                                 <p class="text-xs uppercase tracking-wider font-bold text-gray-800">Wishlist &amp; Saved Properties</p>
                             </div>
                             <button type="button"
                                     @click="savedDrawerOpen = true"
-                                    class="text-[11px] uppercase tracking-wider text-[#c5983e] font-semibold hover:underline cursor-pointer">
-                                View (<span x-text="savedItems.length">0</span>) ↗
+                                    class="text-[11px] uppercase tracking-wider text-[#c5983e] font-semibold hover:underline cursor-pointer inline-flex items-center gap-1">
+                                <span>View (<span x-text="savedItems.length">0</span>)</span>
+                                <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
                             </button>
                         </div>
                         <p class="text-xs text-gray-500 font-light">
@@ -235,8 +237,8 @@
                                     @click="toggleSaveProperty({ id: {{ $property->id }}, title: '{{ addslashes($property->title) }}', city: '{{ addslashes($property->city) }}', price: '{{ addslashes($property->formatted_price) }}', image: '{{ $property->primary_image_url }}', url: '{{ route('properties.show', $property->slug) }}' })"
                                     class="flex-1 py-2.5 rounded-lg text-xs uppercase tracking-wider font-semibold transition-all cursor-pointer flex items-center justify-center gap-2 border"
                                     :class="isPropertySaved({{ $property->id }}) ? 'bg-red-50 text-red-600 border-red-200 shadow-sm' : 'bg-[#06130d] text-white hover:bg-[#1a2e1e] border-transparent shadow'">
-                                <span :class="isPropertySaved({{ $property->id }}) ? 'text-red-500' : 'text-[#c5983e]'"
-                                      x-text="isPropertySaved({{ $property->id }}) ? '♥ Saved in Wishlist' : '♡ Add to Saved Properties'"></span>
+                                <i class="fa-solid" :class="isPropertySaved({{ $property->id }}) ? 'fa-heart text-red-500' : 'fa-heart text-[#c5983e]'"></i>
+                                <span x-text="isPropertySaved({{ $property->id }}) ? 'Saved in Wishlist' : 'Add to Saved Properties'"></span>
                             </button>
                             @guest
                                 <a href="{{ route('login') }}"
@@ -256,8 +258,9 @@
                         </div>
                         <button type="button"
                                 @click="openUnlockModal('Overview VIP Callout')"
-                                class="px-4 py-2 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-[11px] uppercase tracking-wider font-semibold cursor-pointer">
-                            Register Here ↗
+                                class="px-4 py-2 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-[11px] uppercase tracking-wider font-semibold cursor-pointer inline-flex items-center gap-1.5">
+                            <span>Register Here</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
                         </button>
                     </div>
                 </div>
@@ -398,8 +401,9 @@
                     </div>
                     <button type="button"
                             @click="openUnlockModal('Complete Floor Plan Package')"
-                            class="px-6 py-3 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer shrink-0">
-                        Unlock All Floor Plans ↗
+                            class="px-6 py-3 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer shrink-0 inline-flex items-center gap-1.5">
+                        <span>Unlock All Floor Plans</span>
+                        <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                     </button>
                 </div>
 
@@ -416,16 +420,15 @@
 
                                 <!-- Schematic with Unlock Overlay -->
                                 <div class="relative aspect-[4/3] bg-[#fdfaf4] border border-dashed border-gray-200 rounded-lg flex flex-col items-center justify-center p-4 mb-6 overflow-hidden">
-                                    <svg class="w-12 h-12 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                    </svg>
+                                    <i class="fa-solid fa-file-shield text-3xl text-[#c5983e]/60 mb-2"></i>
                                     <span class="text-[10px] text-gray-400 uppercase tracking-widest">Architectural Schematic Locked</span>
                                     
                                     <div class="absolute inset-0 bg-white/70 backdrop-blur-[2px] flex items-center justify-center p-4 text-center group-hover:bg-white/80 transition-all">
                                         <button type="button"
                                                 @click="openUnlockModal('{{ addslashes($plan->name) }}')"
-                                                class="px-4 py-2 bg-[#0b2112] hover:bg-[#c5983e] text-white text-[11px] uppercase tracking-wider font-semibold rounded shadow-md transition-colors cursor-pointer">
-                                            Unlock This Floor Plan ↗
+                                                class="px-4 py-2 bg-[#0b2112] hover:bg-[#c5983e] text-white text-[11px] uppercase tracking-wider font-semibold rounded shadow-md transition-colors cursor-pointer inline-flex items-center gap-1.5">
+                                            <span>Unlock This Floor Plan</span>
+                                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -440,8 +443,9 @@
 
                                 <button type="button"
                                         @click="openUnlockModal('{{ addslashes($plan->name) }}')"
-                                        class="w-full py-3 rounded-lg border border-[#0b2112] text-[#0b2112] hover:bg-[#0b2112] hover:text-white transition-colors text-xs font-semibold uppercase tracking-wider text-center cursor-pointer">
-                                    Unlock Floor Plan PDF ↗
+                                        class="w-full py-3 rounded-lg border border-[#0b2112] text-[#0b2112] hover:bg-[#0b2112] hover:text-white transition-colors text-xs font-semibold uppercase tracking-wider text-center cursor-pointer inline-flex items-center justify-center gap-1.5">
+                                    <span>Unlock Floor Plan PDF</span>
+                                    <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
                                 </button>
                             </div>
                         @endforeach
@@ -452,8 +456,9 @@
                         <p class="text-xs text-gray-500 font-light mb-6">Register your interest to receive detailed elevations, lot availability, and architectural drawings.</p>
                         <button type="button"
                                 @click="openUnlockModal('Full Architectural Package')"
-                                class="px-8 py-3.5 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs uppercase tracking-wider font-semibold shadow-md transition-colors cursor-pointer">
-                            Unlock Floor Plan Package ↗
+                                class="px-8 py-3.5 rounded-full bg-[#c5983e] hover:bg-[#b08432] text-white text-xs uppercase tracking-wider font-semibold shadow-md transition-colors cursor-pointer inline-flex items-center gap-2">
+                            <span>Unlock Floor Plan Package</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                         </button>
                     </div>
                 @endif
@@ -481,9 +486,9 @@
                 
                 <button type="button"
                         @click="unlockModalOpen = false"
-                        class="absolute top-5 right-5 text-gray-400 hover:text-gray-900 transition-colors p-1"
+                        class="absolute top-5 right-5 text-gray-400 hover:text-gray-900 transition-colors p-2"
                         aria-label="Close modal">
-                    ✕
+                    <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
 
                 <template x-if="!unlockSubmitted">
@@ -534,7 +539,10 @@
                                 <button type="submit"
                                         :disabled="unlockLoading"
                                         class="w-full py-3.5 rounded-lg bg-[#c5983e] hover:bg-[#b08432] text-white text-xs uppercase tracking-wider font-semibold transition-colors shadow-md cursor-pointer flex items-center justify-center gap-2">
-                                    <span x-show="!unlockLoading">Unlock Floor Plans Now ↗</span>
+                                    <span x-show="!unlockLoading" class="inline-flex items-center gap-1.5">
+                                        <span>Unlock Floor Plans Now</span>
+                                        <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
+                                    </span>
                                     <span x-show="unlockLoading" style="display: none;">Connecting with Follow Up Boss VIP Desk...</span>
                                 </button>
                             </div>
@@ -549,7 +557,7 @@
                 <template x-if="unlockSubmitted">
                     <div class="text-center py-6 space-y-4">
                         <div class="w-14 h-14 mx-auto rounded-full bg-[#fdfaf4] border border-[#c5983e] text-[#c5983e] flex items-center justify-center text-xl">
-                            ✓
+                            <i class="fa-solid fa-check text-xl"></i>
                         </div>
                         <h4 class="font-fragment text-2xl uppercase tracking-wide text-gray-900">Floor Plans Unlocked</h4>
                         <p class="text-xs text-gray-500 font-light leading-relaxed max-w-sm mx-auto">

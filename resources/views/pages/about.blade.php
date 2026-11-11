@@ -534,7 +534,7 @@
                         <button type="submit"
                                 class="bg-[#c5983e] hover:bg-[#b08432] text-white text-xs uppercase tracking-[0.2em] font-semibold px-10 py-4 transition-colors shadow-xl cursor-pointer flex items-center gap-2">
                             <span>GET EXCLUSIVE PLATINUM ACCESS</span>
-                            <span>↗</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-xs"></i>
                         </button>
                     </div>
                 </form>

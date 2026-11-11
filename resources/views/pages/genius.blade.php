@@ -31,8 +31,9 @@
                     Every featured pre-construction community integrates intelligent automation and architectural upgrades directly into the base purchase price. No hidden fees or basic builder-grade compromises.
                 </p>
                 <div class="pt-2">
-                    <a href="{{ route('pre-construction') }}" class="btn-gold">
-                        Explore Communities ↗
+                    <a href="{{ route('pre-construction') }}" class="btn-gold inline-flex items-center gap-2">
+                        <span>Explore Communities</span>
+                        <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
                     </a>
                 </div>
             </div>

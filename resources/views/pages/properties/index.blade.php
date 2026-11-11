@@ -200,25 +200,19 @@
                                 <div class="grid grid-cols-3 gap-2 text-[11.5px] text-[#222] font-sans font-medium">
                                     <!-- Bedrooms -->
                                     <div class="flex items-center gap-1.5 whitespace-nowrap">
-                                        <svg class="w-4 h-4 text-[#c5983e] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M2 19h2v-2h16v2h2v-7a3 3 0 00-3-3H9a3 3 0 00-3 3v1H4V6H2v13zm4-7a1 1 0 011-1h10a1 1 0 011 1v3H6v-3zm2-3a2 2 0 110-4 2 2 0 010 4z"/>
-                                        </svg>
+                                        <i class="fa-solid fa-bed text-[#c5983e] text-xs"></i>
                                         <span>{{ $prop->bedrooms ?? 4 }} Bedrooms</span>
                                     </div>
 
                                     <!-- Bathroom -->
                                     <div class="flex items-center gap-1.5 whitespace-nowrap">
-                                        <svg class="w-4 h-4 text-[#c5983e] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M20 13V8a1 1 0 00-1-1h-2V5a2 2 0 00-2-2h-1a1 1 0 000 2h1v2H4a2 2 0 00-2 2v6a4 4 0 004 4v1a1 1 0 102 0v-1h8v1a1 1 0 102 0v-1a4 4 0 004-4v-2h-2zm0 0H4v-4h16v4z"/>
-                                        </svg>
+                                        <i class="fa-solid fa-bath text-[#c5983e] text-xs"></i>
                                         <span>{{ (int)($prop->bathrooms ?? 6) }} Bathroom</span>
                                     </div>
 
                                     <!-- Garage -->
                                     <div class="flex items-center gap-1.5 whitespace-nowrap">
-                                        <svg class="w-4 h-4 text-[#c5983e] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 3L2 10v11h20V10L12 3zm6 16H6v-7h12v7zm-2-2h-8v-3h8v3z"/>
-                                        </svg>
+                                        <i class="fa-solid fa-warehouse text-[#c5983e] text-xs"></i>
                                         <span>{{ $prop->garage_spaces ?? 1 }} Garage</span>
                                     </div>
                                 </div>
@@ -227,17 +221,13 @@
                                 <div class="grid grid-cols-3 gap-2 text-[11.5px] text-[#222] font-sans font-medium">
                                     <!-- sq.ft -->
                                     <div class="flex items-center gap-1.5 whitespace-nowrap">
-                                        <svg class="w-4 h-4 text-[#c5983e] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M4 3h4v11h11v4H4V3zm2 2v11h2v-2h2v2h2v-2h2v2h2v-2h1v-1H8V5H6z"/>
-                                        </svg>
+                                        <i class="fa-solid fa-ruler-combined text-[#c5983e] text-xs"></i>
                                         <span>{{ number_format($prop->sqft ?? 1400) }} sq.ft</span>
                                     </div>
 
                                     <!-- Balcony -->
                                     <div class="flex items-center gap-1.5 whitespace-nowrap">
-                                        <svg class="w-4 h-4 text-[#c5983e] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
-                                        </svg>
+                                        <i class="fa-solid fa-building text-[#c5983e] text-xs"></i>
                                         <span>{{ $prop->balcony ?? '8' }} Balcony</span>
                                     </div>
                                 </div>

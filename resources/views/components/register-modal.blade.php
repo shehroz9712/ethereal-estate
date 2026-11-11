@@ -27,9 +27,7 @@
                 @click="open = false"
                 class="absolute top-5 right-5 text-gray-400 hover:text-gray-900 transition-colors p-1"
                 aria-label="Close modal">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
+            <i class="fa-solid fa-xmark text-lg"></i>
         </button>
 
         <template x-if="!submitted">
@@ -115,8 +113,11 @@
 
                     <button type="submit"
                             :disabled="loading"
-                            class="w-full btn-gold justify-center text-xs py-3.5 mt-2 cursor-pointer">
-                        <span x-show="!loading">Submit VIP Registration ↗</span>
+                            class="w-full btn-gold justify-center text-xs py-3.5 mt-2 cursor-pointer inline-flex items-center gap-2">
+                        <span x-show="!loading" class="inline-flex items-center gap-1.5">
+                            <span>Submit VIP Registration</span>
+                            <i class="fa-solid fa-arrow-up rotate-45 text-[10px]"></i>
+                        </span>
                         <span x-show="loading" style="display: none;">Processing Registration...</span>
                     </button>
                 </form>
@@ -127,9 +128,7 @@
         <template x-if="submitted">
             <div class="text-center py-8">
                 <div class="w-14 h-14 mx-auto rounded-full bg-[#fdfaf4] border border-[#d5a94e] text-[#d5a94e] flex items-center justify-center mb-5">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    </svg>
+                    <i class="fa-solid fa-check text-xl"></i>
                 </div>
                 <h4 class="font-fragment text-2xl uppercase tracking-wide text-gray-900 mb-2">Registration Confirmed</h4>
                 <p class="text-xs text-gray-500 font-light leading-relaxed max-w-sm mx-auto mb-6">

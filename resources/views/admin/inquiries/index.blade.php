@@ -94,7 +94,7 @@
                                         <a href="{{ route('properties.show', $inquiry->property->slug) }}" target="_blank"
                                            class="font-semibold text-[#1a2e1e] hover:underline flex items-center gap-1">
                                             <span>{{ $inquiry->property->title }}</span>
-                                            <span class="text-[10px] text-gray-400">↗</span>
+                                            <i class="fa-solid fa-arrow-up rotate-45 text-[9px] text-gray-400"></i>
                                         </a>
                                         <span class="block text-[11px] text-gray-400">{{ $inquiry->property->city }}, {{ $inquiry->property->province }}</span>
                                     @else
@@ -185,8 +185,8 @@
              class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
              @keydown.escape.window="modalOpen = false">
             <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl space-y-6 relative" @click.away="modalOpen = false">
-                <button type="button" @click="modalOpen = false" class="absolute top-5 right-5 text-gray-400 hover:text-gray-900 text-lg font-bold">
-                    ✕
+                <button type="button" @click="modalOpen = false" class="absolute top-5 right-5 text-gray-400 hover:text-gray-900 p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
 
                 <div>

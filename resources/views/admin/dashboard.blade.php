@@ -218,7 +218,10 @@
                                     @endif
                                 </td>
                                 <td class="py-3.5 px-6 text-right space-x-2">
-                                    <a href="{{ route('properties.show', $prop->slug) }}" target="_blank" class="text-gray-400 hover:text-gray-800">Live ↗</a>
+                                    <a href="{{ route('properties.show', $prop->slug) }}" target="_blank" class="text-gray-400 hover:text-gray-800 inline-flex items-center gap-1">
+                                        <span>Live</span>
+                                        <i class="fa-solid fa-arrow-up rotate-45 text-[9px]"></i>
+                                    </a>
                                     <a href="{{ route('admin.properties.edit', $prop->id) }}" class="text-[#d5a94e] hover:underline font-semibold">Edit</a>
                                 </td>
                             </tr>

@@ -8,6 +8,11 @@
     <title>{{ $title ?? 'Ethereal Estates — Invest in Tomorrow\'s Address' }}</title>
     <meta name="description" content="{{ $description ?? 'Discover exclusive pre-construction opportunities and luxury real estate across Ontario with Ethereal Estates.' }}">
 
+    <!-- Google Fonts Preconnect & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Urbanist:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
 

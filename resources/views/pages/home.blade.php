@@ -78,8 +78,8 @@
                             at Today's Price.
                         </h1> -->
 
-                        <!-- Tagline Subtext (Placeholder) -->
-                        <p class="text-white/85 text-xs sm:text-sm font-light tracking-wide max-w-xl mx-auto leading-relaxed">
+                        <!-- Tagline Subtext (Playfair Display, increased px) -->
+                        <p class="font-playfair text-base sm:text-lg md:text-xl text-white/90 font-normal tracking-wide max-w-2xl mx-auto leading-relaxed drop-shadow-md">
                             Ontario's curated pre-construction advisory. Seamlessly connecting discerning buyers with premier developer releases.
                         </p>
                     </div>

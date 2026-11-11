@@ -240,66 +240,55 @@
     </div>
 
     <!-- Main Navigation Links Grid -->
-    <div class="max-w-4xl mx-auto w-full py-10 grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-6">
-        <div>
-            <p class="text-[11px] uppercase tracking-[0.24em] text-[#c5983e] font-semibold mb-6">Discover Portfolio</p>
-            <div class="space-y-4 font-fragment text-2xl sm:text-3xl lg:text-4xl uppercase tracking-[0.04em]">
-                <div>
-                    <a href="{{ route('pre-construction') }}" @click="menuOpen = false" class="inline-flex items-center gap-3 text-white/90 hover:text-[#c5983e] transition-colors">
-                        Pre-Construction <span class="text-lg text-[#c5983e]">↗</span>
-                    </a>
-                </div>
-                <div>
-                    <a href="{{ route('properties.index') }}" @click="menuOpen = false" class="inline-flex items-center gap-3 text-white/90 hover:text-[#c5983e] transition-colors">
-                        Featured Listings <span class="text-lg text-[#c5983e]">↗</span>
-                    </a>
-                </div>
-                <div>
-                    <button type="button" @click="menuOpen = false; savedDrawerOpen = true;" class="inline-flex items-center gap-3 text-white/90 hover:text-[#c5983e] transition-colors text-left uppercase">
-                        Saved Properties (<span x-text="savedItems.length">0</span>) <span class="text-lg text-[#c5983e]">♥</span>
-                    </button>
-                </div>
-                <div>
-                    <a href="{{ route('rebate-calculator') }}" @click="menuOpen = false" class="inline-flex items-center gap-3 text-white/90 hover:text-[#c5983e] transition-colors">
-                        Rebate Calculator <span class="text-lg text-[#c5983e]">↗</span>
-                    </a>
-                </div>
-                <div>
-                    <a href="{{ route('genius') }}" @click="menuOpen = false" class="inline-flex items-center gap-3 text-white/90 hover:text-[#c5983e] transition-colors">
-                        Genius Experience <span class="text-lg text-[#c5983e]">↗</span>
-                    </a>
-                </div>
+    <div class="max-w-4xl mx-auto w-full py-8 sm:py-12 grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4 sm:gap-y-6">
+        <div class="space-y-3.5 sm:space-y-4 font-fragment text-base sm:text-lg lg:text-xl uppercase tracking-[0.06em]">
+            <div>
+                <a href="{{ route('pre-construction') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
+                    Pre-Construction <span class="text-sm text-[#c5983e]">↗</span>
+                </a>
+            </div>
+            <div>
+                <a href="{{ route('properties.index') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
+                    Featured Listings <span class="text-sm text-[#c5983e]">↗</span>
+                </a>
+            </div>
+            <div>
+                <button type="button" @click="menuOpen = false; savedDrawerOpen = true;" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all text-left uppercase cursor-pointer">
+                    Saved Properties <span class="text-sm text-[#c5983e]">♥</span>
+                </button>
+            </div>
+            <div>
+                <a href="{{ route('rebate-calculator') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
+                    Rebate Calculator <span class="text-sm text-[#c5983e]">↗</span>
+                </a>
             </div>
         </div>
 
-        <div>
-            <p class="text-[11px] uppercase tracking-[0.24em] text-[#c5983e] font-semibold mb-6">About & Advisory</p>
-            <div class="space-y-4 font-fragment text-2xl sm:text-3xl lg:text-4xl uppercase tracking-[0.04em]">
-                <div>
-                    <a href="{{ route('about') }}" @click="menuOpen = false" class="inline-flex items-center gap-3 text-white/90 hover:text-[#c5983e] transition-colors">
-                        Who We Are <span class="text-lg text-[#c5983e]">↗</span>
-                    </a>
-                </div>
-                <div>
-                    <a href="{{ route('our-story') }}" @click="menuOpen = false" class="inline-flex items-center gap-3 text-white/90 hover:text-[#c5983e] transition-colors">
-                        Our Story <span class="text-lg text-[#c5983e]">↗</span>
-                    </a>
-                </div>
-                <div>
-                    <a href="{{ route('news.index') }}" @click="menuOpen = false" class="inline-flex items-center gap-3 text-white/90 hover:text-[#c5983e] transition-colors">
-                        Ethereal Edit <span class="text-lg text-[#c5983e]">↗</span>
-                    </a>
-                </div>
-                <div>
-                    <a href="{{ route('join-ethereal') }}" @click="menuOpen = false" class="inline-flex items-center gap-3 text-white/90 hover:text-[#c5983e] transition-colors">
-                        Join Ethereal <span class="text-lg text-[#c5983e]">↗</span>
-                    </a>
-                </div>
-                <div>
-                    <a href="{{ route('contact') }}" @click="menuOpen = false" class="inline-flex items-center gap-3 text-white/90 hover:text-[#c5983e] transition-colors">
-                        Contact Us <span class="text-lg text-[#c5983e]">↗</span>
-                    </a>
-                </div>
+        <div class="space-y-3.5 sm:space-y-4 font-fragment text-base sm:text-lg lg:text-xl uppercase tracking-[0.06em]">
+            <div>
+                <a href="{{ route('about') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
+                    Who We Are <span class="text-sm text-[#c5983e]">↗</span>
+                </a>
+            </div>
+            <div>
+                <a href="{{ route('our-story') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
+                    Our Story <span class="text-sm text-[#c5983e]">↗</span>
+                </a>
+            </div>
+            <div>
+                <a href="{{ route('news.index') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
+                    Ethereal Edit <span class="text-sm text-[#c5983e]">↗</span>
+                </a>
+            </div>
+            <div>
+                <a href="{{ route('join-ethereal') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
+                    Join Ethereal <span class="text-sm text-[#c5983e]">↗</span>
+                </a>
+            </div>
+            <div>
+                <a href="{{ route('contact') }}" @click="menuOpen = false" class="inline-flex items-center gap-2.5 text-white/90 hover:text-[#c5983e] hover:translate-x-1 transition-all">
+                    Contact Us <span class="text-sm text-[#c5983e]">↗</span>
+                </a>
             </div>
         </div>
     </div>

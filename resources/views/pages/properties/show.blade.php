@@ -1,7 +1,7 @@
 <x-layouts.app activePage="properties" :title="$property->title . ' — Ethereal Estates'">
 
     <div x-data="{ 
-            currentTab: 'overview',
+            currentTab: (new URLSearchParams(window.location.search).get('tab') || 'overview'),
             unlockModalOpen: false,
             unlockSubmitted: false,
             unlockLoading: false,
@@ -306,23 +306,67 @@
                     </p>
                 </div>
 
+                @php
+                    $neighborhoodCards = [
+                        [
+                            'title' => 'Parks & Trails',
+                            'tag'   => 'Recreation',
+                            'icon'  => 'fa-solid fa-tree',
+                            'desc'  => 'Valleys, conservation lands, and waterfront parks within minutes.',
+                            'image' => asset('assets/images/newsletter-cabin.jpg'),
+                        ],
+                        [
+                            'title' => 'Top Schools',
+                            'tag'   => 'Education',
+                            'icon'  => 'fa-solid fa-graduation-cap',
+                            'desc'  => 'Reputable elementary and secondary schools close to the neighborhood.',
+                            'image' => asset('assets/images/news-hero.jpg'),
+                        ],
+                        [
+                            'title' => 'Hwy 407 & GO',
+                            'tag'   => 'Transit',
+                            'icon'  => 'fa-solid fa-train-subway',
+                            'desc'  => 'Seamless transit to Downtown Toronto, Markham, and Durham employment hubs.',
+                            'image' => asset('assets/images/news-art-1.jpg'),
+                        ],
+                        [
+                            'title' => 'Historic Downtown',
+                            'tag'   => 'Culture',
+                            'icon'  => 'fa-solid fa-utensils',
+                            'desc'  => 'Artisan bakeries, local markets, family bistros, and street festivals.',
+                            'image' => asset('assets/images/news-art-2.jpg'),
+                        ],
+                    ];
+                @endphp
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                    <div class="p-6 border border-gray-200 rounded-xl bg-[#fdfaf4]">
-                        <h4 class="font-fragment text-base uppercase tracking-wide text-gray-900 mb-1">Parks &amp; Trails</h4>
-                        <p class="text-xs font-light text-gray-500">Valleys, conservation lands, and waterfront parks within minutes.</p>
-                    </div>
-                    <div class="p-6 border border-gray-200 rounded-xl bg-[#fdfaf4]">
-                        <h4 class="font-fragment text-base uppercase tracking-wide text-gray-900 mb-1">Top Schools</h4>
-                        <p class="text-xs font-light text-gray-500">Reputable elementary and secondary schools close to the neighborhood.</p>
-                    </div>
-                    <div class="p-6 border border-gray-200 rounded-xl bg-[#fdfaf4]">
-                        <h4 class="font-fragment text-base uppercase tracking-wide text-gray-900 mb-1">Hwy 407 &amp; GO</h4>
-                        <p class="text-xs font-light text-gray-500">Seamless transit to Downtown Toronto, Markham, and Durham employment hubs.</p>
-                    </div>
-                    <div class="p-6 border border-gray-200 rounded-xl bg-[#fdfaf4]">
-                        <h4 class="font-fragment text-base uppercase tracking-wide text-gray-900 mb-1">Historic Downtown</h4>
-                        <p class="text-xs font-light text-gray-500">Artisan bakeries, local markets, family bistros, and street festivals.</p>
-                    </div>
+                    @foreach($neighborhoodCards as $card)
+                        <div class="group flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 hover:border-[#c5983e]/50">
+                            <!-- Image on top -->
+                            <div class="relative w-full aspect-[16/11] overflow-hidden bg-gray-100">
+                                <img src="{{ $card['image'] }}"
+                                     alt="{{ $card['title'] }}"
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                                     loading="lazy" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-60"></div>
+                                <span class="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-semibold uppercase tracking-wider text-gray-800 shadow-xs border border-white/40">
+                                    <i class="{{ $card['icon'] }} text-[#c5983e] text-[11px]"></i>
+                                    {{ $card['tag'] }}
+                                </span>
+                            </div>
+                            <!-- Detail below -->
+                            <div class="p-5 sm:p-6 bg-[#fdfaf4] flex-1 flex flex-col justify-between border-t border-gray-100">
+                                <div>
+                                    <h4 class="font-fragment text-base uppercase tracking-wide text-gray-900 mb-1.5 font-normal">
+                                        {{ $card['title'] }}
+                                    </h4>
+                                    <p class="text-xs font-light text-gray-600 leading-relaxed">
+                                        {{ $card['desc'] }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </section>
